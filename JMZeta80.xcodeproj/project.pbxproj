@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D69C3C72163EC9B00F7A7C7 /* TestBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */; };
+		1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C82163F50500F7A7C7 /* Clock.swift */; };
 		1D7EA9252163C701005D14C1 /* JMZeta80.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7EA91B2163C701005D14C1 /* JMZeta80.framework */; };
 		1D7EA92A2163C701005D14C1 /* JMZeta80Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9292163C701005D14C1 /* JMZeta80Tests.swift */; };
 		1D7EA92C2163C701005D14C1 /* JMZeta80.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7EA91E2163C701005D14C1 /* JMZeta80.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9372163C8FE005D14C1 /* Cpu.swift */; };
 		1D7EA93A2163CAAC005D14C1 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9392163CAAB005D14C1 /* Register.swift */; };
+		1D7EA93C2163E9FF005D14C1 /* BusComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA93B2163E9FF005D14C1 /* BusComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBus.swift; sourceTree = "<group>"; };
+		1D69C3C82163F50500F7A7C7 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		1D7EA91B2163C701005D14C1 /* JMZeta80.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JMZeta80.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D7EA91E2163C701005D14C1 /* JMZeta80.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMZeta80.h; sourceTree = "<group>"; };
 		1D7EA91F2163C701005D14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,6 +38,7 @@
 		1D7EA92B2163C701005D14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D7EA9372163C8FE005D14C1 /* Cpu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cpu.swift; sourceTree = "<group>"; };
 		1D7EA9392163CAAB005D14C1 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		1D7EA93B2163E9FF005D14C1 /* BusComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,8 @@
 				1D7EA91F2163C701005D14C1 /* Info.plist */,
 				1D7EA9372163C8FE005D14C1 /* Cpu.swift */,
 				1D7EA9392163CAAB005D14C1 /* Register.swift */,
+				1D7EA93B2163E9FF005D14C1 /* BusComponent.swift */,
+				1D69C3C82163F50500F7A7C7 /* Clock.swift */,
 			);
 			path = JMZeta80;
 			sourceTree = "<group>";
@@ -88,6 +96,7 @@
 			children = (
 				1D7EA9292163C701005D14C1 /* JMZeta80Tests.swift */,
 				1D7EA92B2163C701005D14C1 /* Info.plist */,
+				1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */,
 			);
 			path = JMZeta80Tests;
 			sourceTree = "<group>";
@@ -203,6 +212,8 @@
 			files = (
 				1D7EA93A2163CAAC005D14C1 /* Register.swift in Sources */,
 				1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */,
+				1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */,
+				1D7EA93C2163E9FF005D14C1 /* BusComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D69C3C72163EC9B00F7A7C7 /* TestBus.swift in Sources */,
 				1D7EA92A2163C701005D14C1 /* JMZeta80Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

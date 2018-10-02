@@ -18,5 +18,21 @@ struct CpuRegs {
 
 // main cpu class
 public class Cpu {
+    let bus: Bus
+    let clock: SystemClock
+    
     var regs = CpuRegs()
+    
+    public init(bus: Bus) {
+        self.bus = bus
+        self.clock = bus.getClock()
+        
+        reset()
+    }
+    
+    public func reset() {
+        regs.pc = 0
+        regs.sp = 0xFFFF
+        clock.reset()
+    }
 }
