@@ -12,5 +12,4 @@ import Foundation
 public protocol Bus {
     func read(_ address: UInt16) -> UInt8
     func write(_ address: UInt16, value: UInt8)
-    func getClock() -> SystemClock
 }
