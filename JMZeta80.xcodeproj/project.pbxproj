@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D04749C21650DB800B0D379 /* DataBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04749B21650DB800B0D379 /* DataBus.swift */; };
+		1D04749E2165162500B0D379 /* Opcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04749D2165162500B0D379 /* Opcode.swift */; };
 		1D69C3C72163EC9B00F7A7C7 /* TestBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */; };
 		1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C82163F50500F7A7C7 /* Clock.swift */; };
 		1D7EA9252163C701005D14C1 /* JMZeta80.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7EA91B2163C701005D14C1 /* JMZeta80.framework */; };
@@ -15,7 +16,7 @@
 		1D7EA92C2163C701005D14C1 /* JMZeta80.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7EA91E2163C701005D14C1 /* JMZeta80.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9372163C8FE005D14C1 /* Cpu.swift */; };
 		1D7EA93A2163CAAC005D14C1 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9392163CAAB005D14C1 /* Register.swift */; };
-		1D7EA93C2163E9FF005D14C1 /* BusComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA93B2163E9FF005D14C1 /* BusComponent.swift */; };
+		1DA162FC216519EB00243141 /* AccessibleBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA162FB216519EB00243141 /* AccessibleBus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		1D04749B21650DB800B0D379 /* DataBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBus.swift; sourceTree = "<group>"; };
+		1D04749D2165162500B0D379 /* Opcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opcode.swift; sourceTree = "<group>"; };
 		1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBus.swift; sourceTree = "<group>"; };
 		1D69C3C82163F50500F7A7C7 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		1D7EA91B2163C701005D14C1 /* JMZeta80.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JMZeta80.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,7 +42,7 @@
 		1D7EA92B2163C701005D14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D7EA9372163C8FE005D14C1 /* Cpu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cpu.swift; sourceTree = "<group>"; };
 		1D7EA9392163CAAB005D14C1 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
-		1D7EA93B2163E9FF005D14C1 /* BusComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusComponent.swift; sourceTree = "<group>"; };
+		1DA162FB216519EB00243141 /* AccessibleBus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibleBus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,13 +85,14 @@
 		1D7EA91D2163C701005D14C1 /* JMZeta80 */ = {
 			isa = PBXGroup;
 			children = (
+				1DA162FB216519EB00243141 /* AccessibleBus.swift */,
 				1D7EA91E2163C701005D14C1 /* JMZeta80.h */,
 				1D7EA91F2163C701005D14C1 /* Info.plist */,
 				1D7EA9372163C8FE005D14C1 /* Cpu.swift */,
 				1D7EA9392163CAAB005D14C1 /* Register.swift */,
-				1D7EA93B2163E9FF005D14C1 /* BusComponent.swift */,
 				1D69C3C82163F50500F7A7C7 /* Clock.swift */,
 				1D04749B21650DB800B0D379 /* DataBus.swift */,
+				1D04749D2165162500B0D379 /* Opcode.swift */,
 			);
 			path = JMZeta80;
 			sourceTree = "<group>";
@@ -213,11 +216,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DA162FC216519EB00243141 /* AccessibleBus.swift in Sources */,
 				1D7EA93A2163CAAC005D14C1 /* Register.swift in Sources */,
 				1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */,
 				1D04749C21650DB800B0D379 /* DataBus.swift in Sources */,
+				1D04749E2165162500B0D379 /* Opcode.swift in Sources */,
 				1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */,
-				1D7EA93C2163E9FF005D14C1 /* BusComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

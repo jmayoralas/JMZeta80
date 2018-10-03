@@ -22,8 +22,9 @@ public class Cpu {
     let clock: SystemClock
     
     var regs = CpuRegs()
+    var current_opcode = Opcode()
     
-    public init(bus: Bus, clock: SystemClock) {
+    public init(bus: AccessibleBus, clock: SystemClock) {
         self.bus = DataBus(bus: bus, clock: clock)
         self.clock = clock
         
