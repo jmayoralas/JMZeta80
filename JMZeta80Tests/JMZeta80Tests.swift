@@ -10,7 +10,8 @@ import XCTest
 @testable import JMZeta80
 
 class JMZeta80Tests: XCTestCase {
-    let bus = TestBus(clock: Clock())
+    let bus = TestBus()
+    let clock = Clock()
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -32,7 +33,7 @@ class JMZeta80Tests: XCTestCase {
     }
     
     func testCpuRegs() {
-        let cpu = Cpu(bus: bus)
+        let cpu = Cpu(bus: bus, clock: clock)
      
         // test cpu registers accessors for each z80 register
         cpu.regs.main.a = 0x12
@@ -65,7 +66,7 @@ class JMZeta80Tests: XCTestCase {
     }
 
     func testBus() {
-        let cpu = Cpu(bus: bus)
+        let cpu = Cpu(bus: bus, clock: clock)
         
         // test bus operation and cpu accessibility
         bus.write(0x0000, value: 0x11)
@@ -73,7 +74,7 @@ class JMZeta80Tests: XCTestCase {
     }
     
     func testCpu() {
-        let cpu = Cpu(bus: bus)
+        let cpu = Cpu(bus: bus, clock: clock)
         
         // test cpu reset on instance creation
         XCTAssert(cpu.regs.sp == 0xFFFF)

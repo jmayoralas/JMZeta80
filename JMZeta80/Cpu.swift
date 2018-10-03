@@ -18,14 +18,14 @@ struct CpuRegs {
 
 // main cpu class
 public class Cpu {
-    let bus: Bus
+    let bus: DataBus
     let clock: SystemClock
     
     var regs = CpuRegs()
     
-    public init(bus: Bus) {
-        self.bus = bus
-        self.clock = bus.getClock()
+    public init(bus: Bus, clock: SystemClock) {
+        self.bus = DataBus(bus: bus, clock: clock)
+        self.clock = clock
         
         reset()
     }
