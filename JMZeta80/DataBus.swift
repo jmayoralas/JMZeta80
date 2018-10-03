@@ -12,10 +12,10 @@ import Foundation
 // reads takes 3 tstates
 // writes takes 4 tstates
 class DataBus {
-    let _bus: Bus
+    let _bus: AccessibleBus
     let _clock: SystemClock
     
-    init(bus: Bus, clock: SystemClock) {
+    init(bus: AccessibleBus, clock: SystemClock) {
         _bus = bus
         _clock = clock
     }

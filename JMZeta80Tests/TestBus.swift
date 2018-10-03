@@ -25,7 +25,7 @@ class Clock : SystemClock {
     }
 }
 
-class TestBus: Bus {
+class TestBus: AccessibleBus {
     private var _data = Array<UInt8>(repeating: 0, count: 0x10000)
     
     func read(_ address: UInt16) -> UInt8 {
