@@ -63,17 +63,3 @@ public class Cpu {
         return opcode
     }
 }
-
-extension Cpu {
-    private func initOpcodeTable() {
-        // nop
-        opcodes[0x00] = {}
-         // LD BC,&0000
-        opcodes[0x01] = {
-            self.regs.main.c = self.bus.read(self.regs.pc)
-            self.regs.pc = self.regs.pc &+ 1
-            self.regs.main.b = self.bus.read(self.regs.pc)
-            self.regs.pc = self.regs.pc &+ 1
-        }
-    }
-}
