@@ -8,33 +8,13 @@
 
 import Foundation
 
+typealias Opcode = UInt8
+
 // opcode struct for opcode decode operations
-struct Opcode {
-    var value: UInt8 = 0
-    
-    var x: Int {
-        get {
-            return Int((self.value & 0b11000000) >> 6)
-        }
-    }
-    var y: Int {
-        get {
-            return Int((self.value & 0b00111000) >> 3)
-        }
-    }
-    var z: Int {
-        get {
-            return Int(self.value & 0b00000111)
-        }
-    }
-    var p: Int {
-        get {
-            return self.y >> 1
-        }
-    }
-    var q: Int {
-        get {
-            return self.y % 2
-        }
-    }
+extension Opcode {
+    var x: Int { return Int((self & 0b11000000) >> 6) }
+    var y: Int { return Int((self & 0b00111000) >> 3) }
+    var z: Int { return Int(self & 0b00000111) }
+    var p: Int { return self.y >> 1 }
+    var q: Int { return self.y % 2 }
 }

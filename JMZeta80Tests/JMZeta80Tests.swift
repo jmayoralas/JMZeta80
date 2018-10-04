@@ -33,16 +33,16 @@ class JMZeta80Tests: XCTestCase {
     }
     
     func testOpcode() {
-        var opcode = Opcode()
+        var opcode: Opcode
         
-        opcode.value = 0x22
+        opcode = 0x22
         XCTAssert(opcode.x == 0, String.init(format: "value: %d", opcode.x))
         XCTAssert(opcode.y == 4, String.init(format: "value: %d", opcode.y))
         XCTAssert(opcode.z == 2, String.init(format: "value: %d", opcode.z))
         XCTAssert(opcode.p == 2, String.init(format: "value: %d", opcode.p))
         XCTAssert(opcode.q == 0, String.init(format: "value: %d", opcode.q))
         
-        opcode.value = 0xA2
+        opcode = 0xA2
         XCTAssert(opcode.x == 2, String.init(format: "value: %d", opcode.x))
         XCTAssert(opcode.y == 4, String.init(format: "value: %d", opcode.y))
         XCTAssert(opcode.z == 2, String.init(format: "value: %d", opcode.z))
