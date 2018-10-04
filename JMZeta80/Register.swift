@@ -22,8 +22,8 @@ struct Register {
     }
     
     init() {
-        self.high = 0x00
-        self.low = 0x00
+        self.high = 0xFF
+        self.low = 0xFF
     }
 }
 
