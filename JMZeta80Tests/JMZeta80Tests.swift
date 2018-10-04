@@ -89,6 +89,7 @@ class JMZeta80Tests: XCTestCase {
         // test bus operation and cpu accessibility
         bus.write(0x0000, value: 0x11)
         XCTAssert(cpu.bus.read(0x0000) == 0x11)
+        XCTAssert(cpu.bus.ioRead(0xFE) == 0xFF)
     }
     
     func testCpu() {
