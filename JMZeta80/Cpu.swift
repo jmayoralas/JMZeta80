@@ -62,4 +62,8 @@ public class Cpu {
         clock.add(cycles: 1)
         return opcode
     }
+    
+    func buildAddress(_ h: UInt8, _ l: UInt8) -> UInt16 {
+        return (UInt16(h) << 8) + UInt16(l)
+    }
 }

@@ -105,6 +105,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.clock.getCycles() == 3)
         cpu.bus.write(0x0000, value: 0x11)
         XCTAssert(cpu.clock.getCycles() == 6)
+        XCTAssert(cpu.buildAddress(0x12, 0x34) == 0x1234)
     }
     
     func testOpcodes() {
@@ -122,5 +123,13 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.bc == 0x1234, String.init(format: "bc: 0x%X", cpu.regs.main.bc))
         XCTAssert(clock.getCycles() == 4 + 4 + 3 + 3, String.init(format: "value: %d", clock.getCycles()))
         XCTAssert(cpu.regs.pc == 0x0004)
+        
+        bus.write(0x04, value: 0xDB)
+        bus.write(0x05, value: 0xFE)
+        cpu.regs.main.a = 0x00
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.a == 0xFF)
+        XCTAssert(clock.getCycles() == 14 + 11)
+        XCTAssert(cpu.regs.pc == 0x06)
     }
 }
