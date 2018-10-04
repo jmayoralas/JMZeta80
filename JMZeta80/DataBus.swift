@@ -26,12 +26,12 @@ class DataBus {
     }
     
     func write(_ address: UInt16, value: UInt8) {
-        _clock.add(cycles: 4)
+        _clock.add(cycles: 3)
         _bus.write(address, value: value)
     }
     
     func ioRead(_ address: UInt16) -> UInt8 {
-        _clock.add(cycles: 3)
+        _clock.add(cycles: 4)
         return _bus.ioRead(address)
     }
     

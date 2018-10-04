@@ -104,7 +104,7 @@ class JMZeta80Tests: XCTestCase {
         _ = cpu.bus.read(0x0000)
         XCTAssert(cpu.clock.getCycles() == 3)
         cpu.bus.write(0x0000, value: 0x11)
-        XCTAssert(cpu.clock.getCycles() == 7)
+        XCTAssert(cpu.clock.getCycles() == 6)
     }
     
     func testOpcodes() {
