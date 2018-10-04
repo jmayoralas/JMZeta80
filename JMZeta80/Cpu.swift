@@ -12,8 +12,12 @@ import Foundation
 struct CpuRegs {
     var main = RegisterBank()
     var alternate = RegisterBank()
+    
+    var ix: UInt16 = 0
+    var iy: UInt16 = 0
     var pc: UInt16 = 0
     var sp: UInt16 = 0
+    var ir: UInt8 = 0
 }
 
 // main cpu class
