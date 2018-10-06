@@ -66,4 +66,9 @@ public class Cpu {
     func buildAddress(_ h: UInt8, _ l: UInt8) -> UInt16 {
         return (UInt16(h) << 8) + UInt16(l)
     }
+    
+    func addRelative(displacement: UInt8, toAddress address: UInt16) -> UInt16 {
+        let abs_displ = displacement.comp2
+        return abs_displ < 0 ? address &- UInt16(-abs_displ) : address &+ UInt16(abs_displ)
+    }
 }
