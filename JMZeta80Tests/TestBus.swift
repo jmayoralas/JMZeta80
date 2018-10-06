@@ -38,4 +38,12 @@ class TestBus: AccessibleBus {
     
     func ioRead(_ address: UInt16) -> UInt8 { return 0xFF }
     func ioWrite(_ address: UInt16, value: UInt8) {}
+    
+    func write(_ address: UInt16, data: [UInt8]) {
+        var l_address = address
+        for byte in data {
+            write(l_address, value: byte)
+            l_address += 1
+        }
+    }
 }
