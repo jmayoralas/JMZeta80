@@ -16,7 +16,7 @@ extension Cpu {
 		opcodes[0x01] = {
 			// ld main.bc,&0000
 			self.regs.main.bc = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
-			self.regs.pc = self.regs.pc &+ 2
+			self.regs.pc &+= 2
 		}
 		opcodes[0x02] = {
 		}
@@ -40,7 +40,7 @@ extension Cpu {
 			// add hl,main.bc
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.bc
-			let hl_bit_12 = self.regs.main.h & 0b00010000
+			let h_low = self.regs.main.h & 0x0F
 			self.regs.main.hl &+= added_value
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
@@ -48,7 +48,7 @@ extension Cpu {
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0b00010000 != hl_bit_12 {
+			if self.regs.main.h & 0x0F < h_low {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -70,8 +70,8 @@ extension Cpu {
 			// djnz n
 			self.clock.add(cycles: 1)
 			let displ = self.bus.read(self.regs.pc)
-			self.regs.pc = self.regs.pc &+ 1
-			self.regs.main.b = self.regs.main.b &- 1
+			self.regs.pc &+= 1
+			self.regs.main.b &-= 1
 			if self.regs.main.b != 0 {
 				self.clock.add(cycles: 5)
 				self.regs.pc = self.addRelative(displacement: displ, toAddress: self.regs.pc)
@@ -80,7 +80,7 @@ extension Cpu {
 		opcodes[0x11] = {
 			// ld main.de,&0000
 			self.regs.main.de = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
-			self.regs.pc = self.regs.pc &+ 2
+			self.regs.pc &+= 2
 		}
 		opcodes[0x12] = {
 		}
@@ -97,7 +97,7 @@ extension Cpu {
 		opcodes[0x18] = {
 			// jr &00
 			let displ = self.bus.read(self.regs.pc)
-			self.regs.pc = self.regs.pc &+ 1
+			self.regs.pc &+= 1
 			self.regs.pc = self.addRelative(displacement: displ, toAddress: self.regs.pc)
 			self.clock.add(cycles: 5)
 		}
@@ -105,7 +105,7 @@ extension Cpu {
 			// add hl,main.de
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.de
-			let hl_bit_12 = self.regs.main.h & 0b00010000
+			let h_low = self.regs.main.h & 0x0F
 			self.regs.main.hl &+= added_value
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
@@ -113,7 +113,7 @@ extension Cpu {
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0b00010000 != hl_bit_12 {
+			if self.regs.main.h & 0x0F < h_low {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -134,7 +134,7 @@ extension Cpu {
 		opcodes[0x20] = {
 			// jr FLAG_Z == 0 &00
 			let displ = self.bus.read(self.regs.pc)
-			self.regs.pc = self.regs.pc &+ 1
+			self.regs.pc &+= 1
 			if self.regs.main.f & FLAG_Z == 0 {
 				self.clock.add(cycles: 5)
 				self.regs.pc = self.addRelative(displacement: displ, toAddress: self.regs.pc)
@@ -143,7 +143,7 @@ extension Cpu {
 		opcodes[0x21] = {
 			// ld main.hl,&0000
 			self.regs.main.hl = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
-			self.regs.pc = self.regs.pc &+ 2
+			self.regs.pc &+= 2
 		}
 		opcodes[0x22] = {
 		}
@@ -160,7 +160,7 @@ extension Cpu {
 		opcodes[0x28] = {
 			// jr FLAG_Z != 0 &00
 			let displ = self.bus.read(self.regs.pc)
-			self.regs.pc = self.regs.pc &+ 1
+			self.regs.pc &+= 1
 			if self.regs.main.f & FLAG_Z != 0 {
 				self.clock.add(cycles: 5)
 				self.regs.pc = self.addRelative(displacement: displ, toAddress: self.regs.pc)
@@ -170,7 +170,7 @@ extension Cpu {
 			// add hl,main.hl
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.hl
-			let hl_bit_12 = self.regs.main.h & 0b00010000
+			let h_low = self.regs.main.h & 0x0F
 			self.regs.main.hl &+= added_value
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
@@ -178,7 +178,7 @@ extension Cpu {
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0b00010000 != hl_bit_12 {
+			if self.regs.main.h & 0x0F < h_low {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -199,7 +199,7 @@ extension Cpu {
 		opcodes[0x30] = {
 			// jr FLAG_C == 0 &00
 			let displ = self.bus.read(self.regs.pc)
-			self.regs.pc = self.regs.pc &+ 1
+			self.regs.pc &+= 1
 			if self.regs.main.f & FLAG_C == 0 {
 				self.clock.add(cycles: 5)
 				self.regs.pc = self.addRelative(displacement: displ, toAddress: self.regs.pc)
@@ -208,7 +208,7 @@ extension Cpu {
 		opcodes[0x31] = {
 			// ld sp,&0000
 			self.regs.sp = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
-			self.regs.pc = self.regs.pc &+ 2
+			self.regs.pc &+= 2
 		}
 		opcodes[0x32] = {
 		}
@@ -225,7 +225,7 @@ extension Cpu {
 		opcodes[0x38] = {
 			// jr FLAG_C != 0 &00
 			let displ = self.bus.read(self.regs.pc)
-			self.regs.pc = self.regs.pc &+ 1
+			self.regs.pc &+= 1
 			if self.regs.main.f & FLAG_C != 0 {
 				self.clock.add(cycles: 5)
 				self.regs.pc = self.addRelative(displacement: displ, toAddress: self.regs.pc)
@@ -235,7 +235,7 @@ extension Cpu {
 			// add hl,sp
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.sp
-			let hl_bit_12 = self.regs.main.h & 0b00010000
+			let h_low = self.regs.main.h & 0x0F
 			self.regs.main.hl &+= added_value
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
@@ -243,7 +243,7 @@ extension Cpu {
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0b00010000 != hl_bit_12 {
+			if self.regs.main.h & 0x0F < h_low {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)

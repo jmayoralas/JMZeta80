@@ -258,7 +258,7 @@ class JMZeta80Tests: XCTestCase {
     func test_add_hl_ss() {
         cpu.reset()
         
-        bus.write(0x0000, data: [0x09, 0x09, 0x09])
+        bus.write(0x0000, data: [0x09, 0x09, 0x09, 0x09])
         
         cpu.regs.main.hl = 0x4242
         cpu.regs.main.bc = 0x1111
@@ -267,7 +267,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.hl == 0x5353)
         XCTAssert(cpu.regs.main.f & FLAG_C == 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
-        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H == 0)
         XCTAssert(clock.getCycles() == 4 + 4 + 3)
         
         cpu.regs.main.hl = 0xFFFF
@@ -288,6 +288,15 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
         XCTAssert(cpu.regs.main.f & FLAG_H == 0)
         
-        XCTAssert(clock.getCycles() == 11 + 11 + 11)
+        cpu.regs.main.hl = 0x1818
+        cpu.regs.main.bc = 0x1818
+        cpu.regs.main.f = 0xFF
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.hl == 0x3030)
+        XCTAssert(cpu.regs.main.f & FLAG_C == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+
+        XCTAssert(clock.getCycles() == 11 + 11 + 11 + 11)
     }
 }

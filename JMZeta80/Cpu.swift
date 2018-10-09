@@ -50,7 +50,7 @@ public class Cpu {
         clock.reset()
     }
     
-    // fetches and execute opcode at PC
+    // fetch and execute opcode at PC
     public func executeNextOpcode() {
         regs.ir = _fetchOpcode()
         opcodes[Int(regs.ir)]()
