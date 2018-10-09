@@ -27,6 +27,12 @@ class Clock : SystemClock {
 
 class TestBus: AccessibleBus {
     private var _data = Array<UInt8>(repeating: 0, count: 0x10000)
+ 
+    func clear() {
+        for i in 0...0xFFFF {
+            _data[i] = 0
+        }
+    }
     
     func read(_ address: UInt16) -> UInt8 {
         return _data[Int(address)]

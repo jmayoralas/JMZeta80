@@ -19,14 +19,48 @@ extension Cpu {
 			self.regs.pc &+= 2
 		}
 		opcodes[0x02] = {
+			// ld (main.bc),a
+			self.bus.write(self.regs.main.bc, value: self.regs.main.a)
 		}
 		opcodes[0x03] = {
+			// inc main.bc
+			self.clock.add(cycles: 2)
+			self.regs.main.bc &+= 1
 		}
 		opcodes[0x04] = {
+			// inc main.b
+			if self.regs.main.b == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.b & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.b &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.b & FLAG_S
+			if self.regs.main.b == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x05] = {
+			// dec main.b
+			if self.regs.main.b == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.b & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.b &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.b & FLAG_S
+			if self.regs.main.b == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
 		}
 		opcodes[0x06] = {
+			// ld main.b,n
+			self.regs.main.b = self.bus.read(self.regs.pc)
+			self.regs.pc &+= 1
 		}
 		opcodes[0x07] = {
 		}
@@ -55,14 +89,48 @@ extension Cpu {
 			}
 		}
 		opcodes[0x0A] = {
+			// ld a,(main.bc)
+			self.regs.main.a = self.bus.read(self.regs.main.bc)
 		}
 		opcodes[0x0B] = {
+			// dec main.bc
+			self.clock.add(cycles: 2)
+			self.regs.main.bc &-= 1
 		}
 		opcodes[0x0C] = {
+			// inc main.c
+			if self.regs.main.c == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.c & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.c &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.c & FLAG_S
+			if self.regs.main.c == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x0D] = {
+			// dec main.c
+			if self.regs.main.c == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.c & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.c &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.c & FLAG_S
+			if self.regs.main.c == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
 		}
 		opcodes[0x0E] = {
+			// ld main.c,n
+			self.regs.main.c = self.bus.read(self.regs.pc)
+			self.regs.pc &+= 1
 		}
 		opcodes[0x0F] = {
 		}
@@ -83,14 +151,48 @@ extension Cpu {
 			self.regs.pc &+= 2
 		}
 		opcodes[0x12] = {
+			// ld (main.de),a
+			self.bus.write(self.regs.main.de, value: self.regs.main.a)
 		}
 		opcodes[0x13] = {
+			// inc main.de
+			self.clock.add(cycles: 2)
+			self.regs.main.de &+= 1
 		}
 		opcodes[0x14] = {
+			// inc main.d
+			if self.regs.main.d == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.d & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.d &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.d & FLAG_S
+			if self.regs.main.d == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x15] = {
+			// dec main.d
+			if self.regs.main.d == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.d & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.d &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.d & FLAG_S
+			if self.regs.main.d == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
 		}
 		opcodes[0x16] = {
+			// ld main.d,n
+			self.regs.main.d = self.bus.read(self.regs.pc)
+			self.regs.pc &+= 1
 		}
 		opcodes[0x17] = {
 		}
@@ -120,14 +222,48 @@ extension Cpu {
 			}
 		}
 		opcodes[0x1A] = {
+			// ld a,(main.de)
+			self.regs.main.a = self.bus.read(self.regs.main.de)
 		}
 		opcodes[0x1B] = {
+			// dec main.de
+			self.clock.add(cycles: 2)
+			self.regs.main.de &-= 1
 		}
 		opcodes[0x1C] = {
+			// inc main.e
+			if self.regs.main.e == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.e & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.e &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.e & FLAG_S
+			if self.regs.main.e == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x1D] = {
+			// dec main.e
+			if self.regs.main.e == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.e & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.e &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.e & FLAG_S
+			if self.regs.main.e == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
 		}
 		opcodes[0x1E] = {
+			// ld main.e,n
+			self.regs.main.e = self.bus.read(self.regs.pc)
+			self.regs.pc &+= 1
 		}
 		opcodes[0x1F] = {
 		}
@@ -146,14 +282,51 @@ extension Cpu {
 			self.regs.pc &+= 2
 		}
 		opcodes[0x22] = {
+			// ld (nn),hl
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			self.bus.write(address, value: self.regs.main.l)
+			self.bus.write(address &+ 1, value: self.regs.main.h)
 		}
 		opcodes[0x23] = {
+			// inc main.hl
+			self.clock.add(cycles: 2)
+			self.regs.main.hl &+= 1
 		}
 		opcodes[0x24] = {
+			// inc main.h
+			if self.regs.main.h == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.h & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.h &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.h & FLAG_S
+			if self.regs.main.h == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x25] = {
+			// dec main.h
+			if self.regs.main.h == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.h & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.h &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.h & FLAG_S
+			if self.regs.main.h == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
 		}
 		opcodes[0x26] = {
+			// ld main.h,n
+			self.regs.main.h = self.bus.read(self.regs.pc)
+			self.regs.pc &+= 1
 		}
 		opcodes[0x27] = {
 		}
@@ -185,14 +358,51 @@ extension Cpu {
 			}
 		}
 		opcodes[0x2A] = {
+			// ld hl,(nn)
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			self.regs.main.l = self.bus.read(address)
+			self.regs.main.h = self.bus.read(address &+ 1)
 		}
 		opcodes[0x2B] = {
+			// dec main.hl
+			self.clock.add(cycles: 2)
+			self.regs.main.hl &-= 1
 		}
 		opcodes[0x2C] = {
+			// inc main.l
+			if self.regs.main.l == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.l & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.l &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.l & FLAG_S
+			if self.regs.main.l == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x2D] = {
+			// dec main.l
+			if self.regs.main.l == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.l & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.l &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.l & FLAG_S
+			if self.regs.main.l == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
 		}
 		opcodes[0x2E] = {
+			// ld main.l,n
+			self.regs.main.l = self.bus.read(self.regs.pc)
+			self.regs.pc &+= 1
 		}
 		opcodes[0x2F] = {
 		}
@@ -211,14 +421,55 @@ extension Cpu {
 			self.regs.pc &+= 2
 		}
 		opcodes[0x32] = {
+			// ld (nn),a
+			self.bus.write(self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc)), value: self.regs.main.a)
+			self.regs.pc &+= 2
 		}
 		opcodes[0x33] = {
+			// inc sp
+			self.clock.add(cycles: 2)
+			self.regs.sp &+= 1
 		}
 		opcodes[0x34] = {
+			// inc (hl)
+			var data = self.bus.read(self.regs.main.hl)
+			if data == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if data & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			data &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | data & FLAG_S
+			if data == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
+			self.bus.write(self.regs.main.hl, value: data)
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0x35] = {
+			// dec (hl)
+			var data = self.bus.read(self.regs.main.hl)
+			if data == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if data & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			data &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | data & FLAG_S
+			if data == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
+			self.bus.write(self.regs.main.hl, value: data)
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0x36] = {
+			// ld (hl),n
+			self.bus.write(self.regs.main.hl, value: self.bus.read(self.regs.pc))
+			self.regs.pc &+= 1
 		}
 		opcodes[0x37] = {
 		}
@@ -250,14 +501,49 @@ extension Cpu {
 			}
 		}
 		opcodes[0x3A] = {
+			// ld a,(nn)
+			self.regs.main.a = self.bus.read(self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc)))
+			self.regs.pc &+= 2
 		}
 		opcodes[0x3B] = {
+			// dec sp
+			self.clock.add(cycles: 2)
+			self.regs.sp &-= 1
 		}
 		opcodes[0x3C] = {
+			// inc main.a
+			if self.regs.main.a == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.a & 0x0F == 0xF {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.a &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.a & FLAG_S
+			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x3D] = {
+			// dec main.a
+			if self.regs.main.a == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
+			else { self.regs.main.f.reset(bit: FLAG_PV) }
+			if self.regs.main.a & 0x0F == 0 {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
+			self.regs.main.a &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.a & FLAG_S
+			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			self.regs.main.f.set(bit: FLAG_N)
 		}
 		opcodes[0x3E] = {
+			// ld main.a,n
+			self.regs.main.a = self.bus.read(self.regs.pc)
+			self.regs.pc &+= 1
 		}
 		opcodes[0x3F] = {
 		}
