@@ -361,6 +361,48 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0x27] = {
+			// daa
+			/*
+			The exact process is the following:
+			- if the least significant four bits of A contain a non-BCD digit (i. e. it is greater than 9) or the H flag is set, then $06 is added to the register
+			- then the four most significant bits are checked. If this more significant digit also happens to be greater than 9 or the C flag is set, then $60 is added.
+			- if the second addition was needed, the C flag is set after execution, otherwise it is reset.
+			- the N flag is preserved
+			- P/V is parity
+			- the others flags are altered by definition.
+			*/
+			let a = self.regs.main.a
+			var add: UInt8 = 0
+			var carry = self.regs.main.f & FLAG_C
+			
+			if a.low > 9 || self.regs.main.f & FLAG_H != 0 {
+				add = 0x06
+			}
+			
+			if a > 0x99 || self.regs.main.f & FLAG_C != 0 {
+				add |= 0x60
+				carry = 1
+			}
+			
+			if self.regs.main.f & FLAG_N != 0 {
+				self.regs.main.a -= add
+			} else {
+				self.regs.main.a += add
+			}
+			if self.regs.main.a.parity == 0 {
+				self.regs.main.f.set(bit: FLAG_PV) // even parity
+			} else {
+				self.regs.main.f.reset(bit: FLAG_PV) // odd parity
+			}
+			self.regs.main.f = self.regs.main.f & ~FLAG_C | carry & FLAG_C
+			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.a & FLAG_S
+			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) }
+			else { self.regs.main.f.reset(bit: FLAG_Z) }
+			if self.regs.main.a & 0x0F < a.low {
+				self.regs.main.f.set(bit: FLAG_H)
+			} else {
+				self.regs.main.f.reset(bit: FLAG_H)
+			}
 		}
 		opcodes[0x28] = {
 			// jr FLAG_Z != 0 &00

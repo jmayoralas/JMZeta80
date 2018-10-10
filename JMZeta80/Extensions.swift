@@ -25,6 +25,27 @@ extension UInt8 {
     var oldComp2: Int {
         return self > 0x7F ? Int(Int(self) - 0xFF - 1) : Int(self)
     }
+    
+    var parity: Int {
+        var value = self & 1
+        value += self >> 1 & 1
+        value += self >> 2 & 1
+        value += self >> 3 & 1
+        value += self >> 4 & 1
+        value += self >> 5 & 1
+        value += self >> 6 & 1
+        value += self >> 7 & 1
+        
+        return Int(value) & 1
+    }
+    
+    var high: UInt8 {
+        return self & 0b11110000
+    }
+    
+    var low: UInt8 {
+        return self & 0b00001111
+    }
 }
 
 let FLAG_S: UInt8  = 0b10000000
