@@ -641,388 +641,517 @@ extension Cpu {
 			self.regs.main.f.reset(bit: FLAG_N)
 		}
 		opcodes[0x40] = {
-		// X1
+			// ld main.b,main.b
+			self.regs.main.b = self.regs.main.b
 		}
 		opcodes[0x41] = {
-		// X1
+			// ld main.b,main.c
+			self.regs.main.b = self.regs.main.c
 		}
 		opcodes[0x42] = {
-		// X1
+			// ld main.b,main.d
+			self.regs.main.b = self.regs.main.d
 		}
 		opcodes[0x43] = {
-		// X1
+			// ld main.b,main.e
+			self.regs.main.b = self.regs.main.e
 		}
 		opcodes[0x44] = {
-		// X1
+			// ld main.b,main.h
+			self.regs.main.b = self.regs.main.h
 		}
 		opcodes[0x45] = {
-		// X1
+			// ld main.b,main.l
+			self.regs.main.b = self.regs.main.l
 		}
 		opcodes[0x46] = {
-		// X1
+			// ld main.b,(hl)
+			self.regs.main.b = self.bus.read(self.regs.main.hl)
 		}
 		opcodes[0x47] = {
-		// X1
+			// ld main.b,main.a
+			self.regs.main.b = self.regs.main.a
 		}
 		opcodes[0x48] = {
-		// X1
+			// ld main.c,main.b
+			self.regs.main.c = self.regs.main.b
 		}
 		opcodes[0x49] = {
-		// X1
+			// ld main.c,main.c
+			self.regs.main.c = self.regs.main.c
 		}
 		opcodes[0x4A] = {
-		// X1
+			// ld main.c,main.d
+			self.regs.main.c = self.regs.main.d
 		}
 		opcodes[0x4B] = {
-		// X1
+			// ld main.c,main.e
+			self.regs.main.c = self.regs.main.e
 		}
 		opcodes[0x4C] = {
-		// X1
+			// ld main.c,main.h
+			self.regs.main.c = self.regs.main.h
 		}
 		opcodes[0x4D] = {
-		// X1
+			// ld main.c,main.l
+			self.regs.main.c = self.regs.main.l
 		}
 		opcodes[0x4E] = {
-		// X1
+			// ld main.c,(hl)
+			self.regs.main.c = self.bus.read(self.regs.main.hl)
 		}
 		opcodes[0x4F] = {
-		// X1
+			// ld main.c,main.a
+			self.regs.main.c = self.regs.main.a
 		}
 		opcodes[0x50] = {
-		// X1
+			// ld main.d,main.b
+			self.regs.main.d = self.regs.main.b
 		}
 		opcodes[0x51] = {
-		// X1
+			// ld main.d,main.c
+			self.regs.main.d = self.regs.main.c
 		}
 		opcodes[0x52] = {
-		// X1
+			// ld main.d,main.d
+			self.regs.main.d = self.regs.main.d
 		}
 		opcodes[0x53] = {
-		// X1
+			// ld main.d,main.e
+			self.regs.main.d = self.regs.main.e
 		}
 		opcodes[0x54] = {
-		// X1
+			// ld main.d,main.h
+			self.regs.main.d = self.regs.main.h
 		}
 		opcodes[0x55] = {
-		// X1
+			// ld main.d,main.l
+			self.regs.main.d = self.regs.main.l
 		}
 		opcodes[0x56] = {
-		// X1
+			// ld main.d,(hl)
+			self.regs.main.d = self.bus.read(self.regs.main.hl)
 		}
 		opcodes[0x57] = {
-		// X1
+			// ld main.d,main.a
+			self.regs.main.d = self.regs.main.a
 		}
 		opcodes[0x58] = {
-		// X1
+			// ld main.e,main.b
+			self.regs.main.e = self.regs.main.b
 		}
 		opcodes[0x59] = {
-		// X1
+			// ld main.e,main.c
+			self.regs.main.e = self.regs.main.c
 		}
 		opcodes[0x5A] = {
-		// X1
+			// ld main.e,main.d
+			self.regs.main.e = self.regs.main.d
 		}
 		opcodes[0x5B] = {
-		// X1
+			// ld main.e,main.e
+			self.regs.main.e = self.regs.main.e
 		}
 		opcodes[0x5C] = {
-		// X1
+			// ld main.e,main.h
+			self.regs.main.e = self.regs.main.h
 		}
 		opcodes[0x5D] = {
-		// X1
+			// ld main.e,main.l
+			self.regs.main.e = self.regs.main.l
 		}
 		opcodes[0x5E] = {
-		// X1
+			// ld main.e,(hl)
+			self.regs.main.e = self.bus.read(self.regs.main.hl)
 		}
 		opcodes[0x5F] = {
-		// X1
+			// ld main.e,main.a
+			self.regs.main.e = self.regs.main.a
 		}
 		opcodes[0x60] = {
-		// X1
+			// ld main.h,main.b
+			self.regs.main.h = self.regs.main.b
 		}
 		opcodes[0x61] = {
-		// X1
+			// ld main.h,main.c
+			self.regs.main.h = self.regs.main.c
 		}
 		opcodes[0x62] = {
-		// X1
+			// ld main.h,main.d
+			self.regs.main.h = self.regs.main.d
 		}
 		opcodes[0x63] = {
-		// X1
+			// ld main.h,main.e
+			self.regs.main.h = self.regs.main.e
 		}
 		opcodes[0x64] = {
-		// X1
+			// ld main.h,main.h
+			self.regs.main.h = self.regs.main.h
 		}
 		opcodes[0x65] = {
-		// X1
+			// ld main.h,main.l
+			self.regs.main.h = self.regs.main.l
 		}
 		opcodes[0x66] = {
-		// X1
+			// ld main.h,(hl)
+			self.regs.main.h = self.bus.read(self.regs.main.hl)
 		}
 		opcodes[0x67] = {
-		// X1
+			// ld main.h,main.a
+			self.regs.main.h = self.regs.main.a
 		}
 		opcodes[0x68] = {
-		// X1
+			// ld main.l,main.b
+			self.regs.main.l = self.regs.main.b
 		}
 		opcodes[0x69] = {
-		// X1
+			// ld main.l,main.c
+			self.regs.main.l = self.regs.main.c
 		}
 		opcodes[0x6A] = {
-		// X1
+			// ld main.l,main.d
+			self.regs.main.l = self.regs.main.d
 		}
 		opcodes[0x6B] = {
-		// X1
+			// ld main.l,main.e
+			self.regs.main.l = self.regs.main.e
 		}
 		opcodes[0x6C] = {
-		// X1
+			// ld main.l,main.h
+			self.regs.main.l = self.regs.main.h
 		}
 		opcodes[0x6D] = {
-		// X1
+			// ld main.l,main.l
+			self.regs.main.l = self.regs.main.l
 		}
 		opcodes[0x6E] = {
-		// X1
+			// ld main.l,(hl)
+			self.regs.main.l = self.bus.read(self.regs.main.hl)
 		}
 		opcodes[0x6F] = {
-		// X1
+			// ld main.l,main.a
+			self.regs.main.l = self.regs.main.a
 		}
 		opcodes[0x70] = {
-		// X1
+			// ld (hl),main.b
+			self.bus.write(self.regs.main.hl, value: self.regs.main.b)
 		}
 		opcodes[0x71] = {
-		// X1
+			// ld (hl),main.c
+			self.bus.write(self.regs.main.hl, value: self.regs.main.c)
 		}
 		opcodes[0x72] = {
-		// X1
+			// ld (hl),main.d
+			self.bus.write(self.regs.main.hl, value: self.regs.main.d)
 		}
 		opcodes[0x73] = {
-		// X1
+			// ld (hl),main.e
+			self.bus.write(self.regs.main.hl, value: self.regs.main.e)
 		}
 		opcodes[0x74] = {
-		// X1
+			// ld (hl),main.h
+			self.bus.write(self.regs.main.hl, value: self.regs.main.h)
 		}
 		opcodes[0x75] = {
-		// X1
+			// ld (hl),main.l
+			self.bus.write(self.regs.main.hl, value: self.regs.main.l)
 		}
 		opcodes[0x76] = {
-		// X1
+			// halt
+			self.halted = true
+			self.regs.pc &-= 1
 		}
 		opcodes[0x77] = {
-		// X1
+			// ld (hl),main.a
+			self.bus.write(self.regs.main.hl, value: self.regs.main.a)
 		}
 		opcodes[0x78] = {
-		// X1
+			// ld main.a,main.b
+			self.regs.main.a = self.regs.main.b
 		}
 		opcodes[0x79] = {
-		// X1
+			// ld main.a,main.c
+			self.regs.main.a = self.regs.main.c
 		}
 		opcodes[0x7A] = {
-		// X1
+			// ld main.a,main.d
+			self.regs.main.a = self.regs.main.d
 		}
 		opcodes[0x7B] = {
-		// X1
+			// ld main.a,main.e
+			self.regs.main.a = self.regs.main.e
 		}
 		opcodes[0x7C] = {
-		// X1
+			// ld main.a,main.h
+			self.regs.main.a = self.regs.main.h
 		}
 		opcodes[0x7D] = {
-		// X1
+			// ld main.a,main.l
+			self.regs.main.a = self.regs.main.l
 		}
 		opcodes[0x7E] = {
-		// X1
+			// ld main.a,(hl)
+			self.regs.main.a = self.bus.read(self.regs.main.hl)
 		}
 		opcodes[0x7F] = {
-		// X1
+			// ld main.a,main.a
+			self.regs.main.a = self.regs.main.a
 		}
 		opcodes[0x80] = {
-		// X2
+			// add a,main.b
+			self.regs.main.a = Alu.add(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x81] = {
-		// X2
+			// add a,main.c
+			self.regs.main.a = Alu.add(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x82] = {
-		// X2
+			// add a,main.d
+			self.regs.main.a = Alu.add(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x83] = {
-		// X2
+			// add a,main.e
+			self.regs.main.a = Alu.add(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x84] = {
-		// X2
+			// add a,main.h
+			self.regs.main.a = Alu.add(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x85] = {
-		// X2
+			// add a,main.l
+			self.regs.main.a = Alu.add(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x86] = {
-		// X2
+			// add a,(hl)
+			self.regs.main.a = Alu.add(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0x87] = {
-		// X2
+			// add a,main.a
+			self.regs.main.a = Alu.add(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x88] = {
-		// X2
+			// adc a,main.b
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x89] = {
-		// X2
+			// adc a,main.c
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x8A] = {
-		// X2
+			// adc a,main.d
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x8B] = {
-		// X2
+			// adc a,main.e
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x8C] = {
-		// X2
+			// adc a,main.h
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x8D] = {
-		// X2
+			// adc a,main.l
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x8E] = {
-		// X2
+			// adc a,(hl)
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0x8F] = {
-		// X2
+			// adc a,main.a
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x90] = {
-		// X2
+			// sub a,main.b
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x91] = {
-		// X2
+			// sub a,main.c
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x92] = {
-		// X2
+			// sub a,main.d
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x93] = {
-		// X2
+			// sub a,main.e
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x94] = {
-		// X2
+			// sub a,main.h
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x95] = {
-		// X2
+			// sub a,main.l
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x96] = {
-		// X2
+			// sub a,(hl)
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0x97] = {
-		// X2
+			// sub a,main.a
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x98] = {
-		// X2
+			// sbc a,main.b
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x99] = {
-		// X2
+			// sbc a,main.c
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x9A] = {
-		// X2
+			// sbc a,main.d
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x9B] = {
-		// X2
+			// sbc a,main.e
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x9C] = {
-		// X2
+			// sbc a,main.h
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x9D] = {
-		// X2
+			// sbc a,main.l
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x9E] = {
-		// X2
+			// sbc a,(hl)
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0x9F] = {
-		// X2
+			// sbc a,main.a
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xA0] = {
-		// X2
+			// and a,main.b
+			self.regs.main.a = Alu.and(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xA1] = {
-		// X2
+			// and a,main.c
+			self.regs.main.a = Alu.and(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xA2] = {
-		// X2
+			// and a,main.d
+			self.regs.main.a = Alu.and(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xA3] = {
-		// X2
+			// and a,main.e
+			self.regs.main.a = Alu.and(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xA4] = {
-		// X2
+			// and a,main.h
+			self.regs.main.a = Alu.and(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xA5] = {
-		// X2
+			// and a,main.l
+			self.regs.main.a = Alu.and(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xA6] = {
-		// X2
+			// and a,(hl)
+			self.regs.main.a = Alu.and(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0xA7] = {
-		// X2
+			// and a,main.a
+			self.regs.main.a = Alu.and(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xA8] = {
-		// X2
+			// xor a,main.b
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xA9] = {
-		// X2
+			// xor a,main.c
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xAA] = {
-		// X2
+			// xor a,main.d
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xAB] = {
-		// X2
+			// xor a,main.e
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xAC] = {
-		// X2
+			// xor a,main.h
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xAD] = {
-		// X2
+			// xor a,main.l
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xAE] = {
-		// X2
+			// xor a,(hl)
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0xAF] = {
-		// X2
+			// xor a,main.a
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xB0] = {
-		// X2
+			// or a,main.b
+			self.regs.main.a = Alu.or(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xB1] = {
-		// X2
+			// or a,main.c
+			self.regs.main.a = Alu.or(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xB2] = {
-		// X2
+			// or a,main.d
+			self.regs.main.a = Alu.or(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xB3] = {
-		// X2
+			// or a,main.e
+			self.regs.main.a = Alu.or(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xB4] = {
-		// X2
+			// or a,main.h
+			self.regs.main.a = Alu.or(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xB5] = {
-		// X2
+			// or a,main.l
+			self.regs.main.a = Alu.or(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xB6] = {
-		// X2
+			// or a,(hl)
+			self.regs.main.a = Alu.or(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0xB7] = {
-		// X2
+			// or a,main.a
+			self.regs.main.a = Alu.or(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xB8] = {
-		// X2
+			// cp a,main.b
+			Alu.cp(self.regs.main.a, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xB9] = {
-		// X2
+			// cp a,main.c
+			Alu.cp(self.regs.main.a, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xBA] = {
-		// X2
+			// cp a,main.d
+			Alu.cp(self.regs.main.a, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xBB] = {
-		// X2
+			// cp a,main.e
+			Alu.cp(self.regs.main.a, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xBC] = {
-		// X2
+			// cp a,main.h
+			Alu.cp(self.regs.main.a, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xBD] = {
-		// X2
+			// cp a,main.l
+			Alu.cp(self.regs.main.a, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xBE] = {
-		// X2
+			// cp a,(hl)
+			Alu.cp(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
 		}
 		opcodes[0xBF] = {
-		// X2
+			// cp a,main.a
+			Alu.cp(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xC0] = {
 		// X3
