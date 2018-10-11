@@ -82,15 +82,16 @@ extension Cpu {
 			// add hl,main.bc
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.bc
-			let h_low = self.regs.main.h & 0x0F
+			let pre_h = self.regs.main.h
 			self.regs.main.hl &+= added_value
+			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0x0F < h_low {
+			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -231,15 +232,16 @@ extension Cpu {
 			// add hl,main.de
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.de
-			let h_low = self.regs.main.h & 0x0F
+			let pre_h = self.regs.main.h
 			self.regs.main.hl &+= added_value
+			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0x0F < h_low {
+			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -417,15 +419,16 @@ extension Cpu {
 			// add hl,main.hl
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.hl
-			let h_low = self.regs.main.h & 0x0F
+			let pre_h = self.regs.main.h
 			self.regs.main.hl &+= added_value
+			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0x0F < h_low {
+			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -568,15 +571,16 @@ extension Cpu {
 			// add hl,sp
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.sp
-			let h_low = self.regs.main.h & 0x0F
+			let pre_h = self.regs.main.h
 			self.regs.main.hl &+= added_value
+			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if self.regs.main.h & 0x0F < h_low {
+			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
