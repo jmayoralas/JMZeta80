@@ -30,6 +30,8 @@ public class Cpu {
     var regs = CpuRegs()
     var opcodes = OpcodeTable(repeating: {}, count: 0x100)
     
+    var halted = false
+    
     public init(bus: AccessibleBus, clock: SystemClock) {
         self.bus = DataBus(bus: bus, clock: clock)
         self.clock = clock
@@ -47,6 +49,8 @@ public class Cpu {
         regs.main = RegisterBank()
         regs.alternate = RegisterBank()
         
+        halted = false
+        
         clock.reset()
     }
     
@@ -57,9 +61,16 @@ public class Cpu {
     }
     
     private func _fetchOpcode() -> UInt8 {
-        let opcode = bus.read(regs.pc)
-        regs.pc = regs.pc &+ 1
+        var opcode = bus.read(regs.pc)
+        
+        if halted {
+            opcode = 0x00
+        } else {
+            regs.pc = regs.pc &+ 1
+        }
+        
         clock.add(cycles: 1)
+        
         return opcode
     }
     
