@@ -94,11 +94,7 @@ class Alu {
         flags.reset(bit: FLAG_N)
         flags = flags & ~FLAG_S | a & FLAG_S
         if a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
-        if a.low < old_a.low || ((a.low == old_a.low) && (a.high > old_a.high)) {
-            flags.set(bit: FLAG_H)
-        } else {
-            flags.reset(bit: FLAG_H)
-        }
+        if (old_a.low &+ b.low &+ carry) & 0x10 > 0 { flags.set(bit: FLAG_H) } else { flags.reset(bit: FLAG_H) }
         if a < old_a {
             flags.set(bit: FLAG_C)
         } else {
@@ -120,11 +116,7 @@ class Alu {
         flags.set(bit: FLAG_N)
         flags = flags & ~FLAG_S | a & FLAG_S
         if a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
-        if a.low > old_a.low || ((a.low == old_a.low) && (a.high < old_a.high)) {
-            flags.set(bit: FLAG_H)
-        } else {
-            flags.reset(bit: FLAG_H)
-        }
+        if (old_a.low &- b.low &- carry) & 0x10 > 0 { flags.set(bit: FLAG_H) } else { flags.reset(bit: FLAG_H) }
         if a > old_a {
             flags.set(bit: FLAG_C)
         } else {

@@ -788,7 +788,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.a == 0x7F)
         XCTAssert(cpu.regs.main.f & FLAG_C == 0)
         XCTAssert(cpu.regs.main.f & FLAG_S == 0)
-        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H == 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
         XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
         XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
@@ -797,7 +797,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.b = 0x02
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.main.a == 0x00)
-        XCTAssert(cpu.regs.main.f & FLAG_C == 1)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
         XCTAssert(cpu.regs.main.f & FLAG_S == 0)
         XCTAssert(cpu.regs.main.f & FLAG_H != 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
