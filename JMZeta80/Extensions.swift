@@ -8,6 +8,16 @@
 
 import Foundation
 
+extension UInt16 {
+    var high: UInt8 {
+        return UInt8(self >> 8)
+    }
+    
+    var low: UInt8 {
+        return UInt8(self & 0x00FF)
+    }
+}
+
 extension UInt8 {
     var comp2: Int {
         let mask: UInt8 = 0x80

@@ -89,6 +89,10 @@ class JMZeta80Tests: XCTestCase {
         let a: UInt8 = 0xFF
         
         XCTAssert(a.comp2 == a.oldComp2, String.init(format: "new = %d - old = %d", a.comp2, a.oldComp2))
+        
+        let b: UInt16 = 0x1122
+        XCTAssert(b.high == 0x11)
+        XCTAssert(b.low == 0x22)
     }
 
     func testBus() {
@@ -277,7 +281,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.hl == 0x0000)
         XCTAssert(cpu.regs.main.f & FLAG_C != 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
-        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H == 0)
         
         cpu.regs.main.hl = 0x1EFF
         cpu.regs.main.bc = 0x0002
@@ -304,7 +308,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.hl == 0x1100)
         XCTAssert(cpu.regs.main.f & FLAG_C == 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
-        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H == 0)
 
         XCTAssert(clock.getCycles() == 11 + 11 + 11 + 11 + 11)
     }

@@ -83,15 +83,15 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.bc
 			let pre_h = self.regs.main.h
+			let b = added_value.high
 			self.regs.main.hl &+= added_value
-			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
+			if (pre_h.low + b.low) & 0x10 > 0 {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -233,15 +233,15 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.de
 			let pre_h = self.regs.main.h
+			let b = added_value.high
 			self.regs.main.hl &+= added_value
-			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
+			if (pre_h.low + b.low) & 0x10 > 0 {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -420,15 +420,15 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.main.hl
 			let pre_h = self.regs.main.h
+			let b = added_value.high
 			self.regs.main.hl &+= added_value
-			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
+			if (pre_h.low + b.low) & 0x10 > 0 {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
@@ -572,15 +572,15 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 			let added_value = self.regs.sp
 			let pre_h = self.regs.main.h
+			let b = added_value.high
 			self.regs.main.hl &+= added_value
-			let post_h = self.regs.main.h
 			self.regs.main.f.reset(bit: FLAG_N)
 			if self.regs.main.hl < added_value {
 				self.regs.main.f.set(bit: FLAG_C)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_C)
 			}
-			if post_h.low < pre_h.low || ((post_h.low == pre_h.low) && (post_h.high > pre_h.high)) {
+			if (pre_h.low + b.low) & 0x10 > 0 {
 				self.regs.main.f.set(bit: FLAG_H)
 			} else {
 				self.regs.main.f.reset(bit: FLAG_H)
