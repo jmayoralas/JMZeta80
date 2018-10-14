@@ -852,4 +852,112 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssert(clock.getCycles() == 4 + 4 + 4)
     }
+    
+    func test_ret_cc() {
+        cpu.reset()
+        
+        // ret nz
+        bus.write(0x0000, data: [0xC0, 0xC0])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.set(bit: FLAG_Z)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.reset(bit: FLAG_Z)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        // ret z
+        bus.write(0x0000, data: [0xC8, 0xC8])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.reset(bit: FLAG_Z)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.set(bit: FLAG_Z)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        // ret nc
+        bus.write(0x0000, data: [0xD0, 0xD0])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.set(bit: FLAG_C)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.reset(bit: FLAG_C)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        // ret c
+        bus.write(0x0000, data: [0xD8, 0xD8])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.reset(bit: FLAG_C)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.set(bit: FLAG_C)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        // ret po
+        bus.write(0x0000, data: [0xE0, 0xE0])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.set(bit: FLAG_PV)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.reset(bit: FLAG_PV)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        // ret pe
+        bus.write(0x0000, data: [0xE8, 0xE8])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.reset(bit: FLAG_PV)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.set(bit: FLAG_PV)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        // ret p
+        bus.write(0x0000, data: [0xF0, 0xF0])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.set(bit: FLAG_N)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.reset(bit: FLAG_N)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        // ret m
+        bus.write(0x0000, data: [0xF8, 0xF8])
+        bus.write(0xFFFD, data: [0x00, 0x80])
+        cpu.regs.pc = 0x0000
+        cpu.regs.sp = 0xFFFD
+        cpu.regs.main.f.reset(bit: FLAG_N)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0001)
+        cpu.regs.main.f.set(bit: FLAG_N)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x8000)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+    }
 }

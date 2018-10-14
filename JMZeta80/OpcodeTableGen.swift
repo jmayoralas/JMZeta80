@@ -1154,196 +1154,228 @@ extension Cpu {
 			Alu.cp(self.regs.main.a, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xC0] = {
-		// X3
+			// ret FLAG_Z == 0
+			if self.regs.main.f & FLAG_Z == 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xC1] = {
-		// X3
+			// error y = 0 z = 1
 		}
 		opcodes[0xC2] = {
-		// X3
+			// error y = 0 z = 2
 		}
 		opcodes[0xC3] = {
-		// X3
+			// error y = 0 z = 3
 		}
 		opcodes[0xC4] = {
-		// X3
+			// error y = 0 z = 4
 		}
 		opcodes[0xC5] = {
-		// X3
+			// error y = 0 z = 5
 		}
 		opcodes[0xC6] = {
-		// X3
+			// error y = 0 z = 6
 		}
 		opcodes[0xC7] = {
-		// X3
+			// error y = 0 z = 7
 		}
 		opcodes[0xC8] = {
-		// X3
+			// ret FLAG_Z != 0
+			if self.regs.main.f & FLAG_Z != 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xC9] = {
-		// X3
+			// error y = 1 z = 1
 		}
 		opcodes[0xCA] = {
-		// X3
+			// error y = 1 z = 2
 		}
 		opcodes[0xCB] = {
-		// X3
+			// error y = 1 z = 3
 		}
 		opcodes[0xCC] = {
-		// X3
+			// error y = 1 z = 4
 		}
 		opcodes[0xCD] = {
-		// X3
+			// error y = 1 z = 5
 		}
 		opcodes[0xCE] = {
-		// X3
+			// error y = 1 z = 6
 		}
 		opcodes[0xCF] = {
-		// X3
+			// error y = 1 z = 7
 		}
 		opcodes[0xD0] = {
-		// X3
+			// ret FLAG_C == 0
+			if self.regs.main.f & FLAG_C == 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xD1] = {
-		// X3
+			// error y = 2 z = 1
 		}
 		opcodes[0xD2] = {
-		// X3
+			// error y = 2 z = 2
 		}
 		opcodes[0xD3] = {
-		// X3
+			// error y = 2 z = 3
 		}
 		opcodes[0xD4] = {
-		// X3
+			// error y = 2 z = 4
 		}
 		opcodes[0xD5] = {
-		// X3
+			// error y = 2 z = 5
 		}
 		opcodes[0xD6] = {
-		// X3
+			// error y = 2 z = 6
 		}
 		opcodes[0xD7] = {
-		// X3
+			// error y = 2 z = 7
 		}
 		opcodes[0xD8] = {
-		// X3
+			// ret FLAG_C != 0
+			if self.regs.main.f & FLAG_C != 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xD9] = {
-		// X3
+			// error y = 3 z = 1
 		}
 		opcodes[0xDA] = {
-		// X3
+			// error y = 3 z = 2
 		}
 		opcodes[0xDB] = {
-		// X3
+			// error y = 3 z = 3
 		}
 		opcodes[0xDC] = {
-		// X3
+			// error y = 3 z = 4
 		}
 		opcodes[0xDD] = {
-		// X3
+			// error y = 3 z = 5
 		}
 		opcodes[0xDE] = {
-		// X3
+			// error y = 3 z = 6
 		}
 		opcodes[0xDF] = {
-		// X3
+			// error y = 3 z = 7
 		}
 		opcodes[0xE0] = {
-		// X3
+			// ret FLAG_PV == 0
+			if self.regs.main.f & FLAG_PV == 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xE1] = {
-		// X3
+			// error y = 4 z = 1
 		}
 		opcodes[0xE2] = {
-		// X3
+			// error y = 4 z = 2
 		}
 		opcodes[0xE3] = {
-		// X3
+			// error y = 4 z = 3
 		}
 		opcodes[0xE4] = {
-		// X3
+			// error y = 4 z = 4
 		}
 		opcodes[0xE5] = {
-		// X3
+			// error y = 4 z = 5
 		}
 		opcodes[0xE6] = {
-		// X3
+			// error y = 4 z = 6
 		}
 		opcodes[0xE7] = {
-		// X3
+			// error y = 4 z = 7
 		}
 		opcodes[0xE8] = {
-		// X3
+			// ret FLAG_PV != 0
+			if self.regs.main.f & FLAG_PV != 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xE9] = {
-		// X3
+			// error y = 5 z = 1
 		}
 		opcodes[0xEA] = {
-		// X3
+			// error y = 5 z = 2
 		}
 		opcodes[0xEB] = {
-		// X3
+			// error y = 5 z = 3
 		}
 		opcodes[0xEC] = {
-		// X3
+			// error y = 5 z = 4
 		}
 		opcodes[0xED] = {
-		// X3
+			// error y = 5 z = 5
 		}
 		opcodes[0xEE] = {
-		// X3
+			// error y = 5 z = 6
 		}
 		opcodes[0xEF] = {
-		// X3
+			// error y = 5 z = 7
 		}
 		opcodes[0xF0] = {
-		// X3
+			// ret FLAG_N == 0
+			if self.regs.main.f & FLAG_N == 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xF1] = {
-		// X3
+			// error y = 6 z = 1
 		}
 		opcodes[0xF2] = {
-		// X3
+			// error y = 6 z = 2
 		}
 		opcodes[0xF3] = {
-		// X3
+			// error y = 6 z = 3
 		}
 		opcodes[0xF4] = {
-		// X3
+			// error y = 6 z = 4
 		}
 		opcodes[0xF5] = {
-		// X3
+			// error y = 6 z = 5
 		}
 		opcodes[0xF6] = {
-		// X3
+			// error y = 6 z = 6
 		}
 		opcodes[0xF7] = {
-		// X3
+			// error y = 6 z = 7
 		}
 		opcodes[0xF8] = {
-		// X3
+			// ret FLAG_N != 0
+			if self.regs.main.f & FLAG_N != 0 {
+				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+				self.regs.sp &+= 2
+			}
 		}
 		opcodes[0xF9] = {
-		// X3
+			// error y = 7 z = 1
 		}
 		opcodes[0xFA] = {
-		// X3
+			// error y = 7 z = 2
 		}
 		opcodes[0xFB] = {
-		// X3
+			// error y = 7 z = 3
 		}
 		opcodes[0xFC] = {
-		// X3
+			// error y = 7 z = 4
 		}
 		opcodes[0xFD] = {
-		// X3
+			// error y = 7 z = 5
 		}
 		opcodes[0xFE] = {
-		// X3
+			// error y = 7 z = 6
 		}
 		opcodes[0xFF] = {
-		// X3
+			// error y = 7 z = 7
 		}
 	}
 }
