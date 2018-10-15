@@ -35,8 +35,8 @@ class DataBus {
         return _bus.ioRead(address)
     }
     
-    func ioWrite(_ address: UInt16, value: UInt8) {
+    func ioWrite(_ address: UInt16) {
         _clock.add(cycles: 4)
-        _bus.ioWrite(address, value: value)
+        _bus.ioWrite(address)
     }
 }
