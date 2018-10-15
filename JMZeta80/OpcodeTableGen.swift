@@ -1159,15 +1159,26 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xC1] = {
-			// error y = 0 z = 1
+			// pop main.bc
+			let value = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.regs.main.bc = value
 		}
 		opcodes[0xC2] = {
-			// error y = 0 z = 2
+			// jp FLAG_Z == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_Z == 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xC3] = {
-			// error y = 0 z = 3
+			// jp nn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
 		}
 		opcodes[0xC4] = {
 			// error y = 0 z = 4
@@ -1187,15 +1198,24 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xC9] = {
-			// error y = 1 z = 1
+			// ret
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
 		}
 		opcodes[0xCA] = {
-			// error y = 1 z = 2
+			// jp FLAG_Z != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_Z != 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xCB] = {
-			// error y = 1 z = 3
+			 // CB prefix
 		}
 		opcodes[0xCC] = {
 			// error y = 1 z = 4
@@ -1215,15 +1235,27 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xD1] = {
-			// error y = 2 z = 1
+			// pop main.de
+			let value = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.regs.main.de = value
 		}
 		opcodes[0xD2] = {
-			// error y = 2 z = 2
+			// jp FLAG_C == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_C == 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xD3] = {
-			// error y = 2 z = 3
+			// out (n),a
+			self.bus.ioWrite(self.buildAddress(self.regs.main.a, self.bus.read(self.regs.pc)))
+			self.regs.pc &+= 1
 		}
 		opcodes[0xD4] = {
 			// error y = 2 z = 4
@@ -1243,15 +1275,33 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xD9] = {
-			// error y = 3 z = 1
+			// exx
+			let bc_ = self.regs.alternate.bc
+			let de_ = self.regs.alternate.de
+			let hl_ = self.regs.alternate.hl
+			self.regs.alternate.bc = self.regs.main.bc
+			self.regs.alternate.de = self.regs.main.de
+			self.regs.alternate.hl = self.regs.main.hl
+			self.regs.main.bc = bc_
+			self.regs.main.de = de_
+			self.regs.main.hl = hl_
 		}
 		opcodes[0xDA] = {
-			// error y = 3 z = 2
+			// jp FLAG_C != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_C != 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xDB] = {
-			// error y = 3 z = 3
+			// in a,(n)
+			self.regs.main.a = self.bus.ioRead(self.buildAddress(self.regs.main.a, self.bus.read(self.regs.pc)))
+			self.regs.pc &+= 1
 		}
 		opcodes[0xDC] = {
 			// error y = 3 z = 4
@@ -1271,15 +1321,30 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xE1] = {
-			// error y = 4 z = 1
+			// pop main.hl
+			let value = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.regs.main.hl = value
 		}
 		opcodes[0xE2] = {
-			// error y = 4 z = 2
+			// jp FLAG_PV == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_PV == 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xE3] = {
-			// error y = 4 z = 3
+			// ex (sp),hl
+			let hl_ = self.regs.main.hl
+			self.regs.main.hl = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.bus.write(self.regs.sp, value: hl_.low)
+			self.bus.write(self.regs.sp &+ 1, value: hl_.high)
+			self.clock.add(cycles: 3)
 		}
 		opcodes[0xE4] = {
 			// error y = 4 z = 4
@@ -1299,15 +1364,26 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xE9] = {
-			// error y = 5 z = 1
+			// jp (hl)
+			self.regs.pc = self.regs.main.hl
 		}
 		opcodes[0xEA] = {
-			// error y = 5 z = 2
+			// jp FLAG_PV != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_PV != 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xEB] = {
-			// error y = 5 z = 3
+			// ex de,hl
+			let hl_ = self.regs.main.hl
+			self.regs.main.hl = self.regs.main.de
+			self.regs.main.de = hl_
 		}
 		opcodes[0xEC] = {
 			// error y = 5 z = 4
@@ -1327,15 +1403,25 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xF1] = {
-			// error y = 6 z = 1
+			// pop main.af
+			let value = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.regs.main.af = value
 		}
 		opcodes[0xF2] = {
-			// error y = 6 z = 2
+			// jp FLAG_N == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_N == 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xF3] = {
-			// error y = 6 z = 3
+			// di
 		}
 		opcodes[0xF4] = {
 			// error y = 6 z = 4
@@ -1355,15 +1441,24 @@ extension Cpu {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xF9] = {
-			// error y = 7 z = 1
+			// ld sp,hl
+			self.regs.sp = self.regs.main.hl
+			self.clock.add(cycles: 2)
 		}
 		opcodes[0xFA] = {
-			// error y = 7 z = 2
+			// jp FLAG_N != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			if self.regs.main.f & FLAG_N != 0 {
+				self.regs.pc = address
+			} else {
+			self.regs.pc &+= 2
+			}
 		}
 		opcodes[0xFB] = {
-			// error y = 7 z = 3
+			// ei
 		}
 		opcodes[0xFC] = {
 			// error y = 7 z = 4
