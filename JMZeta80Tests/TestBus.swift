@@ -27,6 +27,7 @@ class Clock : SystemClock {
 
 class TestBus: AccessibleBus {
     private var _data = Array<UInt8>(repeating: 0, count: 0x10000)
+    private var _io_buffer = Array<UInt8>(repeating: 0xFF, count: 0x100)
  
     func clear() {
         for i in 0...0xFFFF {
@@ -42,14 +43,20 @@ class TestBus: AccessibleBus {
         _data[Int(address)] = value
     }
     
-    func ioRead(_ address: UInt16) -> UInt8 { return 0xFF }
-    func ioWrite(_ address: UInt16, value: UInt8) {}
+    func ioRead(_ address: UInt16) -> UInt8 {
+        return _io_buffer[Int(address & 0x00FF)]
+        
+    }
+    
+    func ioWrite(_ address: UInt16) {
+        _io_buffer[Int(address & 0x00FF)] = UInt8(address >> 8)
+    }
     
     func write(_ address: UInt16, data: [UInt8]) {
         var l_address = address
         for byte in data {
             write(l_address, value: byte)
-            l_address += 1
+            l_address &+= 1
         }
     }
 }
