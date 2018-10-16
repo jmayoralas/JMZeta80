@@ -60,7 +60,9 @@ extension UInt8 {
 
 let FLAG_S: UInt8  = 0b10000000
 let FLAG_Z: UInt8  = 0b01000000
+let FLAG_5: UInt8  = 0b00100000
 let FLAG_H: UInt8  = 0b00010000
+let FLAG_3: UInt8  = 0b00001000
 let FLAG_PV: UInt8 = 0b00000100
 let FLAG_N: UInt8  = 0b00000010
 let FLAG_C: UInt8  = 0b00000001

@@ -102,6 +102,9 @@ public class Cpu {
             return
         }
         
+        // save flags register before execute the opcode
+        let fBackup = self.regs.main.f
+        
         if !ackInt() {
             interrupt_status.pending_execution = false
             
@@ -111,6 +114,10 @@ public class Cpu {
             } while id_opcode_table != table_NONE
         }
         
+        // test for flags changes and update q register acordingly
+        if id_opcode_table != table_NONE || (id_opcode_table == table_NONE && self.regs.ir != 0x37 && self.regs.ir != 0x3F) {
+            self.regs.q = fBackup != self.regs.main.f ? 1 : 0
+        }
     }
     
     private func _fetchOpcode() -> UInt8 {

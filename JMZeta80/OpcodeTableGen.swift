@@ -486,6 +486,8 @@ extension Cpu {
 			self.regs.main.a = ~self.regs.main.a
 			self.regs.main.f.set(bit: FLAG_H)
 			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
 		}
 		opcodes[0x30] = {
 			// jr FLAG_C == 0 &00
@@ -554,9 +556,13 @@ extension Cpu {
 		}
 		opcodes[0x37] = {
 			// scf
+			let data = self.regs.q == 1 ? self.regs.main.a : self.regs.main.a | self.regs.main.f
 			self.regs.main.f.set(bit: FLAG_C)
 			self.regs.main.f.reset(bit: FLAG_H)
 			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | data & FLAG_5
+			self.regs.q = 1
 		}
 		opcodes[0x38] = {
 			// jr FLAG_C != 0 &00
@@ -633,12 +639,16 @@ extension Cpu {
 		}
 		opcodes[0x3F] = {
 			// ccf
+			let data = self.regs.q == 1 ? self.regs.main.a : self.regs.main.a | self.regs.main.f
 			let carry = self.regs.main.f & FLAG_C
 			if carry != 0 { self.regs.main.f.reset(bit: FLAG_C) }
 			else { self.regs.main.f.set(bit: FLAG_C) }
 			self.regs.main.f.reset(bit: FLAG_H)
 			self.regs.main.f |= carry << 4
 			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | data & FLAG_5
+			self.regs.q = 1
 		}
 		opcodes[0x40] = {
 			// ld main.b,main.b
