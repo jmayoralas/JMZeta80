@@ -1422,6 +1422,8 @@ extension Cpu {
 		}
 		opcodes[0xF3] = {
 			// di
+			self.interrupt_status.IFF1 = false
+			self.interrupt_status.IFF2 = false
 		}
 		opcodes[0xF4] = {
 			// error y = 6 z = 4
@@ -1459,6 +1461,9 @@ extension Cpu {
 		}
 		opcodes[0xFB] = {
 			// ei
+			self.interrupt_status.IFF1 = true
+			self.interrupt_status.IFF2 = true
+			self.interrupt_status.pending_execution = true
 		}
 		opcodes[0xFC] = {
 			// error y = 7 z = 4

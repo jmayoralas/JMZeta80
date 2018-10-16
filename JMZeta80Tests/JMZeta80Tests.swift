@@ -1175,10 +1175,32 @@ class JMZeta80Tests: XCTestCase {
     }
     
     func test_di() {
-        XCTFail()
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xF3])
+        cpu.interrupt_status.IFF1 = true
+        cpu.interrupt_status.IFF2 = true
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.interrupt_status.IFF1 == false)
+        XCTAssert(cpu.interrupt_status.IFF2 == false)
+        XCTAssert(cpu.interrupt_status.pending_execution == false)
+        
+        XCTAssert(clock.getCycles() == 4)
     }
     
     func test_ei() {
-        XCTFail()
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xFB, 0x00])
+        cpu.interrupt_status.IFF1 = false
+        cpu.interrupt_status.IFF2 = false
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.interrupt_status.IFF1 == true)
+        XCTAssert(cpu.interrupt_status.IFF2 == true)
+        XCTAssert(cpu.interrupt_status.pending_execution == true)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.interrupt_status.pending_execution == false)
+        
+        XCTAssert(clock.getCycles() == 8)
     }
 }
