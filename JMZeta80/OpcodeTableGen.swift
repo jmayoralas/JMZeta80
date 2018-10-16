@@ -1181,7 +1181,12 @@ extension Cpu {
 			self.regs.pc = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
 		}
 		opcodes[0xC4] = {
-			// error y = 0 z = 4
+			// call FLAG_Z == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_Z == 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xC5] = {
 			// error y = 0 z = 5
@@ -1218,7 +1223,12 @@ extension Cpu {
 			 // CB prefix
 		}
 		opcodes[0xCC] = {
-			// error y = 1 z = 4
+			// call FLAG_Z != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_Z != 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xCD] = {
 			// error y = 1 z = 5
@@ -1258,7 +1268,12 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xD4] = {
-			// error y = 2 z = 4
+			// call FLAG_C == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_C == 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xD5] = {
 			// error y = 2 z = 5
@@ -1304,7 +1319,12 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xDC] = {
-			// error y = 3 z = 4
+			// call FLAG_C != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_C != 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xDD] = {
 			// error y = 3 z = 5
@@ -1347,7 +1367,12 @@ extension Cpu {
 			self.clock.add(cycles: 3)
 		}
 		opcodes[0xE4] = {
-			// error y = 4 z = 4
+			// call FLAG_PV == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_PV == 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xE5] = {
 			// error y = 4 z = 5
@@ -1386,7 +1411,12 @@ extension Cpu {
 			self.regs.main.de = hl_
 		}
 		opcodes[0xEC] = {
-			// error y = 5 z = 4
+			// call FLAG_PV != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_PV != 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xED] = {
 			// error y = 5 z = 5
@@ -1426,7 +1456,12 @@ extension Cpu {
 			self.interrupt_status.IFF2 = false
 		}
 		opcodes[0xF4] = {
-			// error y = 6 z = 4
+			// call FLAG_S == 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_S == 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xF5] = {
 			// error y = 6 z = 5
@@ -1466,7 +1501,12 @@ extension Cpu {
 			self.interrupt_status.pending_execution = true
 		}
 		opcodes[0xFC] = {
-			// error y = 7 z = 4
+			// call FLAG_S != 0,nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			if self.regs.main.f & FLAG_S != 0 {
+				self.call(address)
+			}
 		}
 		opcodes[0xFD] = {
 			// error y = 7 z = 5

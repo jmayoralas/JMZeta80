@@ -1203,4 +1203,26 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssert(clock.getCycles() == 8)
     }
+    
+    func test_call() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xF4, 0x00, 0x80, 0xF4, 0x00, 0x90])
+        bus.write(0x9000, data: [0xC9])
+        cpu.regs.sp = 0xFFFF
+        cpu.regs.main.f.set(bit: FLAG_S)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0003)
+        cpu.regs.main.f.reset(bit: FLAG_S)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x9000)
+        XCTAssert(bus.read(cpu.regs.sp) == 0x06)
+        XCTAssert(bus.read(cpu.regs.sp &+ 1) == 0x00)
+        XCTAssert(cpu.regs.sp == 0xFFFD)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0006)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        XCTAssert(clock.getCycles() == 37)
+    }
 }
