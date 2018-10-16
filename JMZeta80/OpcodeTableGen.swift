@@ -1189,7 +1189,12 @@ extension Cpu {
 			}
 		}
 		opcodes[0xC5] = {
-			// error y = 0 z = 5
+			// push main.bc
+			self.clock.add(cycles: 1)
+			let value = self.regs.main.bc
+			self.bus.write(self.regs.sp &- 1, value: value.high)
+			self.bus.write(self.regs.sp &- 2, value: value.low)
+			self.regs.sp &-= 2
 		}
 		opcodes[0xC6] = {
 			// error y = 0 z = 6
@@ -1231,7 +1236,10 @@ extension Cpu {
 			}
 		}
 		opcodes[0xCD] = {
-			// error y = 1 z = 5
+			// call nn
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.pc &+= 2
+			self.call(address)
 		}
 		opcodes[0xCE] = {
 			// error y = 1 z = 6
@@ -1276,7 +1284,12 @@ extension Cpu {
 			}
 		}
 		opcodes[0xD5] = {
-			// error y = 2 z = 5
+			// push main.de
+			self.clock.add(cycles: 1)
+			let value = self.regs.main.de
+			self.bus.write(self.regs.sp &- 1, value: value.high)
+			self.bus.write(self.regs.sp &- 2, value: value.low)
+			self.regs.sp &-= 2
 		}
 		opcodes[0xD6] = {
 			// error y = 2 z = 6
@@ -1327,7 +1340,7 @@ extension Cpu {
 			}
 		}
 		opcodes[0xDD] = {
-			// error y = 3 z = 5
+			 // DD prefix
 		}
 		opcodes[0xDE] = {
 			// error y = 3 z = 6
@@ -1375,7 +1388,12 @@ extension Cpu {
 			}
 		}
 		opcodes[0xE5] = {
-			// error y = 4 z = 5
+			// push main.hl
+			self.clock.add(cycles: 1)
+			let value = self.regs.main.hl
+			self.bus.write(self.regs.sp &- 1, value: value.high)
+			self.bus.write(self.regs.sp &- 2, value: value.low)
+			self.regs.sp &-= 2
 		}
 		opcodes[0xE6] = {
 			// error y = 4 z = 6
@@ -1419,7 +1437,7 @@ extension Cpu {
 			}
 		}
 		opcodes[0xED] = {
-			// error y = 5 z = 5
+			 // ED prefix
 		}
 		opcodes[0xEE] = {
 			// error y = 5 z = 6
@@ -1464,7 +1482,12 @@ extension Cpu {
 			}
 		}
 		opcodes[0xF5] = {
-			// error y = 6 z = 5
+			// push main.af
+			self.clock.add(cycles: 1)
+			let value = self.regs.main.af
+			self.bus.write(self.regs.sp &- 1, value: value.high)
+			self.bus.write(self.regs.sp &- 2, value: value.low)
+			self.regs.sp &-= 2
 		}
 		opcodes[0xF6] = {
 			// error y = 6 z = 6
@@ -1509,7 +1532,7 @@ extension Cpu {
 			}
 		}
 		opcodes[0xFD] = {
-			// error y = 7 z = 5
+			 // FD prefix
 		}
 		opcodes[0xFE] = {
 			// error y = 7 z = 6

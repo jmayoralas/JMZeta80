@@ -1204,7 +1204,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(clock.getCycles() == 8)
     }
     
-    func test_call() {
+    func test_call_cc() {
         cpu.reset()
         
         bus.write(0x0000, data: [0xF4, 0x00, 0x80, 0xF4, 0x00, 0x90])
@@ -1224,5 +1224,38 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.sp == 0xFFFF)
         
         XCTAssert(clock.getCycles() == 37)
+    }
+    
+    func test_call() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xCD, 0x00, 0x90])
+        bus.write(0x9000, data: [0xC9])
+        cpu.regs.sp = 0xFFFF
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x9000)
+        XCTAssert(bus.read(cpu.regs.sp) == 0x03)
+        XCTAssert(bus.read(cpu.regs.sp &+ 1) == 0x00)
+        XCTAssert(cpu.regs.sp == 0xFFFD)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0003)
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        
+        XCTAssert(clock.getCycles() == 27)
+    }
+    
+    func test_push_rp() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xC5, 0xD1])
+        cpu.regs.main.bc = 0x1122
+        cpu.regs.sp = 0xFFFF
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.sp == 0xFFFD)
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.sp == 0xFFFF)
+        XCTAssert(cpu.regs.main.de == 0x1122)
+        
+        XCTAssert(clock.getCycles() == 21)
     }
 }
