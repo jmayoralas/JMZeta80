@@ -1202,7 +1202,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xC7] = {
-			// error y = 0 z = 7
+			// rst 0x0000
+			self.call(0x0000)
 		}
 		opcodes[0xC8] = {
 			// ret FLAG_Z != 0
@@ -1249,7 +1250,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xCF] = {
-			// error y = 1 z = 7
+			// rst 0x0008
+			self.call(0x0008)
 		}
 		opcodes[0xD0] = {
 			// ret FLAG_C == 0
@@ -1301,7 +1303,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xD7] = {
-			// error y = 2 z = 7
+			// rst 0x0010
+			self.call(0x0010)
 		}
 		opcodes[0xD8] = {
 			// ret FLAG_C != 0
@@ -1354,7 +1357,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xDF] = {
-			// error y = 3 z = 7
+			// rst 0x0018
+			self.call(0x0018)
 		}
 		opcodes[0xE0] = {
 			// ret FLAG_PV == 0
@@ -1409,7 +1413,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xE7] = {
-			// error y = 4 z = 7
+			// rst 0x0020
+			self.call(0x0020)
 		}
 		opcodes[0xE8] = {
 			// ret FLAG_PV != 0
@@ -1455,7 +1460,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xEF] = {
-			// error y = 5 z = 7
+			// rst 0x0028
+			self.call(0x0028)
 		}
 		opcodes[0xF0] = {
 			// ret FLAG_S == 0
@@ -1507,7 +1513,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xF7] = {
-			// error y = 6 z = 7
+			// rst 0x0030
+			self.call(0x0030)
 		}
 		opcodes[0xF8] = {
 			// ret FLAG_S != 0
@@ -1554,7 +1561,8 @@ extension Cpu {
 			self.regs.pc &+= 1
 		}
 		opcodes[0xFF] = {
-			// error y = 7 z = 7
+			// rst 0x0038
+			self.call(0x0038)
 		}
 	}
 }
