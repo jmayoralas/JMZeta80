@@ -944,10 +944,10 @@ class JMZeta80Tests: XCTestCase {
         bus.write(0xFFFD, data: [0x00, 0x80])
         cpu.regs.pc = 0x0000
         cpu.regs.sp = 0xFFFD
-        cpu.regs.main.f.set(bit: FLAG_N)
+        cpu.regs.main.f.set(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x0001)
-        cpu.regs.main.f.reset(bit: FLAG_N)
+        cpu.regs.main.f.reset(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x8000)
         XCTAssert(cpu.regs.sp == 0xFFFF)
@@ -957,10 +957,10 @@ class JMZeta80Tests: XCTestCase {
         bus.write(0xFFFD, data: [0x00, 0x80])
         cpu.regs.pc = 0x0000
         cpu.regs.sp = 0xFFFD
-        cpu.regs.main.f.reset(bit: FLAG_N)
+        cpu.regs.main.f.reset(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x0001)
-        cpu.regs.main.f.set(bit: FLAG_N)
+        cpu.regs.main.f.set(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x8000)
         XCTAssert(cpu.regs.sp == 0xFFFF)
@@ -1098,20 +1098,20 @@ class JMZeta80Tests: XCTestCase {
         // jp p
         bus.write(0x0000, data: [0xF2, 0x00, 0x80, 0xF2, 0x00, 0x80])
         cpu.regs.pc = 0x0000
-        cpu.regs.main.f.set(bit: FLAG_N)
+        cpu.regs.main.f.set(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x0003)
-        cpu.regs.main.f.reset(bit: FLAG_N)
+        cpu.regs.main.f.reset(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x8000)
         
         // jp m
         bus.write(0x0000, data: [0xFA, 0x00, 0x80, 0xFA, 0x00, 0x80])
         cpu.regs.pc = 0x0000
-        cpu.regs.main.f.reset(bit: FLAG_N)
+        cpu.regs.main.f.reset(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x0003)
-        cpu.regs.main.f.set(bit: FLAG_N)
+        cpu.regs.main.f.set(bit: FLAG_S)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.pc == 0x8000)
         
