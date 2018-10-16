@@ -14,6 +14,7 @@ import Foundation
 class DataBus {
     let _bus: AccessibleBus
     let _clock: SystemClock
+    var _last_data: UInt8 = 0xFF
     
     init(bus: AccessibleBus, clock: SystemClock) {
         _bus = bus
@@ -22,21 +23,29 @@ class DataBus {
     
     func read(_ address: UInt16) -> UInt8 {
         _clock.add(cycles: 3)
-        return _bus.read(address)
+        _last_data = _bus.read(address)
+        return _last_data
     }
     
     func write(_ address: UInt16, value: UInt8) {
         _clock.add(cycles: 3)
         _bus.write(address, value: value)
+        _last_data = value
     }
     
     func ioRead(_ address: UInt16) -> UInt8 {
         _clock.add(cycles: 4)
+        _last_data = _bus.ioRead(address)
         return _bus.ioRead(address)
     }
     
     func ioWrite(_ address: UInt16) {
         _clock.add(cycles: 4)
         _bus.ioWrite(address)
+        _last_data = UInt8(address >> 8)
+    }
+    
+    func getLastData() -> UInt8 {
+        return _last_data
     }
 }
