@@ -1173,7 +1173,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_Z == 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xC3] = {
@@ -1216,7 +1216,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_Z != 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xCB] = {
@@ -1259,7 +1259,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_C == 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xD3] = {
@@ -1310,7 +1310,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_C != 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xDB] = {
@@ -1355,7 +1355,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_PV == 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xE3] = {
@@ -1401,7 +1401,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_PV != 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xEB] = {
@@ -1447,7 +1447,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_S == 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xF3] = {
@@ -1491,7 +1491,7 @@ extension Cpu {
 			if self.regs.main.f & FLAG_S != 0 {
 				self.regs.pc = address
 			} else {
-			self.regs.pc &+= 2
+				self.regs.pc &+= 2
 			}
 		}
 		opcodes[0xFB] = {
