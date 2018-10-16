@@ -1258,4 +1258,42 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssert(clock.getCycles() == 21)
     }
+    
+    func test_add_a_n() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xC6, 0x69, 0xC6, 0x10, 0xC6, 0x02])
+        
+        cpu.regs.main.a = 0x78
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.a == 0xE1)
+        XCTAssert(cpu.regs.main.f & FLAG_C == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        
+        cpu.regs.main.a = 0x6F
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.a == 0x7F)
+        XCTAssert(cpu.regs.main.f & FLAG_C == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
+        
+        cpu.regs.main.a = 0xFE
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.a == 0x00)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
+        
+        XCTAssert(clock.getCycles() == 7 + 7 + 7)
+    }
 }

@@ -1197,7 +1197,9 @@ extension Cpu {
 			self.regs.sp &-= 2
 		}
 		opcodes[0xC6] = {
-			// error y = 0 z = 6
+			// add a,n
+			self.regs.main.a = Alu.add(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xC7] = {
 			// error y = 0 z = 7
@@ -1242,7 +1244,9 @@ extension Cpu {
 			self.call(address)
 		}
 		opcodes[0xCE] = {
-			// error y = 1 z = 6
+			// adc a,n
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xCF] = {
 			// error y = 1 z = 7
@@ -1292,7 +1296,9 @@ extension Cpu {
 			self.regs.sp &-= 2
 		}
 		opcodes[0xD6] = {
-			// error y = 2 z = 6
+			// sub a,n
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xD7] = {
 			// error y = 2 z = 7
@@ -1343,7 +1349,9 @@ extension Cpu {
 			 // DD prefix
 		}
 		opcodes[0xDE] = {
-			// error y = 3 z = 6
+			// sbc a,n
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xDF] = {
 			// error y = 3 z = 7
@@ -1396,7 +1404,9 @@ extension Cpu {
 			self.regs.sp &-= 2
 		}
 		opcodes[0xE6] = {
-			// error y = 4 z = 6
+			// and a,n
+			self.regs.main.a = Alu.and(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xE7] = {
 			// error y = 4 z = 7
@@ -1440,7 +1450,9 @@ extension Cpu {
 			 // ED prefix
 		}
 		opcodes[0xEE] = {
-			// error y = 5 z = 6
+			// xor a,n
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xEF] = {
 			// error y = 5 z = 7
@@ -1490,7 +1502,9 @@ extension Cpu {
 			self.regs.sp &-= 2
 		}
 		opcodes[0xF6] = {
-			// error y = 6 z = 6
+			// or a,n
+			self.regs.main.a = Alu.or(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xF7] = {
 			// error y = 6 z = 7
@@ -1535,7 +1549,9 @@ extension Cpu {
 			 // FD prefix
 		}
 		opcodes[0xFE] = {
-			// error y = 7 z = 6
+			// cp a,n
+			_ = Alu.cp(self.regs.main.a, self.bus.read(self.regs.pc), flags: &self.regs.main.f)
+			self.regs.pc &+= 1
 		}
 		opcodes[0xFF] = {
 			// error y = 7 z = 7
