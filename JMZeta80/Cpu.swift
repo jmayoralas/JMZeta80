@@ -8,6 +8,13 @@
 
 import Foundation
 
+// id opcode table
+let table_NONE = 0
+let table_XX = 1
+let table_CB = 2
+let table_XXCB = 3
+let table_ED = 4
+
 // defines Z80 register structure
 struct CpuRegs {
     var main = RegisterBank()
@@ -41,7 +48,7 @@ public class Cpu {
     let clock: SystemClock
     
     var regs = CpuRegs()
-    var opcodes = OpcodeTable(repeating: {}, count: 0x100)
+    var opcodes: [OpcodeTable]!
     
     var halted = false
     
@@ -49,11 +56,21 @@ public class Cpu {
     var int_req = false
     var nmi_req = false
     
+    var id_opcode_table = table_NONE
+    
     public init(bus: AccessibleBus, clock: SystemClock) {
         self.bus = DataBus(bus: bus, clock: clock)
         self.clock = clock
         
-        initOpcodeTable()
+        opcodes = [OpcodeTable](repeating: OpcodeTable(repeating: {
+            // by default, every undocumented and unimplemented opcode prefixed by DD or FD, will execute his equivalent in the un-prefixed opcode table
+            // and NOP in the rest of cases
+            if self.id_opcode_table == table_XX {
+                self.opcodes[table_NONE][Int(self.regs.ir)]()
+            }
+        }, count: 0x100), count: 5)
+        
+        initOpcodeTable(&opcodes[table_NONE])
         reset()
     }
     
@@ -88,8 +105,10 @@ public class Cpu {
         if !ackInt() {
             interrupt_status.pending_execution = false
             
-            regs.ir = _fetchOpcode()
-            opcodes[Int(regs.ir)]()
+            repeat {
+                regs.ir = _fetchOpcode()
+                opcodes[id_opcode_table][Int(regs.ir)]()
+            } while id_opcode_table != table_NONE
         }
         
     }
@@ -157,10 +176,10 @@ public class Cpu {
         switch interrupt_status.int_mode {
         case 0:
             // TODO: read next instruction from dataBus
-            opcodes[Int(bus.getLastData())]()
+            opcodes[id_opcode_table][Int(bus.getLastData())]()
         case 1:
             // do a RST 38
-            opcodes[0xFF]()
+            opcodes[id_opcode_table][0xFF]()
         case 2:
             let vector_address = buildAddress(regs.i, bus.getLastData() & 0xFE) // reset bit 0 of the byte in dataBus to make sure we get an even address
             let routine_address = buildAddress(bus.read(vector_address + 1), bus.read(vector_address))

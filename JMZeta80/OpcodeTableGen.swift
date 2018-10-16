@@ -9,7 +9,7 @@
 import Foundation
 
 extension Cpu {
-	func initOpcodeTable() {
+	func initOpcodeTable(_ opcodes: inout OpcodeTable) {
 		opcodes[0x00] = {
 			// nop
 		}
