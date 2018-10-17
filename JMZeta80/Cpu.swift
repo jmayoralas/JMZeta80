@@ -20,6 +20,7 @@ struct CpuRegs {
     var main = RegisterBank()
     var alternate = RegisterBank()
     
+    var xx: UInt16 = 0
     var ix: UInt16 = 0
     var iy: UInt16 = 0
     var pc: UInt16 = 0
@@ -71,6 +72,8 @@ public class Cpu {
         }, count: 0x100), count: 5)
         
         initOpcodeTable(&opcodes[table_NONE])
+        initOpcodeTableCB(&opcodes[table_CB])
+        
         reset()
     }
     
@@ -109,8 +112,7 @@ public class Cpu {
             interrupt_status.pending_execution = false
             
             repeat {
-                regs.ir = _fetchOpcode()
-                opcodes[id_opcode_table][Int(regs.ir)]()
+                fetchAndExec()
             } while id_opcode_table != table_NONE
         }
         
@@ -118,6 +120,11 @@ public class Cpu {
         if id_opcode_table != table_NONE || (id_opcode_table == table_NONE && self.regs.ir != 0x37 && self.regs.ir != 0x3F) {
             self.regs.q = fBackup != self.regs.main.f ? 1 : 0
         }
+    }
+    
+    func fetchAndExec() {
+        regs.ir = _fetchOpcode()
+        opcodes[id_opcode_table][Int(regs.ir)]()
     }
     
     private func _fetchOpcode() -> UInt8 {
