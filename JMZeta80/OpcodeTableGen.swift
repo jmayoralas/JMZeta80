@@ -145,9 +145,9 @@ extension Cpu {
 			// rrca
 			let bit_0 = self.regs.main.a & 0x01
 			self.regs.main.a >>= 1
-				self.regs.main.f.reset(bit: FLAG_C)
-				self.regs.main.f |= bit_0
-				self.regs.main.a |= bit_0 << 7
+			self.regs.main.f.reset(bit: FLAG_C)
+			self.regs.main.f |= bit_0
+			self.regs.main.a |= bit_0 << 7
 			self.regs.main.f.reset(bit: FLAG_H)
 			self.regs.main.f.reset(bit: FLAG_N)
 		}
