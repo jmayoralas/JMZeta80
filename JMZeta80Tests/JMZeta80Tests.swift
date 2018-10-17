@@ -93,6 +93,11 @@ class JMZeta80Tests: XCTestCase {
         let b: UInt16 = 0x1122
         XCTAssert(b.high == 0x11)
         XCTAssert(b.low == 0x22)
+        
+        var c: UInt8 = 0b00000001
+        XCTAssert(c.parity != 0)
+        c = 0b00000011
+        XCTAssert(c.parity == 0)
     }
 
     func testBus() {
