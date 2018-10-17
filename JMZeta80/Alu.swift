@@ -79,6 +79,135 @@ class Alu {
         
         return op_a
     }
+    
+    static func rlc(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        let bit_7 = (op & 0x80) >> 7
+        
+        var result = op << 1
+        
+        flags.reset(bit: FLAG_C)
+        flags |= bit_7
+        result |= bit_7
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        return result
+    }
+    
+    static func rrc(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        let bit_0 = op & 0x01
+        
+        var result = op >> 1
+        
+        flags.reset(bit: FLAG_C)
+        flags |= bit_0
+        result |= bit_0 << 7
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        return result
+    }
+    
+    static func rl(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        let bit_7 = (op & 0x80) >> 7
+        
+        var result = op << 1
+        
+        result |= flags & FLAG_C
+        flags.reset(bit: FLAG_C)
+        flags |= bit_7
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        
+        return result
+    }
+    
+    static func rr(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        var result = op >> 1
+        
+        result |= (flags & FLAG_C) << 7
+        flags = flags & ~FLAG_C | op & FLAG_C
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        
+        return result
+    }
+    
+    static func sla(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        let bit_7 = (op & 0x80) >> 7
+        
+        let result = op << 1
+        
+        flags.reset(bit: FLAG_C)
+        flags |= bit_7
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        return result
+    }
+    
+    static func sra(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        let bit_7 = (op & 0x80) >> 7
+        
+        var result = op >> 1
+        
+        flags = flags & ~FLAG_C | op & FLAG_C
+        result |= bit_7 << 7
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        return result
+    }
+    
+    static func sll(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        let bit_7 = (op & 0x80) >> 7
+        
+        var result = op << 1
+        
+        flags.reset(bit: FLAG_C)
+        flags |= bit_7
+        result |= 1
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        return result
+    }
+    
+    static func srl(_ op: UInt8, flags: inout UInt8) -> UInt8 {
+        let result = op >> 1
+        
+        flags = flags & ~FLAG_C | op & FLAG_C
+        flags.reset(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_S | result & FLAG_S
+        if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
+        if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+
+        return result
+    }
 
     private static func _add(_ a: inout UInt8, _ b: UInt8, carry: UInt8, flags: inout UInt8) {
         let old_a = a
