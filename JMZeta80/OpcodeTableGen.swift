@@ -1239,6 +1239,9 @@ extension Cpu {
 		}
 		opcodes[0xCB] = {
 			 // CB prefix
+			self.id_opcode_table = table_CB
+			self.fetchAndExec()
+			self.id_opcode_table = table_NONE
 		}
 		opcodes[0xCC] = {
 			// call FLAG_Z != 0,nn
@@ -1360,6 +1363,11 @@ extension Cpu {
 		}
 		opcodes[0xDD] = {
 			 // DD prefix
+			self.id_opcode_table = table_XX
+			self.regs.xx = self.regs.ix
+			self.fetchAndExec()
+			self.regs.ix = self.regs.xx
+			self.id_opcode_table = table_NONE
 		}
 		opcodes[0xDE] = {
 			// sbc a,n
@@ -1463,6 +1471,7 @@ extension Cpu {
 		}
 		opcodes[0xED] = {
 			 // ED prefix
+			self.id_opcode_table = table_ED
 		}
 		opcodes[0xEE] = {
 			// xor a,n
@@ -1564,6 +1573,11 @@ extension Cpu {
 		}
 		opcodes[0xFD] = {
 			 // FD prefix
+			self.id_opcode_table = table_XX
+			self.regs.xx = self.regs.iy
+			self.fetchAndExec()
+			self.regs.iy = self.regs.xx
+			self.id_opcode_table = table_NONE
 		}
 		opcodes[0xFE] = {
 			// cp a,n
