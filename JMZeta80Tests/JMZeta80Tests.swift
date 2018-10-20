@@ -1469,4 +1469,123 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssert(clock.getCycles() == 8)
     }
+    
+    func test_bit() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xCB, 0x40, 0xCB, 0x40, 0xCB, 0x78, 0xCB, 0x78])
+        cpu.regs.main.b = 0b00010000
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.pc == 0x0002)
+        
+        cpu.regs.main.b = 0b00010001
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        
+        cpu.regs.main.b = 0b00010001
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        
+        cpu.regs.main.b = 0b10010001
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        
+        XCTAssert(clock.getCycles() == 4 * 8)
+    }
+    
+    func test_bit_hli() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xCB, 0x46, 0xCB, 0x46, 0xCB, 0x7E, 0xCB, 0x7E])
+        cpu.regs.main.hl = 0xA000
+        bus.write(cpu.regs.main.hl, data: [0b00010000])
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
+        XCTAssert(cpu.regs.pc == 0x0002)
+        
+        bus.write(cpu.regs.main.hl, data: [0b00010001])
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
+
+        bus.write(cpu.regs.main.hl, data: [0b00110001])
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
+        
+        bus.write(cpu.regs.main.hl, data: [0b10011001])
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
+        
+        XCTAssert(clock.getCycles() == 4 * 12)
+    }
+    
+    func test_set() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xCB, 0xDD])
+        cpu.regs.main.l = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.l == 0x08)
+        
+        XCTAssert(clock.getCycles() == 8)
+    }
+    
+    func test_reset() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xCB, 0x9D])
+        cpu.regs.main.l = 0x08
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.l == 0)
+        
+        XCTAssert(clock.getCycles() == 8)
+    }
 }

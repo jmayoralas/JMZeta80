@@ -275,580 +275,812 @@ extension Cpu {
 			self.regs.main.a = Alu.srl(self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x40] = {
-			// bit
+			// bit 0,main.b
+			Alu.bit(0, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x41] = {
-			// bit
+			// bit 0,main.c
+			Alu.bit(0, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x42] = {
-			// bit
+			// bit 0,main.d
+			Alu.bit(0, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x43] = {
-			// bit
+			// bit 0,main.e
+			Alu.bit(0, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x44] = {
-			// bit
+			// bit 0,main.h
+			Alu.bit(0, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x45] = {
-			// bit
+			// bit 0,main.l
+			Alu.bit(0, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x46] = {
-			// bit
+			// bit 0,(hl)
+			Alu.bit(0, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x47] = {
-			// bit
+			// bit 0,main.a
+			Alu.bit(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x48] = {
-			// bit
+			// bit 1,main.b
+			Alu.bit(1, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x49] = {
-			// bit
+			// bit 1,main.c
+			Alu.bit(1, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x4A] = {
-			// bit
+			// bit 1,main.d
+			Alu.bit(1, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x4B] = {
-			// bit
+			// bit 1,main.e
+			Alu.bit(1, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x4C] = {
-			// bit
+			// bit 1,main.h
+			Alu.bit(1, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x4D] = {
-			// bit
+			// bit 1,main.l
+			Alu.bit(1, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x4E] = {
-			// bit
+			// bit 1,(hl)
+			Alu.bit(1, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x4F] = {
-			// bit
+			// bit 1,main.a
+			Alu.bit(1, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x50] = {
-			// bit
+			// bit 2,main.b
+			Alu.bit(2, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x51] = {
-			// bit
+			// bit 2,main.c
+			Alu.bit(2, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x52] = {
-			// bit
+			// bit 2,main.d
+			Alu.bit(2, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x53] = {
-			// bit
+			// bit 2,main.e
+			Alu.bit(2, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x54] = {
-			// bit
+			// bit 2,main.h
+			Alu.bit(2, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x55] = {
-			// bit
+			// bit 2,main.l
+			Alu.bit(2, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x56] = {
-			// bit
+			// bit 2,(hl)
+			Alu.bit(2, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x57] = {
-			// bit
+			// bit 2,main.a
+			Alu.bit(2, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x58] = {
-			// bit
+			// bit 3,main.b
+			Alu.bit(3, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x59] = {
-			// bit
+			// bit 3,main.c
+			Alu.bit(3, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x5A] = {
-			// bit
+			// bit 3,main.d
+			Alu.bit(3, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x5B] = {
-			// bit
+			// bit 3,main.e
+			Alu.bit(3, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x5C] = {
-			// bit
+			// bit 3,main.h
+			Alu.bit(3, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x5D] = {
-			// bit
+			// bit 3,main.l
+			Alu.bit(3, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x5E] = {
-			// bit
+			// bit 3,(hl)
+			Alu.bit(3, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x5F] = {
-			// bit
+			// bit 3,main.a
+			Alu.bit(3, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x60] = {
-			// bit
+			// bit 4,main.b
+			Alu.bit(4, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x61] = {
-			// bit
+			// bit 4,main.c
+			Alu.bit(4, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x62] = {
-			// bit
+			// bit 4,main.d
+			Alu.bit(4, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x63] = {
-			// bit
+			// bit 4,main.e
+			Alu.bit(4, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x64] = {
-			// bit
+			// bit 4,main.h
+			Alu.bit(4, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x65] = {
-			// bit
+			// bit 4,main.l
+			Alu.bit(4, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x66] = {
-			// bit
+			// bit 4,(hl)
+			Alu.bit(4, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x67] = {
-			// bit
+			// bit 4,main.a
+			Alu.bit(4, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x68] = {
-			// bit
+			// bit 5,main.b
+			Alu.bit(5, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x69] = {
-			// bit
+			// bit 5,main.c
+			Alu.bit(5, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x6A] = {
-			// bit
+			// bit 5,main.d
+			Alu.bit(5, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x6B] = {
-			// bit
+			// bit 5,main.e
+			Alu.bit(5, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x6C] = {
-			// bit
+			// bit 5,main.h
+			Alu.bit(5, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x6D] = {
-			// bit
+			// bit 5,main.l
+			Alu.bit(5, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x6E] = {
-			// bit
+			// bit 5,(hl)
+			Alu.bit(5, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x6F] = {
-			// bit
+			// bit 5,main.a
+			Alu.bit(5, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x70] = {
-			// bit
+			// bit 6,main.b
+			Alu.bit(6, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x71] = {
-			// bit
+			// bit 6,main.c
+			Alu.bit(6, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x72] = {
-			// bit
+			// bit 6,main.d
+			Alu.bit(6, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x73] = {
-			// bit
+			// bit 6,main.e
+			Alu.bit(6, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x74] = {
-			// bit
+			// bit 6,main.h
+			Alu.bit(6, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x75] = {
-			// bit
+			// bit 6,main.l
+			Alu.bit(6, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x76] = {
-			// bit
+			// bit 6,(hl)
+			Alu.bit(6, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x77] = {
-			// bit
+			// bit 6,main.a
+			Alu.bit(6, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x78] = {
-			// bit
+			// bit 7,main.b
+			Alu.bit(7, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x79] = {
-			// bit
+			// bit 7,main.c
+			Alu.bit(7, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x7A] = {
-			// bit
+			// bit 7,main.d
+			Alu.bit(7, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x7B] = {
-			// bit
+			// bit 7,main.e
+			Alu.bit(7, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x7C] = {
-			// bit
+			// bit 7,main.h
+			Alu.bit(7, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x7D] = {
-			// bit
+			// bit 7,main.l
+			Alu.bit(7, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x7E] = {
-			// bit
+			// bit 7,(hl)
+			Alu.bit(7, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
 		opcodes[0x7F] = {
-			// bit
+			// bit 7,main.a
+			Alu.bit(7, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x80] = {
-			// res
+			// res 0,main.b
+			self.regs.main.b = Alu.res(0, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x81] = {
-			// res
+			// res 0,main.c
+			self.regs.main.c = Alu.res(0, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x82] = {
-			// res
+			// res 0,main.d
+			self.regs.main.d = Alu.res(0, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x83] = {
-			// res
+			// res 0,main.e
+			self.regs.main.e = Alu.res(0, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x84] = {
-			// res
+			// res 0,main.h
+			self.regs.main.h = Alu.res(0, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x85] = {
-			// res
+			// res 0,main.l
+			self.regs.main.l = Alu.res(0, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x86] = {
-			// res
+			// res 0,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(0, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0x87] = {
-			// res
+			// res 0,main.a
+			self.regs.main.a = Alu.res(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x88] = {
-			// res
+			// res 1,main.b
+			self.regs.main.b = Alu.res(1, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x89] = {
-			// res
+			// res 1,main.c
+			self.regs.main.c = Alu.res(1, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x8A] = {
-			// res
+			// res 1,main.d
+			self.regs.main.d = Alu.res(1, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x8B] = {
-			// res
+			// res 1,main.e
+			self.regs.main.e = Alu.res(1, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x8C] = {
-			// res
+			// res 1,main.h
+			self.regs.main.h = Alu.res(1, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x8D] = {
-			// res
+			// res 1,main.l
+			self.regs.main.l = Alu.res(1, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x8E] = {
-			// res
+			// res 1,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(1, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0x8F] = {
-			// res
+			// res 1,main.a
+			self.regs.main.a = Alu.res(1, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x90] = {
-			// res
+			// res 2,main.b
+			self.regs.main.b = Alu.res(2, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x91] = {
-			// res
+			// res 2,main.c
+			self.regs.main.c = Alu.res(2, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x92] = {
-			// res
+			// res 2,main.d
+			self.regs.main.d = Alu.res(2, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x93] = {
-			// res
+			// res 2,main.e
+			self.regs.main.e = Alu.res(2, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x94] = {
-			// res
+			// res 2,main.h
+			self.regs.main.h = Alu.res(2, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x95] = {
-			// res
+			// res 2,main.l
+			self.regs.main.l = Alu.res(2, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x96] = {
-			// res
+			// res 2,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(2, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0x97] = {
-			// res
+			// res 2,main.a
+			self.regs.main.a = Alu.res(2, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x98] = {
-			// res
+			// res 3,main.b
+			self.regs.main.b = Alu.res(3, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x99] = {
-			// res
+			// res 3,main.c
+			self.regs.main.c = Alu.res(3, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x9A] = {
-			// res
+			// res 3,main.d
+			self.regs.main.d = Alu.res(3, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x9B] = {
-			// res
+			// res 3,main.e
+			self.regs.main.e = Alu.res(3, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x9C] = {
-			// res
+			// res 3,main.h
+			self.regs.main.h = Alu.res(3, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x9D] = {
-			// res
+			// res 3,main.l
+			self.regs.main.l = Alu.res(3, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x9E] = {
-			// res
+			// res 3,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(3, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0x9F] = {
-			// res
+			// res 3,main.a
+			self.regs.main.a = Alu.res(3, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xA0] = {
-			// res
+			// res 4,main.b
+			self.regs.main.b = Alu.res(4, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xA1] = {
-			// res
+			// res 4,main.c
+			self.regs.main.c = Alu.res(4, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xA2] = {
-			// res
+			// res 4,main.d
+			self.regs.main.d = Alu.res(4, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xA3] = {
-			// res
+			// res 4,main.e
+			self.regs.main.e = Alu.res(4, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xA4] = {
-			// res
+			// res 4,main.h
+			self.regs.main.h = Alu.res(4, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xA5] = {
-			// res
+			// res 4,main.l
+			self.regs.main.l = Alu.res(4, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xA6] = {
-			// res
+			// res 4,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(4, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xA7] = {
-			// res
+			// res 4,main.a
+			self.regs.main.a = Alu.res(4, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xA8] = {
-			// res
+			// res 5,main.b
+			self.regs.main.b = Alu.res(5, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xA9] = {
-			// res
+			// res 5,main.c
+			self.regs.main.c = Alu.res(5, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xAA] = {
-			// res
+			// res 5,main.d
+			self.regs.main.d = Alu.res(5, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xAB] = {
-			// res
+			// res 5,main.e
+			self.regs.main.e = Alu.res(5, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xAC] = {
-			// res
+			// res 5,main.h
+			self.regs.main.h = Alu.res(5, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xAD] = {
-			// res
+			// res 5,main.l
+			self.regs.main.l = Alu.res(5, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xAE] = {
-			// res
+			// res 5,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(5, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xAF] = {
-			// res
+			// res 5,main.a
+			self.regs.main.a = Alu.res(5, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xB0] = {
-			// res
+			// res 6,main.b
+			self.regs.main.b = Alu.res(6, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xB1] = {
-			// res
+			// res 6,main.c
+			self.regs.main.c = Alu.res(6, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xB2] = {
-			// res
+			// res 6,main.d
+			self.regs.main.d = Alu.res(6, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xB3] = {
-			// res
+			// res 6,main.e
+			self.regs.main.e = Alu.res(6, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xB4] = {
-			// res
+			// res 6,main.h
+			self.regs.main.h = Alu.res(6, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xB5] = {
-			// res
+			// res 6,main.l
+			self.regs.main.l = Alu.res(6, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xB6] = {
-			// res
+			// res 6,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(6, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xB7] = {
-			// res
+			// res 6,main.a
+			self.regs.main.a = Alu.res(6, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xB8] = {
-			// res
+			// res 7,main.b
+			self.regs.main.b = Alu.res(7, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xB9] = {
-			// res
+			// res 7,main.c
+			self.regs.main.c = Alu.res(7, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xBA] = {
-			// res
+			// res 7,main.d
+			self.regs.main.d = Alu.res(7, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xBB] = {
-			// res
+			// res 7,main.e
+			self.regs.main.e = Alu.res(7, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xBC] = {
-			// res
+			// res 7,main.h
+			self.regs.main.h = Alu.res(7, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xBD] = {
-			// res
+			// res 7,main.l
+			self.regs.main.l = Alu.res(7, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xBE] = {
-			// res
+			// res 7,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.res(7, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xBF] = {
-			// res
+			// res 7,main.a
+			self.regs.main.a = Alu.res(7, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xC0] = {
-			// set
+			// set 0,main.b
+			self.regs.main.b = Alu.set(0, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xC1] = {
-			// set
+			// set 0,main.c
+			self.regs.main.c = Alu.set(0, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xC2] = {
-			// set
+			// set 0,main.d
+			self.regs.main.d = Alu.set(0, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xC3] = {
-			// set
+			// set 0,main.e
+			self.regs.main.e = Alu.set(0, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xC4] = {
-			// set
+			// set 0,main.h
+			self.regs.main.h = Alu.set(0, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xC5] = {
-			// set
+			// set 0,main.l
+			self.regs.main.l = Alu.set(0, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xC6] = {
-			// set
+			// set 0,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(0, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xC7] = {
-			// set
+			// set 0,main.a
+			self.regs.main.a = Alu.set(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xC8] = {
-			// set
+			// set 1,main.b
+			self.regs.main.b = Alu.set(1, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xC9] = {
-			// set
+			// set 1,main.c
+			self.regs.main.c = Alu.set(1, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xCA] = {
-			// set
+			// set 1,main.d
+			self.regs.main.d = Alu.set(1, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xCB] = {
-			// set
+			// set 1,main.e
+			self.regs.main.e = Alu.set(1, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xCC] = {
-			// set
+			// set 1,main.h
+			self.regs.main.h = Alu.set(1, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xCD] = {
-			// set
+			// set 1,main.l
+			self.regs.main.l = Alu.set(1, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xCE] = {
-			// set
+			// set 1,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(1, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xCF] = {
-			// set
+			// set 1,main.a
+			self.regs.main.a = Alu.set(1, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xD0] = {
-			// set
+			// set 2,main.b
+			self.regs.main.b = Alu.set(2, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xD1] = {
-			// set
+			// set 2,main.c
+			self.regs.main.c = Alu.set(2, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xD2] = {
-			// set
+			// set 2,main.d
+			self.regs.main.d = Alu.set(2, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xD3] = {
-			// set
+			// set 2,main.e
+			self.regs.main.e = Alu.set(2, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xD4] = {
-			// set
+			// set 2,main.h
+			self.regs.main.h = Alu.set(2, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xD5] = {
-			// set
+			// set 2,main.l
+			self.regs.main.l = Alu.set(2, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xD6] = {
-			// set
+			// set 2,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(2, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xD7] = {
-			// set
+			// set 2,main.a
+			self.regs.main.a = Alu.set(2, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xD8] = {
-			// set
+			// set 3,main.b
+			self.regs.main.b = Alu.set(3, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xD9] = {
-			// set
+			// set 3,main.c
+			self.regs.main.c = Alu.set(3, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xDA] = {
-			// set
+			// set 3,main.d
+			self.regs.main.d = Alu.set(3, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xDB] = {
-			// set
+			// set 3,main.e
+			self.regs.main.e = Alu.set(3, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xDC] = {
-			// set
+			// set 3,main.h
+			self.regs.main.h = Alu.set(3, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xDD] = {
-			// set
+			// set 3,main.l
+			self.regs.main.l = Alu.set(3, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xDE] = {
-			// set
+			// set 3,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(3, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xDF] = {
-			// set
+			// set 3,main.a
+			self.regs.main.a = Alu.set(3, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xE0] = {
-			// set
+			// set 4,main.b
+			self.regs.main.b = Alu.set(4, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xE1] = {
-			// set
+			// set 4,main.c
+			self.regs.main.c = Alu.set(4, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xE2] = {
-			// set
+			// set 4,main.d
+			self.regs.main.d = Alu.set(4, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xE3] = {
-			// set
+			// set 4,main.e
+			self.regs.main.e = Alu.set(4, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xE4] = {
-			// set
+			// set 4,main.h
+			self.regs.main.h = Alu.set(4, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xE5] = {
-			// set
+			// set 4,main.l
+			self.regs.main.l = Alu.set(4, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xE6] = {
-			// set
+			// set 4,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(4, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xE7] = {
-			// set
+			// set 4,main.a
+			self.regs.main.a = Alu.set(4, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xE8] = {
-			// set
+			// set 5,main.b
+			self.regs.main.b = Alu.set(5, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xE9] = {
-			// set
+			// set 5,main.c
+			self.regs.main.c = Alu.set(5, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xEA] = {
-			// set
+			// set 5,main.d
+			self.regs.main.d = Alu.set(5, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xEB] = {
-			// set
+			// set 5,main.e
+			self.regs.main.e = Alu.set(5, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xEC] = {
-			// set
+			// set 5,main.h
+			self.regs.main.h = Alu.set(5, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xED] = {
-			// set
+			// set 5,main.l
+			self.regs.main.l = Alu.set(5, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xEE] = {
-			// set
+			// set 5,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(5, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xEF] = {
-			// set
+			// set 5,main.a
+			self.regs.main.a = Alu.set(5, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xF0] = {
-			// set
+			// set 6,main.b
+			self.regs.main.b = Alu.set(6, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xF1] = {
-			// set
+			// set 6,main.c
+			self.regs.main.c = Alu.set(6, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xF2] = {
-			// set
+			// set 6,main.d
+			self.regs.main.d = Alu.set(6, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xF3] = {
-			// set
+			// set 6,main.e
+			self.regs.main.e = Alu.set(6, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xF4] = {
-			// set
+			// set 6,main.h
+			self.regs.main.h = Alu.set(6, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xF5] = {
-			// set
+			// set 6,main.l
+			self.regs.main.l = Alu.set(6, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xF6] = {
-			// set
+			// set 6,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(6, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xF7] = {
-			// set
+			// set 6,main.a
+			self.regs.main.a = Alu.set(6, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0xF8] = {
-			// set
+			// set 7,main.b
+			self.regs.main.b = Alu.set(7, self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0xF9] = {
-			// set
+			// set 7,main.c
+			self.regs.main.c = Alu.set(7, self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0xFA] = {
-			// set
+			// set 7,main.d
+			self.regs.main.d = Alu.set(7, self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0xFB] = {
-			// set
+			// set 7,main.e
+			self.regs.main.e = Alu.set(7, self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0xFC] = {
-			// set
+			// set 7,main.h
+			self.regs.main.h = Alu.set(7, self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0xFD] = {
-			// set
+			// set 7,main.l
+			self.regs.main.l = Alu.set(7, self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0xFE] = {
-			// set
+			// set 7,(hl)
+			self.bus.write(self.regs.main.hl, value: Alu.set(7, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f))
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xFF] = {
-			// set
+			// set 7,main.a
+			self.regs.main.a = Alu.set(7, self.regs.main.a, flags: &self.regs.main.f)
 		}
 	}
 }

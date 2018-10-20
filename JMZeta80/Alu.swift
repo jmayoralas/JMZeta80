@@ -208,6 +208,26 @@ class Alu {
 
         return result
     }
+    
+    static func bit(_ n: Int, _ op: UInt8, flags: inout UInt8) {
+        flags.set(bit: FLAG_H)
+        flags.reset(bit: FLAG_N)
+        flags = flags & ~FLAG_Z | ((~((op >> n) & 0x01) & 0x01) << Z)
+        if flags & FLAG_Z != 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+        if n == 7 {
+            flags = flags & ~FLAG_S | op & FLAG_S
+        } else {
+            flags.reset(bit: FLAG_S)
+        }
+    }
+    
+    static func set(_ n: Int, _ op: UInt8, flags: inout UInt8) -> UInt8 {
+        return op | UInt8(1 << n)
+    }
+    
+    static func res(_ n: Int, _ op: UInt8, flags: inout UInt8) -> UInt8 {
+        return op & UInt8(0 << n)
+    }
 
     private static func _add(_ a: inout UInt8, _ b: UInt8, carry: UInt8, flags: inout UInt8) {
         let old_a = a

@@ -66,3 +66,10 @@ let FLAG_3: UInt8  = 0b00001000
 let FLAG_PV: UInt8 = 0b00000100
 let FLAG_N: UInt8  = 0b00000010
 let FLAG_C: UInt8  = 0b00000001
+
+let S = 7
+let Z = 6
+let H = 4
+let PV = 2
+let N = 1
+let C = 0
