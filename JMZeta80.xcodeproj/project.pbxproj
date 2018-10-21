@@ -11,6 +11,7 @@
 		1D04749E2165162500B0D379 /* Opcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04749D2165162500B0D379 /* Opcode.swift */; };
 		1D69C3C72163EC9B00F7A7C7 /* TestBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */; };
 		1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C82163F50500F7A7C7 /* Clock.swift */; };
+		1D7C858C217B8C8A00F3F65A /* OpcodeTableEDGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7C858B217B8C8A00F3F65A /* OpcodeTableEDGen.swift */; };
 		1D7EA9252163C701005D14C1 /* JMZeta80.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7EA91B2163C701005D14C1 /* JMZeta80.framework */; };
 		1D7EA92A2163C701005D14C1 /* JMZeta80Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9292163C701005D14C1 /* JMZeta80Tests.swift */; };
 		1D7EA92C2163C701005D14C1 /* JMZeta80.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7EA91E2163C701005D14C1 /* JMZeta80.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -38,6 +39,7 @@
 		1D04749D2165162500B0D379 /* Opcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opcode.swift; sourceTree = "<group>"; };
 		1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBus.swift; sourceTree = "<group>"; };
 		1D69C3C82163F50500F7A7C7 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		1D7C858B217B8C8A00F3F65A /* OpcodeTableEDGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableEDGen.swift; sourceTree = "<group>"; };
 		1D7EA91B2163C701005D14C1 /* JMZeta80.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JMZeta80.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D7EA91E2163C701005D14C1 /* JMZeta80.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMZeta80.h; sourceTree = "<group>"; };
 		1D7EA91F2163C701005D14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		1D7EA91D2163C701005D14C1 /* JMZeta80 */ = {
 			isa = PBXGroup;
 			children = (
+				1D7C858B217B8C8A00F3F65A /* OpcodeTableEDGen.swift */,
 				1D7F714121778E8000C31E5E /* OpcodeTableCBGen.swift */,
 				1DF890412167CF7100AC7EA2 /* OpcodeTableGen.swift */,
 				1DA162FB216519EB00243141 /* AccessibleBus.swift */,
@@ -237,6 +240,7 @@
 				1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */,
 				1D04749C21650DB800B0D379 /* DataBus.swift in Sources */,
 				1D04749E2165162500B0D379 /* Opcode.swift in Sources */,
+				1D7C858C217B8C8A00F3F65A /* OpcodeTableEDGen.swift in Sources */,
 				1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

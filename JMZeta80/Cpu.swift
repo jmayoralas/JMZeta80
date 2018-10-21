@@ -73,6 +73,7 @@ public class Cpu {
         
         initOpcodeTable(&opcodes[table_NONE])
         initOpcodeTableCB(&opcodes[table_CB])
+        initOpcodeTableED(&opcodes[table_ED])
         
         reset()
     }
