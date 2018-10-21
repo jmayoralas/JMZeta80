@@ -48,8 +48,8 @@ class TestBus: AccessibleBus {
         
     }
     
-    func ioWrite(_ address: UInt16) {
-        _io_buffer[Int(address & 0x00FF)] = UInt8(address >> 8)
+    func ioWrite(_ address: UInt16, value: UInt8) {
+        _io_buffer[Int(address & 0x00FF)] = value
     }
     
     func write(_ address: UInt16, data: [UInt8]) {

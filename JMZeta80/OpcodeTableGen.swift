@@ -1291,7 +1291,7 @@ extension Cpu {
 		}
 		opcodes[0xD3] = {
 			// out (n),a
-			self.bus.ioWrite(self.buildAddress(self.regs.main.a, self.bus.read(self.regs.pc)))
+			self.bus.ioWrite(self.buildAddress(self.regs.main.a, self.bus.read(self.regs.pc)), value: self.regs.main.a)
 			self.regs.pc &+= 1
 		}
 		opcodes[0xD4] = {

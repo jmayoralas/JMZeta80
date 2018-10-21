@@ -108,7 +108,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.bus.read(0x0000) == 0x11)
         XCTAssert(cpu.bus.ioRead(0xFE) == 0xFF)
         
-        bus.ioWrite(0x77FE)
+        bus.ioWrite(0x77FE, value: 0x77)
         XCTAssert(bus.ioRead(0x00FE) == 0x77)
     }
     
@@ -1144,7 +1144,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.reset()
         
         bus.write(0x0000, data: [0xDB, 0xFF])
-        bus.ioWrite(0x77FF)
+        bus.ioWrite(0x77FF, value: 0x77)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.main.a == 0x77)
         
