@@ -1472,6 +1472,8 @@ extension Cpu {
 		opcodes[0xED] = {
 			 // ED prefix
 			self.id_opcode_table = table_ED
+			self.fetchAndExec()
+			self.id_opcode_table = table_NONE
 		}
 		opcodes[0xEE] = {
 			// xor a,n
