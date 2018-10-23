@@ -281,7 +281,7 @@ class Alu {
     private static func _sub(_ a: inout UInt8, _ b: UInt8, carry: UInt8, flags: inout UInt8) {
         let old_a = a
         
-        a &-= b &- carry
+        a &-= b &+ carry
         
         // flags
         if old_a & FLAG_S != b & FLAG_S && a & FLAG_S == b & FLAG_S {
