@@ -21,16 +21,30 @@ class Alu {
         return op_a
     }
     
+    static func adc(_ a: UInt16, _ b: UInt16, flags: inout UInt8) -> UInt16 {
+        let l_add = adc(a.low, b.low, flags: &flags)
+        let h_add = adc(a.high, b.high, flags: &flags)
+        
+        return UInt16(h_add) << 8 | UInt16(l_add)
+    }
+
     static func sub(_ a: UInt8, _ b: UInt8, flags: inout UInt8) -> UInt8 {
         var op_a = a
         _sub(&op_a, b, carry: 0, flags: &flags)
         return op_a
     }
-    
+
     static func sbc(_ a: UInt8, _ b: UInt8, flags: inout UInt8) -> UInt8 {
         var op_a = a
         _sub(&op_a, b, carry: flags & FLAG_C, flags: &flags)
         return op_a
+    }
+    
+    static func sbc(_ a: UInt16, _ b: UInt16, flags: inout UInt8) -> UInt16 {
+        let l_add = sbc(a.low, b.low, flags: &flags)
+        let h_add = sbc(a.high, b.high, flags: &flags)
+
+        return UInt16(h_add) << 8 | UInt16(l_add)
     }
     
     static func cp(_ a: UInt8, _ b: UInt8, flags: inout UInt8) {
