@@ -15,6 +15,19 @@ class Alu {
         return op_a
     }
     
+    static func add(_ a: UInt16, _ b: UInt16, flags: inout UInt8) -> UInt16 {
+        let f_backup = flags
+        
+        let l_add = add(a.low, b.low, flags: &flags)
+        let h_add = adc(a.high, b.high, flags: &flags)
+        
+        flags = flags & ~FLAG_S | f_backup & FLAG_S
+        flags = flags & ~FLAG_Z | f_backup & FLAG_Z
+        flags = flags & ~FLAG_PV | f_backup & FLAG_PV
+        
+        return UInt16(h_add) << 8 | UInt16(l_add)
+    }
+    
     static func adc(_ a: UInt8, _ b: UInt8, flags: inout UInt8) -> UInt8 {
         var op_a = a
         _add(&op_a, b, carry: flags & FLAG_C, flags: &flags)

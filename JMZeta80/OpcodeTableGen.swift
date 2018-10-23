@@ -81,21 +81,7 @@ extension Cpu {
 		opcodes[0x09] = {
 			// add hl,main.bc
 			self.clock.add(cycles: 7)
-			let added_value = self.regs.main.bc
-			let pre_h = self.regs.main.h
-			let b = added_value.high
-			self.regs.main.hl &+= added_value
-			self.regs.main.f.reset(bit: FLAG_N)
-			if self.regs.main.hl < added_value {
-				self.regs.main.f.set(bit: FLAG_C)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_C)
-			}
-			if (pre_h.low + b.low) & 0x10 > 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
+			self.regs.main.hl = Alu.add(self.regs.main.hl, self.regs.main.bc, flags: &self.regs.main.f)
 		}
 		opcodes[0x0A] = {
 			// ld a,(main.bc)
@@ -231,21 +217,7 @@ extension Cpu {
 		opcodes[0x19] = {
 			// add hl,main.de
 			self.clock.add(cycles: 7)
-			let added_value = self.regs.main.de
-			let pre_h = self.regs.main.h
-			let b = added_value.high
-			self.regs.main.hl &+= added_value
-			self.regs.main.f.reset(bit: FLAG_N)
-			if self.regs.main.hl < added_value {
-				self.regs.main.f.set(bit: FLAG_C)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_C)
-			}
-			if (pre_h.low + b.low) & 0x10 > 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
+			self.regs.main.hl = Alu.add(self.regs.main.hl, self.regs.main.de, flags: &self.regs.main.f)
 		}
 		opcodes[0x1A] = {
 			// ld a,(main.de)
@@ -418,21 +390,7 @@ extension Cpu {
 		opcodes[0x29] = {
 			// add hl,main.hl
 			self.clock.add(cycles: 7)
-			let added_value = self.regs.main.hl
-			let pre_h = self.regs.main.h
-			let b = added_value.high
-			self.regs.main.hl &+= added_value
-			self.regs.main.f.reset(bit: FLAG_N)
-			if self.regs.main.hl < added_value {
-				self.regs.main.f.set(bit: FLAG_C)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_C)
-			}
-			if (pre_h.low + b.low) & 0x10 > 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
+			self.regs.main.hl = Alu.add(self.regs.main.hl, self.regs.main.hl, flags: &self.regs.main.f)
 		}
 		opcodes[0x2A] = {
 			// ld hl,(nn)
@@ -576,21 +534,7 @@ extension Cpu {
 		opcodes[0x39] = {
 			// add hl,sp
 			self.clock.add(cycles: 7)
-			let added_value = self.regs.sp
-			let pre_h = self.regs.main.h
-			let b = added_value.high
-			self.regs.main.hl &+= added_value
-			self.regs.main.f.reset(bit: FLAG_N)
-			if self.regs.main.hl < added_value {
-				self.regs.main.f.set(bit: FLAG_C)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_C)
-			}
-			if (pre_h.low + b.low) & 0x10 > 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
+			self.regs.main.hl = Alu.add(self.regs.main.hl, self.regs.sp, flags: &self.regs.main.f)
 		}
 		opcodes[0x3A] = {
 			// ld a,(nn)
