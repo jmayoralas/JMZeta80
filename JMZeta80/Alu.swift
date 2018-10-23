@@ -63,6 +63,9 @@ class Alu {
     static func cp(_ a: UInt8, _ b: UInt8, flags: inout UInt8) {
         var dummy = a
         _sub(&dummy, b, carry: 0, flags: &flags)
+        
+        flags = flags & ~FLAG_3 | a & FLAG_3
+        flags = flags & ~FLAG_5 | a & FLAG_5
     }
     
     static func and(_ a: UInt8, _ b: UInt8, flags: inout UInt8) -> UInt8 {
@@ -75,6 +78,9 @@ class Alu {
         flags = flags & ~FLAG_S | a & FLAG_S
         if op_a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if op_a.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+        
+        flags = flags & ~FLAG_3 | op_a & FLAG_3
+        flags = flags & ~FLAG_5 | op_a & FLAG_5
         
         return op_a
     }
@@ -90,6 +96,9 @@ class Alu {
         if op_a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if op_a.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
         
+        flags = flags & ~FLAG_3 | op_a & FLAG_3
+        flags = flags & ~FLAG_5 | op_a & FLAG_5
+        
         return op_a
     }
     
@@ -103,6 +112,9 @@ class Alu {
         flags = flags & ~FLAG_S | a & FLAG_S
         if op_a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if op_a.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
+        
+        flags = flags & ~FLAG_3 | op_a & FLAG_3
+        flags = flags & ~FLAG_5 | op_a & FLAG_5
         
         return op_a
     }
@@ -121,6 +133,9 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
+        
         return result
     }
     
@@ -138,6 +153,9 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
+        
         return result
     }
     
@@ -155,6 +173,8 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
         
         return result
     }
@@ -170,6 +190,8 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
         
         return result
     }
@@ -187,6 +209,9 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
+        
         return result
     }
     
@@ -203,6 +228,9 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
+        
         return result
     }
     
@@ -220,6 +248,9 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
+        
         return result
     }
     
@@ -233,6 +264,9 @@ class Alu {
         if result == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if result.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
 
+        flags = flags & ~FLAG_3 | result & FLAG_3
+        flags = flags & ~FLAG_5 | result & FLAG_5
+        
         return result
     }
     
@@ -246,6 +280,9 @@ class Alu {
         } else {
             flags.reset(bit: FLAG_S)
         }
+        
+        flags = flags & ~FLAG_3 | op & FLAG_3
+        flags = flags & ~FLAG_5 | op & FLAG_5
     }
     
     static func set(_ n: Int, _ op: UInt8, flags: inout UInt8) -> UInt8 {
@@ -276,6 +313,9 @@ class Alu {
         } else {
             flags.reset(bit: FLAG_C)
         }
+        
+        flags = flags & ~FLAG_3 | a & FLAG_3
+        flags = flags & ~FLAG_5 | a & FLAG_5
     }
     
     private static func _sub(_ a: inout UInt8, _ b: UInt8, carry: UInt8, flags: inout UInt8) {
@@ -298,5 +338,8 @@ class Alu {
         } else {
             flags.reset(bit: FLAG_C)
         }
+        
+        flags = flags & ~FLAG_3 | a & FLAG_3
+        flags = flags & ~FLAG_5 | a & FLAG_5
     }
 }

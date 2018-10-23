@@ -71,6 +71,8 @@ extension Cpu {
 			self.regs.main.a |= bit_7
 			self.regs.main.f.reset(bit: FLAG_H)
 			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
 		}
 		opcodes[0x08] = {
 			// ex af,af'
@@ -136,6 +138,8 @@ extension Cpu {
 			self.regs.main.a |= bit_0 << 7
 			self.regs.main.f.reset(bit: FLAG_H)
 			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
 		}
 		opcodes[0x10] = {
 			// djnz n
@@ -206,6 +210,8 @@ extension Cpu {
 			self.regs.main.f |= bit_7
 			self.regs.main.f.reset(bit: FLAG_H)
 			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
 		}
 		opcodes[0x18] = {
 			// jr &00
@@ -272,6 +278,8 @@ extension Cpu {
 			self.regs.main.f |= bit_0
 			self.regs.main.f.reset(bit: FLAG_H)
 			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
 		}
 		opcodes[0x20] = {
 			// jr FLAG_Z == 0 &00
