@@ -289,7 +289,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.hl == 0x0000)
         XCTAssert(cpu.regs.main.f & FLAG_C != 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
-        XCTAssert(cpu.regs.main.f & FLAG_H == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
         
         cpu.regs.main.hl = 0x1EFF
         cpu.regs.main.bc = 0x0002
