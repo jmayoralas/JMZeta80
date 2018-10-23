@@ -283,7 +283,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: self.regs.main.b)
 		}
 		opcodes[0x42] = {
-			// error z = 2
+			// sbc hl,main.bc
+			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.main.bc, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x43] = {
 			// error z = 3
@@ -317,7 +319,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: self.regs.main.c)
 		}
 		opcodes[0x4A] = {
-			// error z = 2
+			// adc hl,main.bc
+			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.main.bc, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x4B] = {
 			// error z = 3
@@ -351,7 +355,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: self.regs.main.d)
 		}
 		opcodes[0x52] = {
-			// error z = 2
+			// sbc hl,main.de
+			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.main.de, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x53] = {
 			// error z = 3
@@ -385,7 +391,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: self.regs.main.e)
 		}
 		opcodes[0x5A] = {
-			// error z = 2
+			// adc hl,main.de
+			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.main.de, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x5B] = {
 			// error z = 3
@@ -419,7 +427,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: self.regs.main.h)
 		}
 		opcodes[0x62] = {
-			// error z = 2
+			// sbc hl,main.hl
+			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.main.hl, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x63] = {
 			// error z = 3
@@ -453,7 +463,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: self.regs.main.l)
 		}
 		opcodes[0x6A] = {
-			// error z = 2
+			// adc hl,main.hl
+			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.main.hl, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x6B] = {
 			// error z = 3
@@ -486,7 +498,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: 0x00)
 		}
 		opcodes[0x72] = {
-			// error z = 2
+			// sbc hl,sp
+			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.sp, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x73] = {
 			// error z = 3
@@ -520,7 +534,9 @@ extension Cpu {
 			self.bus.ioWrite(self.regs.main.bc, value: self.regs.main.a)
 		}
 		opcodes[0x7A] = {
-			// error z = 2
+			// adc hl,sp
+			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.sp, flags: &self.regs.main.f)
+			self.clock.add(cycles: 7)
 		}
 		opcodes[0x7B] = {
 			// error z = 3
