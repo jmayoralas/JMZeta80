@@ -163,7 +163,7 @@ public class Cpu {
             self.halted = false
         }
         
-        clock.add(cycles: 8)
+        clock.add(cycles: 4)
         
         self.call(0x0066)
         
