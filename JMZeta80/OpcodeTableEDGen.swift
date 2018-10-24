@@ -13,258 +13,322 @@ extension Cpu {
 		opcodes[0x00] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x01] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x02] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x03] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x04] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x05] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x06] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x07] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x08] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x09] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x0A] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x0B] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x0C] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x0D] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x0E] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x0F] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x10] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x11] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x12] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x13] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x14] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x15] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x16] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x17] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x18] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x19] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x1A] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x1B] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x1C] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x1D] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x1E] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x1F] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x20] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x21] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x22] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x23] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x24] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x25] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x26] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x27] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x28] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x29] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x2A] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x2B] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x2C] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x2D] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x2E] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x2F] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x30] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x31] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x32] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x33] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x34] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x35] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x36] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x37] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x38] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x39] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x3A] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x3B] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x3C] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x3D] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x3E] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x3F] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0x40] = {
 			// in main.b,(c)
@@ -755,258 +819,322 @@ extension Cpu {
 		opcodes[0xC0] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC1] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC2] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC3] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC4] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC5] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC6] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC7] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC8] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xC9] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xCA] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xCB] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xCC] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xCD] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xCE] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xCF] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD0] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD1] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD2] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD3] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD4] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD5] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD6] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD7] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD8] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xD9] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xDA] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xDB] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xDC] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xDD] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xDE] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xDF] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE0] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE1] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE2] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE3] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE4] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE5] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE6] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE7] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE8] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xE9] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xEA] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xEB] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xEC] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xED] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xEE] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xEF] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF0] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF1] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF2] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF3] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF4] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF5] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF6] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF7] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF8] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xF9] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xFA] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xFB] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xFC] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xFD] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xFE] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 		opcodes[0xFF] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
 			self.interrupt_status.pending_execution = true
+			self.clock.add(cycles: 4)
 		}
 	}
 }
