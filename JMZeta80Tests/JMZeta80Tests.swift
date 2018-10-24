@@ -1686,4 +1686,88 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssert(clock.getCycles() == 2 * 15)
     }
+    
+    func test_ld_nni_rp() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xED, 0x43, 0x00, 0x80])
+        cpu.regs.main.bc = 0x4644
+        cpu.executeNextOpcode()
+        XCTAssert(bus.read(0x8000) == 0x44)
+        XCTAssert(bus.read(0x8001) == 0x46)
+        
+        XCTAssert(clock.getCycles() == 20)
+    }
+    
+    func test_ld_rp_nni() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xED, 0x4B, 0x00, 0x90])
+        bus.write(0x9000, data: [0x65, 0x78])
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.bc == 0x7865)
+        
+        XCTAssert(clock.getCycles() == 20)
+    }
+    
+    func test_neg() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xED, 0x44])
+        cpu.regs.main.a = 0b10011000
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.a == 0b01101000)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_Z == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_3 != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
+        
+        XCTAssert(clock.getCycles() == 8)
+    }
+    
+    func test_retn() {
+        cpu.reset()
+        
+        bus.write(0x0066, data: [0x00, 0xED, 0x45])
+        cpu.interrupt_status.IFF1 = true
+        cpu.executeNextOpcode()
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0002)
+        cpu.nmi_req = true
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0066)
+        XCTAssert(cpu.interrupt_status.IFF1 == false)
+        XCTAssert(cpu.nmi_req == false)
+        cpu.executeNextOpcode()
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.interrupt_status.IFF1 == true)
+        XCTAssert(cpu.regs.pc == 0x0002)
+        
+        XCTAssert(clock.getCycles() == 4 + 4 + 11 + 4 + 14)
+    }
+    
+    func test_reti() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xED, 0x56])
+        bus.write(0x0038, data: [0x00, 0xED, 0x4D])
+        cpu.interrupt_status.IFF1 = true
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0002)
+        cpu.int_req = true
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x0038)
+        XCTAssert(cpu.interrupt_status.IFF1 == false)
+        XCTAssert(cpu.int_req == true)
+        cpu.executeNextOpcode()
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.interrupt_status.IFF1 == false)
+        XCTAssert(cpu.regs.pc == 0x0002)
+        
+        XCTAssert(clock.getCycles() == 8 + 13 + 4 + 14)
+    }
 }

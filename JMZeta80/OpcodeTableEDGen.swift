@@ -288,16 +288,26 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x43] = {
-			// error z = 3
+			// ld (nn),main.bc
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			let data = self.regs.main.bc
+			self.bus.write(address, value: data.low)
+			self.bus.write(address &+ 1, value: data.high)
+			self.regs.pc &+= 2
 		}
 		opcodes[0x44] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x45] = {
-			// error z = 5
+			// retn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.interrupt_status.IFF1 = self.interrupt_status.IFF2
 		}
 		opcodes[0x46] = {
-			// error z = 6
+			// im 0
+			self.interrupt_status.int_mode = 0
 		}
 		opcodes[0x47] = {
 			// error z = 7
@@ -324,16 +334,23 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x4B] = {
-			// error z = 3
+			// ld main.bc,(nn)
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.main.bc = self.buildAddress(self.bus.read(address &+ 1),self.bus.read(address))
+			self.regs.pc &+= 2
 		}
 		opcodes[0x4C] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x4D] = {
-			// error z = 5
+			// reti
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
 		}
 		opcodes[0x4E] = {
-			// error z = 6
+			// im 1
+			self.interrupt_status.int_mode = 1
 		}
 		opcodes[0x4F] = {
 			// error z = 7
@@ -360,16 +377,26 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x53] = {
-			// error z = 3
+			// ld (nn),main.de
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			let data = self.regs.main.de
+			self.bus.write(address, value: data.low)
+			self.bus.write(address &+ 1, value: data.high)
+			self.regs.pc &+= 2
 		}
 		opcodes[0x54] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x55] = {
-			// error z = 5
+			// retn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.interrupt_status.IFF1 = self.interrupt_status.IFF2
 		}
 		opcodes[0x56] = {
-			// error z = 6
+			// im 1
+			self.interrupt_status.int_mode = 1
 		}
 		opcodes[0x57] = {
 			// error z = 7
@@ -396,16 +423,24 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x5B] = {
-			// error z = 3
+			// ld main.de,(nn)
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.main.de = self.buildAddress(self.bus.read(address &+ 1),self.bus.read(address))
+			self.regs.pc &+= 2
 		}
 		opcodes[0x5C] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x5D] = {
-			// error z = 5
+			// retn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.interrupt_status.IFF1 = self.interrupt_status.IFF2
 		}
 		opcodes[0x5E] = {
-			// error z = 6
+			// im 2
+			self.interrupt_status.int_mode = 2
 		}
 		opcodes[0x5F] = {
 			// error z = 7
@@ -432,16 +467,26 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x63] = {
-			// error z = 3
+			// ld (nn),main.hl
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			let data = self.regs.main.hl
+			self.bus.write(address, value: data.low)
+			self.bus.write(address &+ 1, value: data.high)
+			self.regs.pc &+= 2
 		}
 		opcodes[0x64] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x65] = {
-			// error z = 5
+			// retn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.interrupt_status.IFF1 = self.interrupt_status.IFF2
 		}
 		opcodes[0x66] = {
-			// error z = 6
+			// im 0
+			self.interrupt_status.int_mode = 0
 		}
 		opcodes[0x67] = {
 			// error z = 7
@@ -468,16 +513,24 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x6B] = {
-			// error z = 3
+			// ld main.hl,(nn)
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.main.hl = self.buildAddress(self.bus.read(address &+ 1),self.bus.read(address))
+			self.regs.pc &+= 2
 		}
 		opcodes[0x6C] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x6D] = {
-			// error z = 5
+			// retn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.interrupt_status.IFF1 = self.interrupt_status.IFF2
 		}
 		opcodes[0x6E] = {
-			// error z = 6
+			// im 1
+			self.interrupt_status.int_mode = 1
 		}
 		opcodes[0x6F] = {
 			// error z = 7
@@ -503,16 +556,26 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x73] = {
-			// error z = 3
+			// ld (nn),sp
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			let data = self.regs.sp
+			self.bus.write(address, value: data.low)
+			self.bus.write(address &+ 1, value: data.high)
+			self.regs.pc &+= 2
 		}
 		opcodes[0x74] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x75] = {
-			// error z = 5
+			// retn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.interrupt_status.IFF1 = self.interrupt_status.IFF2
 		}
 		opcodes[0x76] = {
-			// error z = 6
+			// im 1
+			self.interrupt_status.int_mode = 1
 		}
 		opcodes[0x77] = {
 			// error z = 7
@@ -539,16 +602,24 @@ extension Cpu {
 			self.clock.add(cycles: 7)
 		}
 		opcodes[0x7B] = {
-			// error z = 3
+			// ld sp,(nn)
+			let address = self.buildAddress(self.bus.read(self.regs.pc &+ 1), self.bus.read(self.regs.pc))
+			self.regs.sp = self.buildAddress(self.bus.read(address &+ 1),self.bus.read(address))
+			self.regs.pc &+= 2
 		}
 		opcodes[0x7C] = {
-			// error z = 4
+			// neg
+			self.regs.main.a = Alu.sub(0, self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x7D] = {
-			// error z = 5
+			// retn
+			self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.regs.sp &+= 2
+			self.interrupt_status.IFF1 = self.interrupt_status.IFF2
 		}
 		opcodes[0x7E] = {
-			// error z = 6
+			// im 2
+			self.interrupt_status.int_mode = 2
 		}
 		opcodes[0x7F] = {
 			// error z = 7
