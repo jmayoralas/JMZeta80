@@ -29,6 +29,8 @@ struct CpuRegs {
     
     // Interrupt Vector
     var i: UInt8 = 0xFF
+    // Memory refresh
+    var r: UInt8 = 0xFF
     
     // undocumented register for flag affection of scf/ccf opcodes
     var q : UInt8 = 0
@@ -137,9 +139,27 @@ public class Cpu {
             regs.pc = regs.pc &+ 1
         }
         
+        _updateMemoryRefreshRegister(opcode)
+        
         clock.add(cycles: 1)
         
         return opcode
+    }
+    
+    private func _updateMemoryRefreshRegister(_ opcode: Opcode) {
+        guard opcode != 0xCB || id_opcode_table == table_NONE else {
+            return
+        }
+        
+        // save bit 7 of R to restore after increment
+        let bit7 = regs.r & 0x80
+        
+        // increment only seven bits
+        regs.r &= 0x7F
+        regs.r = regs.r + 1 <= 0x7F ? regs.r + 1 : 0
+        
+        // restore bit 7
+        regs.r |= bit7
     }
     
     func call(_ address: UInt16) {
