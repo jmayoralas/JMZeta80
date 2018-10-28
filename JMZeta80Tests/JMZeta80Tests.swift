@@ -2052,12 +2052,12 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(bus.read(0x1113) == 0xA5)
         XCTAssert(bus.read(0x2222) == 0x88)
         XCTAssert(bus.read(0x2223) == 0x36)
-        XCTAssert(bus.read(0x2222) == 0xA5)
+        XCTAssert(bus.read(0x2224) == 0xA5)
         XCTAssert(cpu.regs.main.f & FLAG_H == 0)
         XCTAssert(cpu.regs.main.f & FLAG_PV == 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
-        XCTAssert(cpu.regs.main.f & FLAG_3 != 0)
-        XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_5 == 0)
         XCTAssert(cpu.regs.pc == 0x0002)
         
         XCTAssert(clock.getCycles() == 21 * 2 + 16)
@@ -2087,16 +2087,18 @@ class JMZeta80Tests: XCTestCase {
         
         bus.write(0x0000, data: [0xED, 0xB2])
         bus.write(0x1000, data: [0x00, 0x00, 0x00, 0x00])
-        bus.ioWrite(0x0007, value: 0x7B)
         cpu.regs.main.b = 0x03
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
+        bus.ioWrite(0x0007, value: 0x7B)
         cpu.executeNextOpcode()
+        bus.ioWrite(0x0007, value: 0x22)
         cpu.executeNextOpcode()
+        bus.ioWrite(0x0007, value: 0x5C)
         cpu.executeNextOpcode()
         XCTAssert(bus.read(0x1000) == 0x7B)
-        XCTAssert(bus.read(0x1001) == 0x7B)
-        XCTAssert(bus.read(0x1002) == 0x7B)
+        XCTAssert(bus.read(0x1001) == 0x22)
+        XCTAssert(bus.read(0x1002) == 0x5C)
         XCTAssert(bus.read(0x1003) == 0x00)
         XCTAssert(cpu.regs.main.hl == 0x1003)
         XCTAssert(cpu.regs.main.b == 0x00)
@@ -2115,7 +2117,9 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
         cpu.executeNextOpcode()
+        XCTAssert(bus.ioRead(0x07) == 0x51)
         cpu.executeNextOpcode()
+        XCTAssert(bus.ioRead(0x07) == 0xA9)
         cpu.executeNextOpcode()
         XCTAssert(bus.ioRead(0x07) == 0x03)
         XCTAssert(cpu.regs.main.hl == 0x1003)
@@ -2183,16 +2187,18 @@ class JMZeta80Tests: XCTestCase {
         
         bus.write(0x0000, data: [0xED, 0xB3])
         bus.write(0x0FFD, data: [0x00, 0x00, 0x00, 0x00])
-        bus.ioWrite(0x0007, value: 0x7B)
         cpu.regs.main.b = 0x03
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
+        bus.ioWrite(0x0007, value: 0x7B)
         cpu.executeNextOpcode()
+        bus.ioWrite(0x0007, value: 0xDD)
         cpu.executeNextOpcode()
+        bus.ioWrite(0x0007, value: 0x8A)
         cpu.executeNextOpcode()
         XCTAssert(bus.read(0x1000) == 0x7B)
-        XCTAssert(bus.read(0x0FFF) == 0x7B)
-        XCTAssert(bus.read(0x0FFE) == 0x7B)
+        XCTAssert(bus.read(0x0FFF) == 0xDD)
+        XCTAssert(bus.read(0x0FFE) == 0x8A)
         XCTAssert(bus.read(0x0FFD) == 0x00)
         XCTAssert(cpu.regs.main.hl == 0x0FFD)
         XCTAssert(cpu.regs.main.b == 0x00)
@@ -2212,7 +2218,9 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
         cpu.executeNextOpcode()
+        XCTAssert(bus.ioRead(0x07) == 0xBB)
         cpu.executeNextOpcode()
+        XCTAssert(bus.ioRead(0x07) == 0xA9)
         cpu.executeNextOpcode()
         XCTAssert(bus.ioRead(0x07) == 0x51)
         XCTAssert(cpu.regs.main.hl == 0x0FFD)
