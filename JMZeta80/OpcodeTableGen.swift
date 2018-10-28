@@ -29,33 +29,11 @@ extension Cpu {
 		}
 		opcodes[0x04] = {
 			// inc main.b
-			if self.regs.main.b == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.b & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.b &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.b & FLAG_S
-			if self.regs.main.b == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.b = Alu.add(self.regs.main.b, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x05] = {
 			// dec main.b
-			if self.regs.main.b == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.b & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.b &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.b & FLAG_S
-			if self.regs.main.b == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x06] = {
 			// ld main.b,n
@@ -96,33 +74,11 @@ extension Cpu {
 		}
 		opcodes[0x0C] = {
 			// inc main.c
-			if self.regs.main.c == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.c & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.c &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.c & FLAG_S
-			if self.regs.main.c == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.c = Alu.add(self.regs.main.c, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x0D] = {
 			// dec main.c
-			if self.regs.main.c == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.c & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.c &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.c & FLAG_S
-			if self.regs.main.c == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.c = Alu.sub(self.regs.main.c, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x0E] = {
 			// ld main.c,n
@@ -168,33 +124,11 @@ extension Cpu {
 		}
 		opcodes[0x14] = {
 			// inc main.d
-			if self.regs.main.d == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.d & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.d &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.d & FLAG_S
-			if self.regs.main.d == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.d = Alu.add(self.regs.main.d, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x15] = {
 			// dec main.d
-			if self.regs.main.d == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.d & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.d &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.d & FLAG_S
-			if self.regs.main.d == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.d = Alu.sub(self.regs.main.d, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x16] = {
 			// ld main.d,n
@@ -236,33 +170,11 @@ extension Cpu {
 		}
 		opcodes[0x1C] = {
 			// inc main.e
-			if self.regs.main.e == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.e & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.e &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.e & FLAG_S
-			if self.regs.main.e == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.e = Alu.add(self.regs.main.e, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x1D] = {
 			// dec main.e
-			if self.regs.main.e == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.e & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.e &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.e & FLAG_S
-			if self.regs.main.e == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.e = Alu.sub(self.regs.main.e, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x1E] = {
 			// ld main.e,n
@@ -309,33 +221,11 @@ extension Cpu {
 		}
 		opcodes[0x24] = {
 			// inc main.h
-			if self.regs.main.h == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.h & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.h &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.h & FLAG_S
-			if self.regs.main.h == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.h = Alu.add(self.regs.main.h, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x25] = {
 			// dec main.h
-			if self.regs.main.h == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.h & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.h &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.h & FLAG_S
-			if self.regs.main.h == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.h = Alu.sub(self.regs.main.h, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x26] = {
 			// ld main.h,n
@@ -414,33 +304,11 @@ extension Cpu {
 		}
 		opcodes[0x2C] = {
 			// inc main.l
-			if self.regs.main.l == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.l & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.l &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.l & FLAG_S
-			if self.regs.main.l == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.l = Alu.add(self.regs.main.l, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x2D] = {
 			// dec main.l
-			if self.regs.main.l == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.l & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.l &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.l & FLAG_S
-			if self.regs.main.l == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.l = Alu.sub(self.regs.main.l, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x2E] = {
 			// ld main.l,n
@@ -482,36 +350,14 @@ extension Cpu {
 		opcodes[0x34] = {
 			// inc (hl)
 			var data = self.bus.read(self.regs.main.hl)
-			if data == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if data & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			data &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | data & FLAG_S
-			if data == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			data = Alu.add(data, 1, flags: &self.regs.main.f)
 			self.bus.write(self.regs.main.hl, value: data)
 			self.clock.add(cycles: 1)
 		}
 		opcodes[0x35] = {
 			// dec (hl)
 			var data = self.bus.read(self.regs.main.hl)
-			if data == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if data & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			data &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | data & FLAG_S
-			if data == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			data = Alu.sub(data, 1, flags: &self.regs.main.f)
 			self.bus.write(self.regs.main.hl, value: data)
 			self.clock.add(cycles: 1)
 		}
@@ -556,33 +402,11 @@ extension Cpu {
 		}
 		opcodes[0x3C] = {
 			// inc main.a
-			if self.regs.main.a == 0x7F { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.a & 0x0F == 0xF {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.a &+= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.a & FLAG_S
-			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.a = Alu.add(self.regs.main.a, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x3D] = {
 			// dec main.a
-			if self.regs.main.a == 0x80 { self.regs.main.f.set(bit: FLAG_PV) }
-			else { self.regs.main.f.reset(bit: FLAG_PV) }
-			if self.regs.main.a & 0x0F == 0 {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
-			self.regs.main.a &-= 1
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.a & FLAG_S
-			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			self.regs.main.f.set(bit: FLAG_N)
+			self.regs.main.a = Alu.sub(self.regs.main.a, 1, flags: &self.regs.main.f)
 		}
 		opcodes[0x3E] = {
 			// ld main.a,n
