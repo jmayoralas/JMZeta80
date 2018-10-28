@@ -902,15 +902,49 @@ extension Cpu {
 		}
 		opcodes[0xA0] = {
 			// ldi
+			var data = self.bus.read(self.regs.main.hl)
+			self.bus.write(self.regs.main.de, value: data)
+			self.regs.main.bc &-= 1
+			self.regs.main.hl &+= 1
+			self.regs.main.de &+= 1
+			data &+= self.regs.main.a
+			self.regs.main.f.reset(bit: FLAG_H)
+			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x01) << 5
+			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
+			self.clock.add(cycles: 2)
 		}
 		opcodes[0xA1] = {
 			// ldd
+			var data = self.bus.read(self.regs.main.hl)
+			self.bus.write(self.regs.main.de, value: data)
+			self.regs.main.bc &-= 1
+			self.regs.main.hl &-= 1
+			self.regs.main.de &-= 1
+			data &+= self.regs.main.a
+			self.regs.main.f.reset(bit: FLAG_H)
+			self.regs.main.f.reset(bit: FLAG_N)
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x01) << 5
+			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
+			self.clock.add(cycles: 2)
 		}
 		opcodes[0xA2] = {
 			// ldir
+			self.opcodes[self.id_opcode_table][0xA0]()
+			if self.regs.main.bc != 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xA3] = {
 			// lddr
+			self.opcodes[self.id_opcode_table][0xA1]()
+			if self.regs.main.bc != 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xA4] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
@@ -934,15 +968,41 @@ extension Cpu {
 		}
 		opcodes[0xA8] = {
 			// cpi
+			var data = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.regs.main.bc &-= 1
+			self.regs.main.hl &+= 1
+			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
+			data &-= (self.regs.main.f & FLAG_H) >> H
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x01) << 5
+			self.clock.add(cycles: 5)
 		}
 		opcodes[0xA9] = {
 			// cpd
+			var data = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.regs.main.bc &-= 1
+			self.regs.main.hl &-= 1
+			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
+			data &-= (self.regs.main.f & FLAG_H) >> H
+			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
+			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x01) << 5
+			self.clock.add(cycles: 5)
 		}
 		opcodes[0xAA] = {
 			// cpir
+			self.opcodes[self.id_opcode_table][0xA8]()
+			if self.regs.main.bc != 0 && self.regs.main.f & FLAG_Z == 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xAB] = {
 			// cpdr
+			self.opcodes[self.id_opcode_table][0xA9]()
+			if self.regs.main.bc != 0 && self.regs.main.f & FLAG_Z == 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xAC] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
@@ -966,15 +1026,33 @@ extension Cpu {
 		}
 		opcodes[0xB0] = {
 			// ini
+			self.bus.write(self.regs.main.hl, value: self.bus.ioRead(self.regs.main.bc))
+			self.regs.main.hl &+= 1
+			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xB1] = {
 			// ind
+			self.bus.write(self.regs.main.hl, value: self.bus.ioRead(self.regs.main.bc))
+			self.regs.main.hl &-= 1
+			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xB2] = {
 			// inir
+			self.opcodes[self.id_opcode_table][0xB0]()
+			if self.regs.main.b != 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xB3] = {
 			// indr
+			self.opcodes[self.id_opcode_table][0xB1]()
+			if self.regs.main.b != 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xB4] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
@@ -998,15 +1076,33 @@ extension Cpu {
 		}
 		opcodes[0xB8] = {
 			// outi
+			self.bus.ioWrite(self.regs.main.bc, value: self.bus.read(self.regs.main.hl))
+			self.regs.main.hl &+= 1
+			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xB9] = {
 			// outd
+			self.bus.ioWrite(self.regs.main.bc, value: self.bus.read(self.regs.main.hl))
+			self.regs.main.hl &-= 1
+			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.clock.add(cycles: 1)
 		}
 		opcodes[0xBA] = {
 			// otir
+			self.opcodes[self.id_opcode_table][0xB8]()
+			if self.regs.main.b != 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xBB] = {
 			// otdr
+			self.opcodes[self.id_opcode_table][0xB9]()
+			if self.regs.main.b != 0 {
+				self.regs.pc &-= 2
+				self.clock.add(cycles: 5)
+			}
 		}
 		opcodes[0xBC] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
