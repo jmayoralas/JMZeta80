@@ -1169,7 +1169,7 @@ class JMZeta80Tests: XCTestCase {
     func test_ex_de_hl() {
         cpu.reset()
         
-        bus.write(0x0000, data: [0xEB])
+        bus.write(0x0000, data: [0xEB, 0xDD, 0xEB])
         cpu.regs.main.de = 0x3344
         cpu.regs.main.hl = 0x5566
         cpu.executeNextOpcode()
@@ -1177,6 +1177,12 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.hl == 0x3344)
         
         XCTAssert(clock.getCycles() == 4)
+        
+        cpu.regs.ix = 0x1111
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.ix == 0x1111)
+        XCTAssert(cpu.regs.main.hl == 0x5566)
+        XCTAssert(cpu.regs.main.de == 0x3344)
     }
     
     func test_di() {
@@ -1622,7 +1628,7 @@ class JMZeta80Tests: XCTestCase {
     func test_adc_hl_r() {
         cpu.reset()
         
-        bus.write(0x0000, data: [0xED, 0x4A, 0xED, 0x4A])
+        bus.write(0x0000, data: [0xED, 0x4A, 0xDD, 0xED, 0x4A])
         cpu.regs.main.bc = 0x2222
         cpu.regs.main.hl = 0x5437
         cpu.executeNextOpcode()
@@ -1650,7 +1656,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
         XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
         
-        XCTAssert(clock.getCycles() == 2 * 15)
+        XCTAssert(clock.getCycles() == 8 + 2 * 15)
     }
     
     func test_sbc_hl_r() {
@@ -2231,4 +2237,100 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssert(clock.getCycles() == 21 * 2 + 16)
     }
+    
+    func test_add_ix_bc() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xDD, 0x09])
+        cpu.regs.ix = 0x22
+        cpu.regs.main.hl = 0x44
+        cpu.regs.main.bc = 0xAA
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.hl == 0x44)
+        XCTAssert(cpu.regs.ix == 0xCC)
+        XCTAssert(cpu.regs.pc == 0x0003)
+        
+        XCTAssert(clock.getCycles() == 23)
+    }
+    
+    func test_add_iy_bc() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xFD, 0x09])
+        cpu.regs.iy = 0x22
+        cpu.regs.main.hl = 0x44
+        cpu.regs.main.bc = 0xAA
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.hl == 0x44)
+        XCTAssert(cpu.regs.iy == 0xCC)
+        XCTAssert(cpu.regs.pc == 0x0003)
+        
+        XCTAssert(clock.getCycles() == 23)
+    }
+    
+    func test_inc_ixdi() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0x34, 0x09])
+        bus.write(0x1009, data: [0x0F])
+        cpu.regs.ix = 0x1000
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.bus.read(0x1009) == 0x10)
+        
+        XCTAssert(clock.getCycles() == 23, String.init(format: "cycles: %d", clock.getCycles()))
+    }
+    
+    func test_jp_ixi() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xE9])
+        cpu.regs.main.hl = 0x4000
+        cpu.regs.ix = 0x5000
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.pc == 0x5000)
+        
+        XCTAssert(clock.getCycles() == 8)
+    }
+    
+    func test_ld_ixh_b() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0x60])
+        cpu.regs.main.b = 0x44
+        cpu.regs.main.hl = 0x2211
+        cpu.regs.ix = 0x6677
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.hl == 0x2211)
+        XCTAssert(cpu.regs.ix == 0x4477)
+        
+        XCTAssert(clock.getCycles() == 8)
+    }
+    
+    func test_ld_iyh_b() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xFD, 0x60])
+        cpu.regs.main.b = 0x44
+        cpu.regs.main.hl = 0x2211
+        cpu.regs.iy = 0x6677
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.hl == 0x2211)
+        XCTAssert(cpu.regs.iy == 0x4477)
+        
+        XCTAssert(clock.getCycles() == 8)
+    }
+    
+    func test_ld_ixd_n() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0x36, 0xFF, 0x22])
+        bus.write(0x1000, data: [0xBB])
+        cpu.regs.main.hl = 0x2000
+        cpu.regs.ix = 0x1001
+        cpu.executeNextOpcode()
+        XCTAssert(bus.read(0x1000) == 0x22)
+        
+        XCTAssert(clock.getCycles() == 19)
+    }
+
 }

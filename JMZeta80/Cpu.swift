@@ -15,6 +15,11 @@ let table_CB = 2
 let table_XXCB = 3
 let table_ED = 4
 
+enum SwapHL {
+    case ix
+    case iy
+}
+
 // defines Z80 register structure
 struct CpuRegs {
     var main = RegisterBank()
@@ -61,21 +66,20 @@ public class Cpu {
     
     var id_opcode_table = table_NONE
     
+    var swap_hl = SwapHL.ix
+    
     public init(bus: AccessibleBus, clock: SystemClock) {
         self.bus = DataBus(bus: bus, clock: clock)
         self.clock = clock
         
         opcodes = [OpcodeTable](repeating: OpcodeTable(repeating: {
-            // by default, every undocumented and unimplemented opcode prefixed by DD or FD, will execute his equivalent in the un-prefixed opcode table
-            // and NOP in the rest of cases
-            if self.id_opcode_table == table_XX {
-                self.opcodes[table_NONE][Int(self.regs.ir)]()
-            }
+            // by default, every undocumented and unimplemented opcode will execute NOP
         }, count: 0x100), count: 5)
         
         initOpcodeTable(&opcodes[table_NONE])
         initOpcodeTableCB(&opcodes[table_CB])
         initOpcodeTableED(&opcodes[table_ED])
+        initOpcodeTableXX(&opcodes[table_XX])
         
         reset()
     }
@@ -237,5 +241,60 @@ public class Cpu {
     func addRelative(displacement: UInt8, toAddress address: UInt16) -> UInt16 {
         let abs_displ = displacement.comp2
         return abs_displ < 0 ? address &- UInt16(-abs_displ) : address &+ UInt16(abs_displ)
+    }
+    
+    private func initOpcodeTableXX(_ opcodes: inout OpcodeTable) {
+        opcodes = OpcodeTable(repeating: {
+            guard self.regs.ir != 0xEB else {
+                self.opcodes[table_NONE][Int(self.regs.ir)]()
+                return
+            }
+            
+            self.regs.xx = self.regs.main.hl
+            
+            switch self.swap_hl {
+            case .ix: self.regs.main.hl = self.regs.ix
+            case .iy: self.regs.main.hl = self.regs.iy
+            }
+
+            self.opcodes[table_NONE][Int(self.regs.ir)]()
+            
+            switch self.swap_hl {
+            case .ix: self.regs.ix = self.regs.main.hl
+            case .iy: self.regs.iy = self.regs.main.hl
+            }
+            
+            self.regs.main.hl = self.regs.xx
+            self.id_opcode_table = table_NONE
+        }, count: 0x100)
+        
+        opcodes[0xDD] = {
+            // NONI
+            self.clock.add(cycles: 4)
+            self.interrupt_status.pending_execution = true
+            
+            // ack new prefix
+            self.swap_hl = SwapHL.ix
+        }
+        
+        opcodes[0xED] = {
+            // NONI
+            self.clock.add(cycles: 4)
+            self.interrupt_status.pending_execution = true
+            
+            // ack new prefix
+            self.id_opcode_table = table_ED
+            self.fetchAndExec()
+            self.id_opcode_table = table_NONE
+        }
+        
+        opcodes[0xFD] = {
+            // NONI
+            self.clock.add(cycles: 4)
+            self.interrupt_status.pending_execution = true
+            
+            // ack new prefix
+            self.swap_hl = SwapHL.iy
+        }
     }
 }

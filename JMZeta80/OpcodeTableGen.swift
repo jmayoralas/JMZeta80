@@ -349,21 +349,42 @@ extension Cpu {
 		}
 		opcodes[0x34] = {
 			// inc (hl)
-			var data = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			var data = self.bus.read(address)
 			data = Alu.add(data, 1, flags: &self.regs.main.f)
-			self.bus.write(self.regs.main.hl, value: data)
+			self.bus.write(address, value: data)
 			self.clock.add(cycles: 1)
 		}
 		opcodes[0x35] = {
 			// dec (hl)
-			var data = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			var data = self.bus.read(address)
 			data = Alu.sub(data, 1, flags: &self.regs.main.f)
-			self.bus.write(self.regs.main.hl, value: data)
+			self.bus.write(address, value: data)
 			self.clock.add(cycles: 1)
 		}
 		opcodes[0x36] = {
 			// ld (hl),n
-			self.bus.write(self.regs.main.hl, value: self.bus.read(self.regs.pc))
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.bus.read(self.regs.pc))
 			self.regs.pc &+= 1
 		}
 		opcodes[0x37] = {
@@ -452,7 +473,14 @@ extension Cpu {
 		}
 		opcodes[0x46] = {
 			// ld main.b,(hl)
-			self.regs.main.b = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.b = self.bus.read(address)
 		}
 		opcodes[0x47] = {
 			// ld main.b,main.a
@@ -484,7 +512,14 @@ extension Cpu {
 		}
 		opcodes[0x4E] = {
 			// ld main.c,(hl)
-			self.regs.main.c = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.c = self.bus.read(address)
 		}
 		opcodes[0x4F] = {
 			// ld main.c,main.a
@@ -516,7 +551,14 @@ extension Cpu {
 		}
 		opcodes[0x56] = {
 			// ld main.d,(hl)
-			self.regs.main.d = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.d = self.bus.read(address)
 		}
 		opcodes[0x57] = {
 			// ld main.d,main.a
@@ -548,7 +590,14 @@ extension Cpu {
 		}
 		opcodes[0x5E] = {
 			// ld main.e,(hl)
-			self.regs.main.e = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.e = self.bus.read(address)
 		}
 		opcodes[0x5F] = {
 			// ld main.e,main.a
@@ -580,7 +629,14 @@ extension Cpu {
 		}
 		opcodes[0x66] = {
 			// ld main.h,(hl)
-			self.regs.main.h = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.h = self.bus.read(address)
 		}
 		opcodes[0x67] = {
 			// ld main.h,main.a
@@ -612,7 +668,14 @@ extension Cpu {
 		}
 		opcodes[0x6E] = {
 			// ld main.l,(hl)
-			self.regs.main.l = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.l = self.bus.read(address)
 		}
 		opcodes[0x6F] = {
 			// ld main.l,main.a
@@ -620,27 +683,69 @@ extension Cpu {
 		}
 		opcodes[0x70] = {
 			// ld (hl),main.b
-			self.bus.write(self.regs.main.hl, value: self.regs.main.b)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.regs.main.b)
 		}
 		opcodes[0x71] = {
 			// ld (hl),main.c
-			self.bus.write(self.regs.main.hl, value: self.regs.main.c)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.regs.main.c)
 		}
 		opcodes[0x72] = {
 			// ld (hl),main.d
-			self.bus.write(self.regs.main.hl, value: self.regs.main.d)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.regs.main.d)
 		}
 		opcodes[0x73] = {
 			// ld (hl),main.e
-			self.bus.write(self.regs.main.hl, value: self.regs.main.e)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.regs.main.e)
 		}
 		opcodes[0x74] = {
 			// ld (hl),main.h
-			self.bus.write(self.regs.main.hl, value: self.regs.main.h)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.regs.main.h)
 		}
 		opcodes[0x75] = {
 			// ld (hl),main.l
-			self.bus.write(self.regs.main.hl, value: self.regs.main.l)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.regs.main.l)
 		}
 		opcodes[0x76] = {
 			// halt
@@ -649,7 +754,14 @@ extension Cpu {
 		}
 		opcodes[0x77] = {
 			// ld (hl),main.a
-			self.bus.write(self.regs.main.hl, value: self.regs.main.a)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.bus.write(address, value: self.regs.main.a)
 		}
 		opcodes[0x78] = {
 			// ld main.a,main.b
@@ -677,7 +789,14 @@ extension Cpu {
 		}
 		opcodes[0x7E] = {
 			// ld main.a,(hl)
-			self.regs.main.a = self.bus.read(self.regs.main.hl)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = self.bus.read(address)
 		}
 		opcodes[0x7F] = {
 			// ld main.a,main.a
@@ -709,7 +828,14 @@ extension Cpu {
 		}
 		opcodes[0x86] = {
 			// add a,(hl)
-			self.regs.main.a = Alu.add(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = Alu.add(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0x87] = {
 			// add a,main.a
@@ -741,7 +867,14 @@ extension Cpu {
 		}
 		opcodes[0x8E] = {
 			// adc a,(hl)
-			self.regs.main.a = Alu.adc(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = Alu.adc(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0x8F] = {
 			// adc a,main.a
@@ -773,7 +906,14 @@ extension Cpu {
 		}
 		opcodes[0x96] = {
 			// sub a,(hl)
-			self.regs.main.a = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = Alu.sub(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0x97] = {
 			// sub a,main.a
@@ -805,7 +945,14 @@ extension Cpu {
 		}
 		opcodes[0x9E] = {
 			// sbc a,(hl)
-			self.regs.main.a = Alu.sbc(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = Alu.sbc(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0x9F] = {
 			// sbc a,main.a
@@ -837,7 +984,14 @@ extension Cpu {
 		}
 		opcodes[0xA6] = {
 			// and a,(hl)
-			self.regs.main.a = Alu.and(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = Alu.and(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0xA7] = {
 			// and a,main.a
@@ -869,7 +1023,14 @@ extension Cpu {
 		}
 		opcodes[0xAE] = {
 			// xor a,(hl)
-			self.regs.main.a = Alu.xor(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = Alu.xor(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0xAF] = {
 			// xor a,main.a
@@ -901,7 +1062,14 @@ extension Cpu {
 		}
 		opcodes[0xB6] = {
 			// or a,(hl)
-			self.regs.main.a = Alu.or(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			self.regs.main.a = Alu.or(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0xB7] = {
 			// or a,main.a
@@ -933,7 +1101,14 @@ extension Cpu {
 		}
 		opcodes[0xBE] = {
 			// cp a,(hl)
-			Alu.cp(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			var address = self.regs.main.hl
+			if self.id_opcode_table == table_XX {
+				let displ = self.bus.read(self.regs.pc)
+				self.regs.pc &+= 1
+				address = self.addRelative(displacement: displ, toAddress: address)
+				self.clock.add(cycles: 2)
+			}
+			Alu.cp(self.regs.main.a, self.bus.read(address), flags: &self.regs.main.f)
 		}
 		opcodes[0xBF] = {
 			// cp a,main.a
@@ -1014,7 +1189,7 @@ extension Cpu {
 			}
 		}
 		opcodes[0xCB] = {
-			 // CB prefix
+			// CB prefix
 			self.id_opcode_table = table_CB
 			self.fetchAndExec()
 			self.id_opcode_table = table_NONE
@@ -1138,12 +1313,9 @@ extension Cpu {
 			}
 		}
 		opcodes[0xDD] = {
-			 // DD prefix
+			// DD prefix
 			self.id_opcode_table = table_XX
-			self.regs.xx = self.regs.ix
-			self.fetchAndExec()
-			self.regs.ix = self.regs.xx
-			self.id_opcode_table = table_NONE
+			self.swap_hl = SwapHL.ix
 		}
 		opcodes[0xDE] = {
 			// sbc a,n
@@ -1246,7 +1418,7 @@ extension Cpu {
 			}
 		}
 		opcodes[0xED] = {
-			 // ED prefix
+			// ED prefix
 			self.id_opcode_table = table_ED
 			self.fetchAndExec()
 			self.id_opcode_table = table_NONE
@@ -1350,12 +1522,9 @@ extension Cpu {
 			}
 		}
 		opcodes[0xFD] = {
-			 // FD prefix
+			// FD prefix
 			self.id_opcode_table = table_XX
-			self.regs.xx = self.regs.iy
-			self.fetchAndExec()
-			self.regs.iy = self.regs.xx
-			self.id_opcode_table = table_NONE
+			self.swap_hl = SwapHL.iy
 		}
 		opcodes[0xFE] = {
 			// cp a,n
