@@ -2332,5 +2332,78 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssert(clock.getCycles() == 19)
     }
+    
+    func test_rlc_r_ixd() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xCB, 0x01, 0x00])
+        bus.write(0x1001, data: [0b10001000])
+        cpu.regs.main.hl = 0x2000
+        cpu.regs.ix = 0x1000
+        cpu.executeNextOpcode()
+        XCTAssert(bus.read(0x1001) == 0b00010001)
+        XCTAssert(cpu.regs.main.b == 0b00010001)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        XCTAssert(cpu.regs.pc == 0x0004)
+        
+        XCTAssert(clock.getCycles() == 23)
+    }
+    
+    func test_rlc_ixd() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xCB, 0x01, 0x06])
+        bus.write(0x1001, data: [0b10001000])
+        cpu.regs.main.b = 0xDD
+        cpu.regs.ix = 0x1000
+        cpu.executeNextOpcode()
+        XCTAssert(bus.read(0x1001) == 0b00010001)
+        XCTAssert(cpu.regs.main.b == 0xDD)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        XCTAssert(cpu.regs.pc == 0x0004)
+        
+        XCTAssert(clock.getCycles() == 23)
+    }
+    
+    func test_bit_ixd() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xCB, 0x01, 0x46])
+        cpu.regs.ix = 0xA000
+        bus.write(cpu.regs.ix + 1, data: [0b00010000])
+        cpu.regs.main.f = 0
+        cpu.executeNextOpcode()
+        XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_S == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_PV != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_H != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
+        XCTAssert(cpu.regs.pc == 0x0004)
+        
+        XCTAssert(clock.getCycles() == 20)
+    }
+    
+    func test_res_set_ixd() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xCB, 0x01, 0x86, 0xFD, 0xDD, 0xCB, 0x01, 0xC7])
+        bus.write(0x1001, data: [0b00000001])
+        cpu.regs.ix = 0x1000
+        cpu.executeNextOpcode()
+        XCTAssert(bus.read(0x1001) == 0)
+        
+        cpu.regs.main.a = 0xDD
+        cpu.executeNextOpcode()
+        XCTAssert(bus.read(0x1001) == 0x01)
+        XCTAssert(cpu.regs.main.a == 0x01)
+        
+        XCTAssert(clock.getCycles() == 23 + 23 + 8)
 
+    }
 }

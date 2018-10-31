@@ -80,6 +80,7 @@ public class Cpu {
         initOpcodeTableCB(&opcodes[table_CB])
         initOpcodeTableED(&opcodes[table_ED])
         initOpcodeTableXX(&opcodes[table_XX])
+        initOpcodeTableXXCB(&opcodes[table_XXCB])
         
         reset()
     }
@@ -267,6 +268,13 @@ public class Cpu {
             self.regs.main.hl = self.regs.xx
             self.id_opcode_table = table_NONE
         }, count: 0x100)
+        
+        opcodes[0xCB] = {
+            self.id_opcode_table = table_XXCB
+            self.regs.pc &+= 1
+            self.fetchAndExec()
+            self.id_opcode_table = table_NONE
+        }
         
         opcodes[0xDD] = {
             // NONI

@@ -18,6 +18,7 @@
 		1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9372163C8FE005D14C1 /* Cpu.swift */; };
 		1D7EA93A2163CAAC005D14C1 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9392163CAAB005D14C1 /* Register.swift */; };
 		1D7F714221778E8000C31E5E /* OpcodeTableCBGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7F714121778E8000C31E5E /* OpcodeTableCBGen.swift */; };
+		1D9FF925218A0EB0004ED568 /* OpcodeTableXXCBGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9FF924218A0EB0004ED568 /* OpcodeTableXXCBGen.swift */; };
 		1DA162FC216519EB00243141 /* AccessibleBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA162FB216519EB00243141 /* AccessibleBus.swift */; };
 		1DECDC8F216FA89700C6383A /* Alu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECDC8E216FA89700C6383A /* Alu.swift */; };
 		1DF890422167CF7100AC7EA2 /* OpcodeTableGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF890412167CF7100AC7EA2 /* OpcodeTableGen.swift */; };
@@ -49,6 +50,7 @@
 		1D7EA9372163C8FE005D14C1 /* Cpu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cpu.swift; sourceTree = "<group>"; };
 		1D7EA9392163CAAB005D14C1 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		1D7F714121778E8000C31E5E /* OpcodeTableCBGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableCBGen.swift; sourceTree = "<group>"; };
+		1D9FF924218A0EB0004ED568 /* OpcodeTableXXCBGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableXXCBGen.swift; sourceTree = "<group>"; };
 		1DA162FB216519EB00243141 /* AccessibleBus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibleBus.swift; sourceTree = "<group>"; };
 		1DECDC8E216FA89700C6383A /* Alu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alu.swift; sourceTree = "<group>"; };
 		1DF890412167CF7100AC7EA2 /* OpcodeTableGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableGen.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 		1D7EA91D2163C701005D14C1 /* JMZeta80 */ = {
 			isa = PBXGroup;
 			children = (
+				1D9FF924218A0EB0004ED568 /* OpcodeTableXXCBGen.swift */,
 				1D7C858B217B8C8A00F3F65A /* OpcodeTableEDGen.swift */,
 				1D7F714121778E8000C31E5E /* OpcodeTableCBGen.swift */,
 				1DF890412167CF7100AC7EA2 /* OpcodeTableGen.swift */,
@@ -239,6 +242,7 @@
 				1DF890442167D95B00AC7EA2 /* Extensions.swift in Sources */,
 				1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */,
 				1D04749C21650DB800B0D379 /* DataBus.swift in Sources */,
+				1D9FF925218A0EB0004ED568 /* OpcodeTableXXCBGen.swift in Sources */,
 				1D04749E2165162500B0D379 /* Opcode.swift in Sources */,
 				1D7C858C217B8C8A00F3F65A /* OpcodeTableEDGen.swift in Sources */,
 				1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */,
