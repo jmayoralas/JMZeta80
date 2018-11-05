@@ -324,7 +324,11 @@ class Alu {
     private static func _add(_ a: inout UInt8, _ b: UInt8, carry: UInt8, flags: inout UInt8) {
         let old_a = a
         
-        a &+= b &+ carry
+        let result = UInt16(a) &+ UInt16(b) &+ UInt16(carry)
+        a = UInt8(result.low)
+        
+        flags = flags & ~FLAG_C | result.high & FLAG_C
+
         
         // flags
         if old_a & FLAG_S == b & FLAG_S && a & FLAG_S != old_a & FLAG_S {
@@ -336,11 +340,6 @@ class Alu {
         flags = flags & ~FLAG_S | a & FLAG_S
         if a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if (old_a.low &+ b.low &+ carry) & 0x10 > 0 { flags.set(bit: FLAG_H) } else { flags.reset(bit: FLAG_H) }
-        if a < old_a {
-            flags.set(bit: FLAG_C)
-        } else {
-            flags.reset(bit: FLAG_C)
-        }
         
         flags = flags & ~FLAG_3 | a & FLAG_3
         flags = flags & ~FLAG_5 | a & FLAG_5
@@ -349,7 +348,10 @@ class Alu {
     private static func _sub(_ a: inout UInt8, _ b: UInt8, carry: UInt8, flags: inout UInt8) {
         let old_a = a
         
-        a &-= b &+ carry
+        let result = UInt16(a) &- UInt16(b) &- UInt16(carry)
+        a = UInt8(result.low)
+        
+        flags = flags & ~FLAG_C | result.high & FLAG_C
         
         // flags
         if old_a & FLAG_S != b & FLAG_S && a & FLAG_S == b & FLAG_S {
@@ -361,11 +363,8 @@ class Alu {
         flags = flags & ~FLAG_S | a & FLAG_S
         if a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if (old_a.low &- b.low &- carry) & 0x10 > 0 { flags.set(bit: FLAG_H) } else { flags.reset(bit: FLAG_H) }
-        if a > old_a {
-            flags.set(bit: FLAG_C)
-        } else {
-            flags.reset(bit: FLAG_C)
-        }
+        
+        
         
         flags = flags & ~FLAG_3 | a & FLAG_3
         flags = flags & ~FLAG_5 | a & FLAG_5
