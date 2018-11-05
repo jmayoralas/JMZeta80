@@ -29,11 +29,11 @@ extension Cpu {
 		}
 		opcodes[0x04] = {
 			// inc main.b
-			self.regs.main.b = Alu.add(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.regs.main.b = Alu.inc(self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x05] = {
 			// dec main.b
-			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 		}
 		opcodes[0x06] = {
 			// ld main.b,n
@@ -74,11 +74,11 @@ extension Cpu {
 		}
 		opcodes[0x0C] = {
 			// inc main.c
-			self.regs.main.c = Alu.add(self.regs.main.c, 1, flags: &self.regs.main.f)
+			self.regs.main.c = Alu.inc(self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x0D] = {
 			// dec main.c
-			self.regs.main.c = Alu.sub(self.regs.main.c, 1, flags: &self.regs.main.f)
+			self.regs.main.c = Alu.dec(self.regs.main.c, flags: &self.regs.main.f)
 		}
 		opcodes[0x0E] = {
 			// ld main.c,n
@@ -124,11 +124,11 @@ extension Cpu {
 		}
 		opcodes[0x14] = {
 			// inc main.d
-			self.regs.main.d = Alu.add(self.regs.main.d, 1, flags: &self.regs.main.f)
+			self.regs.main.d = Alu.inc(self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x15] = {
 			// dec main.d
-			self.regs.main.d = Alu.sub(self.regs.main.d, 1, flags: &self.regs.main.f)
+			self.regs.main.d = Alu.dec(self.regs.main.d, flags: &self.regs.main.f)
 		}
 		opcodes[0x16] = {
 			// ld main.d,n
@@ -170,11 +170,11 @@ extension Cpu {
 		}
 		opcodes[0x1C] = {
 			// inc main.e
-			self.regs.main.e = Alu.add(self.regs.main.e, 1, flags: &self.regs.main.f)
+			self.regs.main.e = Alu.inc(self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x1D] = {
 			// dec main.e
-			self.regs.main.e = Alu.sub(self.regs.main.e, 1, flags: &self.regs.main.f)
+			self.regs.main.e = Alu.dec(self.regs.main.e, flags: &self.regs.main.f)
 		}
 		opcodes[0x1E] = {
 			// ld main.e,n
@@ -221,11 +221,11 @@ extension Cpu {
 		}
 		opcodes[0x24] = {
 			// inc main.h
-			self.regs.main.h = Alu.add(self.regs.main.h, 1, flags: &self.regs.main.f)
+			self.regs.main.h = Alu.inc(self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x25] = {
 			// dec main.h
-			self.regs.main.h = Alu.sub(self.regs.main.h, 1, flags: &self.regs.main.f)
+			self.regs.main.h = Alu.dec(self.regs.main.h, flags: &self.regs.main.f)
 		}
 		opcodes[0x26] = {
 			// ld main.h,n
@@ -304,11 +304,11 @@ extension Cpu {
 		}
 		opcodes[0x2C] = {
 			// inc main.l
-			self.regs.main.l = Alu.add(self.regs.main.l, 1, flags: &self.regs.main.f)
+			self.regs.main.l = Alu.inc(self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x2D] = {
 			// dec main.l
-			self.regs.main.l = Alu.sub(self.regs.main.l, 1, flags: &self.regs.main.f)
+			self.regs.main.l = Alu.dec(self.regs.main.l, flags: &self.regs.main.f)
 		}
 		opcodes[0x2E] = {
 			// ld main.l,n
@@ -357,7 +357,7 @@ extension Cpu {
 				self.clock.add(cycles: 2)
 			}
 			var data = self.bus.read(address)
-			data = Alu.add(data, 1, flags: &self.regs.main.f)
+			data = Alu.inc(data, flags: &self.regs.main.f)
 			self.bus.write(address, value: data)
 			self.clock.add(cycles: 1)
 		}
@@ -371,7 +371,7 @@ extension Cpu {
 				self.clock.add(cycles: 2)
 			}
 			var data = self.bus.read(address)
-			data = Alu.sub(data, 1, flags: &self.regs.main.f)
+			data = Alu.dec(data, flags: &self.regs.main.f)
 			self.bus.write(address, value: data)
 			self.clock.add(cycles: 1)
 		}
@@ -423,11 +423,11 @@ extension Cpu {
 		}
 		opcodes[0x3C] = {
 			// inc main.a
-			self.regs.main.a = Alu.add(self.regs.main.a, 1, flags: &self.regs.main.f)
+			self.regs.main.a = Alu.inc(self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x3D] = {
 			// dec main.a
-			self.regs.main.a = Alu.sub(self.regs.main.a, 1, flags: &self.regs.main.f)
+			self.regs.main.a = Alu.dec(self.regs.main.a, flags: &self.regs.main.f)
 		}
 		opcodes[0x3E] = {
 			// ld main.a,n

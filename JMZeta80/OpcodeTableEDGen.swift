@@ -1028,14 +1028,14 @@ extension Cpu {
 			// ini
 			self.bus.write(self.regs.main.hl, value: self.bus.ioRead(self.regs.main.bc))
 			self.regs.main.hl &+= 1
-			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.clock.add(cycles: 1)
 		}
 		opcodes[0xB1] = {
 			// ind
 			self.bus.write(self.regs.main.hl, value: self.bus.ioRead(self.regs.main.bc))
 			self.regs.main.hl &-= 1
-			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.clock.add(cycles: 1)
 		}
 		opcodes[0xB2] = {
@@ -1078,14 +1078,14 @@ extension Cpu {
 			// outi
 			self.bus.ioWrite(self.regs.main.bc, value: self.bus.read(self.regs.main.hl))
 			self.regs.main.hl &+= 1
-			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.clock.add(cycles: 1)
 		}
 		opcodes[0xB9] = {
 			// outd
 			self.bus.ioWrite(self.regs.main.bc, value: self.bus.read(self.regs.main.hl))
 			self.regs.main.hl &-= 1
-			self.regs.main.b = Alu.sub(self.regs.main.b, 1, flags: &self.regs.main.f)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.clock.add(cycles: 1)
 		}
 		opcodes[0xBA] = {

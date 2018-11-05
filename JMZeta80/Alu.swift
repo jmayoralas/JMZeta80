@@ -9,6 +9,34 @@
 import Foundation
 
 class Alu {
+    static func inc(_ a: UInt8, flags: inout UInt8) -> UInt8 {
+        var op_a = a
+        
+        // preserver carry flag
+        let carry_flag = flags & FLAG_C
+        
+        _add(&op_a, 1, carry: 0, flags: &flags)
+        
+        // restore carry flag
+        flags = flags & ~FLAG_C | carry_flag
+        
+        return op_a
+    }
+    
+    static func dec(_ a: UInt8, flags: inout UInt8) -> UInt8 {
+        var op_a = a
+        
+        // preserver carry flag
+        let carry_flag = flags & FLAG_C
+        
+        _sub(&op_a, 1, carry: 0, flags: &flags)
+        
+        // restore carry flag
+        flags = flags & ~FLAG_C | carry_flag
+        
+        return op_a
+    }
+    
     static func add(_ a: UInt8, _ b: UInt8, flags: inout UInt8) -> UInt8 {
         var op_a = a
         _add(&op_a, b, carry: 0, flags: &flags)
