@@ -92,8 +92,8 @@ class Alu {
         var dummy = a
         _sub(&dummy, b, carry: 0, flags: &flags)
         
-        flags = flags & ~FLAG_3 | a & FLAG_3
-        flags = flags & ~FLAG_5 | a & FLAG_5
+        flags = flags & ~FLAG_3 | b & FLAG_3
+        flags = flags & ~FLAG_5 | b & FLAG_5
     }
     
     static func and(_ a: UInt8, _ b: UInt8, flags: inout UInt8) -> UInt8 {
@@ -103,7 +103,7 @@ class Alu {
         flags.set(bit: FLAG_H)
         flags.reset(bit: FLAG_N)
         flags.reset(bit: FLAG_C)
-        flags = flags & ~FLAG_S | a & FLAG_S
+        flags = flags & ~FLAG_S | op_a & FLAG_S
         if op_a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if op_a.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
         
@@ -120,7 +120,7 @@ class Alu {
         flags.reset(bit: FLAG_H)
         flags.reset(bit: FLAG_N)
         flags.reset(bit: FLAG_C)
-        flags = flags & ~FLAG_S | a & FLAG_S
+        flags = flags & ~FLAG_S | op_a & FLAG_S
         if op_a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if op_a.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
         
@@ -137,7 +137,7 @@ class Alu {
         flags.reset(bit: FLAG_H)
         flags.reset(bit: FLAG_N)
         flags.reset(bit: FLAG_C)
-        flags = flags & ~FLAG_S | a & FLAG_S
+        flags = flags & ~FLAG_S | op_a & FLAG_S
         if op_a == 0 { flags.set(bit: FLAG_Z) } else { flags.reset(bit: FLAG_Z) }
         if op_a.parity == 0 { flags.set(bit: FLAG_PV) } else { flags.reset(bit: FLAG_PV) }
         
