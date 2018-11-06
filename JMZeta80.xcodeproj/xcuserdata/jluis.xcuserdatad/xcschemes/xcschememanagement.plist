@@ -12,7 +12,20 @@
 		<key>JMZeta80.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1D7EA91A2163C701005D14C1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1D7EA9232163C701005D14C1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

@@ -61,8 +61,8 @@ public class Cpu {
     var halted = false
     
     var interrupt_status = InterruptStatus()
-    var int_req = false
-    var nmi_req = false
+    public var int_req = false
+    public var nmi_req = false
     
     var id_opcode_table = table_NONE
     
@@ -104,6 +104,26 @@ public class Cpu {
         nmi_req = false
         
         clock.reset()
+    }
+    
+    public func org(_ address: UInt16) {
+        regs.pc = address
+    }
+    
+    public func getFlags() -> UInt8 {
+        return regs.main.f
+    }
+    
+    public func getLastInstruction() -> UInt8 {
+        return regs.ir
+    }
+    
+    public func getPC() -> UInt16 {
+        return regs.pc
+    }
+    
+    public func getIY() -> UInt16 {
+        return regs.iy
     }
     
     // fetch and execute opcode at PC
@@ -243,66 +263,37 @@ public class Cpu {
         let abs_displ = displacement.comp2
         return abs_displ < 0 ? address &- UInt16(-abs_displ) : address &+ UInt16(abs_displ)
     }
-    
-    private func initOpcodeTableXX(_ opcodes: inout OpcodeTable) {
-        opcodes = OpcodeTable(repeating: {
-            guard self.regs.ir != 0xEB else {
-                self.opcodes[table_NONE][Int(self.regs.ir)]()
-                return
-            }
-            
-            self.regs.xx = self.regs.main.hl
-            
-            switch self.swap_hl {
-            case .ix: self.regs.main.hl = self.regs.ix
-            case .iy: self.regs.main.hl = self.regs.iy
-            }
+}
 
-            self.opcodes[table_NONE][Int(self.regs.ir)]()
-            
-            switch self.swap_hl {
-            case .ix: self.regs.ix = self.regs.main.hl
-            case .iy: self.regs.iy = self.regs.main.hl
+extension Cpu {
+    // Tape loader hook hack
+    public func tapeLoaderHook(buffer: [UInt8]?) {
+        if regs.pc == 0x056B {
+            if let buf = buffer {
+                injectTapeBuffer(buffer: buf)
+                
+                regs.main.bc = 0xB001
+                regs.alternate.af = 0x0145
+                regs.main.f.set(bit: FLAG_C)
+            } else {
+                regs.main.f.reset(bit: FLAG_C)
             }
             
-            self.regs.main.hl = self.regs.xx
-            self.id_opcode_table = table_NONE
-        }, count: 0x100)
-        
-        opcodes[0xCB] = {
-            self.id_opcode_table = table_XXCB
-            self.regs.pc &+= 1
-            self.fetchAndExec()
-            self.id_opcode_table = table_NONE
-        }
-        
-        opcodes[0xDD] = {
-            // NONI
-            self.clock.add(cycles: 4)
-            self.interrupt_status.pending_execution = true
-            
-            // ack new prefix
-            self.swap_hl = SwapHL.ix
-        }
-        
-        opcodes[0xED] = {
-            // NONI
-            self.clock.add(cycles: 4)
-            self.interrupt_status.pending_execution = true
-            
-            // ack new prefix
-            self.id_opcode_table = table_ED
-            self.fetchAndExec()
-            self.id_opcode_table = table_NONE
-        }
-        
-        opcodes[0xFD] = {
-            // NONI
-            self.clock.add(cycles: 4)
-            self.interrupt_status.pending_execution = true
-            
-            // ack new prefix
-            self.swap_hl = SwapHL.iy
+            regs.pc = 0x05E2
         }
     }
+    
+    private func injectTapeBuffer(buffer: [UInt8]) {
+        regs.main.de += 1
+        
+        for (index, data) in buffer.enumerated() {
+            if 0 < index {
+                bus.writeNoDelay(regs.ix, value: data)
+                regs.ix &+= 1
+                regs.main.de -= 1
+            }
+        }
+    }
+    
+
 }

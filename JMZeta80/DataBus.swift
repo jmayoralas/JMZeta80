@@ -29,6 +29,10 @@ class DataBus {
     
     func write(_ address: UInt16, value: UInt8) {
         _clock.add(cycles: 3)
+        writeNoDelay(address, value: value)
+    }
+    
+    func writeNoDelay(_ address: UInt16, value: UInt8) {
         _bus.write(address, value: value)
         _last_data = value
     }

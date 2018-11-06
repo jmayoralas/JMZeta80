@@ -699,6 +699,7 @@ extension Cpu {
 		opcodes[0x78] = {
 			// in main.a,(c)
 			let data = self.bus.ioRead(self.regs.main.bc)
+            NSLog("new data: 0x%02X", data)
 			self.regs.main.f = self.regs.main.f & ~FLAG_S | data & FLAG_S
 			if data == 0 { self.regs.main.f.set(bit: FLAG_Z) } else { self.regs.main.f.reset(bit: FLAG_Z) }
 			if data.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
