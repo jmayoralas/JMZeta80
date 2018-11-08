@@ -318,7 +318,7 @@ class Alu {
     }
     
     static func res(_ n: Int, _ op: UInt8, flags: inout UInt8) -> UInt8 {
-        return op & UInt8(0 << n)
+        return op & ~UInt8(1 << n)
     }
 
     private static func _add(_ a: inout UInt8, _ b: UInt8, carry: UInt8, flags: inout UInt8) {
