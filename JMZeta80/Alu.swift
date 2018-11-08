@@ -66,7 +66,15 @@ class Alu {
         let l_add = adc(a.low, b.low, flags: &flags)
         let h_add = adc(a.high, b.high, flags: &flags)
         
-        return UInt16(h_add) << 8 | UInt16(l_add)
+        let result = UInt16(h_add) << 8 | UInt16(l_add)
+        
+        if result == 0 {
+            flags.set(bit: FLAG_Z)
+        } else {
+            flags.reset(bit: FLAG_Z)
+        }
+        
+        return result
     }
 
     static func sub(_ a: UInt8, _ b: UInt8, flags: inout UInt8) -> UInt8 {
@@ -84,8 +92,16 @@ class Alu {
     static func sbc(_ a: UInt16, _ b: UInt16, flags: inout UInt8) -> UInt16 {
         let l_add = sbc(a.low, b.low, flags: &flags)
         let h_add = sbc(a.high, b.high, flags: &flags)
+        
+        let result = UInt16(h_add) << 8 | UInt16(l_add)
+        
+        if result == 0 {
+            flags.set(bit: FLAG_Z)
+        } else {
+            flags.reset(bit: FLAG_Z)
+        }
 
-        return UInt16(h_add) << 8 | UInt16(l_add)
+        return result
     }
     
     static func cp(_ a: UInt8, _ b: UInt8, flags: inout UInt8) {
