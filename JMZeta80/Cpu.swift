@@ -20,6 +20,18 @@ enum SwapHL {
     case iy
 }
 
+public struct InternalRegisters {
+    public var af: UInt16 = 0
+    public var bc: UInt16 = 0
+    public var de: UInt16 = 0
+    public var hl: UInt16 = 0
+    public var ix: UInt16 = 0
+    public var iy: UInt16 = 0
+    public var pc: UInt16 = 0
+    public var sp: UInt16 = 0
+    public var ir: UInt8 = 0
+}
+
 // defines Z80 register structure
 struct CpuRegs {
     var main = RegisterBank()
@@ -114,16 +126,18 @@ public class Cpu {
         return regs.main.f
     }
     
-    public func getLastInstruction() -> UInt8 {
-        return regs.ir
-    }
-    
-    public func getPC() -> UInt16 {
-        return regs.pc
-    }
-    
-    public func getIY() -> UInt16 {
-        return regs.iy
+    public func getInternalRegisters() -> InternalRegisters {
+        return InternalRegisters(
+            af: regs.main.af,
+            bc: regs.main.bc,
+            de: regs.main.de,
+            hl: regs.main.hl,
+            ix: regs.ix,
+            iy: regs.iy,
+            pc: regs.pc,
+            sp: regs.sp,
+            ir: regs.ir
+        )
     }
     
     // fetch and execute opcode at PC
