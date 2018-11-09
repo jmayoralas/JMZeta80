@@ -10,6 +10,7 @@ import Foundation
 
 public protocol SystemClock {
     func add(cycles: Int)
+    func sub(cycles: Int)
     func getCycles() -> Int
     func reset()
 }
