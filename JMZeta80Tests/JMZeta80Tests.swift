@@ -666,7 +666,7 @@ class JMZeta80Tests: XCTestCase {
     func test_rra() {
         cpu.reset()
         
-        bus.write(0x0000, data: [0x1F])
+        bus.write(0x0000, data: [0x1F, 0x1F])
         cpu.regs.main.a = 0b11100001
         cpu.regs.main.f.reset(bit: FLAG_C)
         cpu.executeNextOpcode()
@@ -675,7 +675,13 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.f & FLAG_H == 0)
         XCTAssert(cpu.regs.main.f & FLAG_N == 0)
         
-        XCTAssert(clock.getCycles() == 4)
+        cpu.regs.main.a = 0xBF
+        cpu.executeNextOpcode()
+        XCTAssertEqual(cpu.regs.main.a, 0xDF)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
+        
+        XCTAssert(clock.getCycles() == 2 * 4)
+        
     }
     
     func test_daa() {
@@ -1152,16 +1158,16 @@ class JMZeta80Tests: XCTestCase {
         bus.write(0x0000, data: [0xD3, 0xFF])
         cpu.regs.main.a = 0x55
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0xFF) == 0x55)
+        XCTAssert(bus.ioPeek(0xFF) == 0x55)
         
-        XCTAssert(clock.getCycles() == 11)
+        XCTAssertEqual(clock.getCycles(), 11)
     }
     
     func test_in_a_n() {
         cpu.reset()
         
         bus.write(0x0000, data: [0xDB, 0xFF])
-        bus.ioWrite(0x77FF, value: 0x77)
+        bus.ioPoke(0x77FF, value: 0x77)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.main.a == 0x77)
         
@@ -1616,7 +1622,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.reset()
         
         bus.write(0x0000, data: [0xED, 0x40])
-        bus.ioWrite(0x00FF, value: 0xA9)
+        bus.ioPoke(0x00FF, value: 0xA9)
         cpu.regs.main.c = 0xFF
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.main.b == 0xA9)
@@ -1628,7 +1634,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.f & FLAG_3 != 0)
         XCTAssert(cpu.regs.main.f & FLAG_5 != 0)
         
-        XCTAssert(clock.getCycles() == 12)
+        XCTAssertEqual(clock.getCycles(), 12)
     }
     
     func test_out_r_c() {
@@ -1637,7 +1643,7 @@ class JMZeta80Tests: XCTestCase {
         bus.write(0x0000, data: [0xED, 0x41])
         cpu.regs.main.bc = 0xB9FF
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x00FF) == 0xB9)
+        XCTAssert(bus.ioPeek(0x00FF) == 0xB9)
         
         XCTAssert(clock.getCycles() == 12)
     }
@@ -1977,7 +1983,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.reset()
         
         bus.write(0x0000, data: [0xED, 0xA2])
-        bus.ioWrite(0x0007, value: 0x7B)
+        bus.ioPoke(0x0007, value: 0x7B)
         cpu.regs.main.b = 0x10
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
@@ -1997,7 +2003,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0x59)
+        XCTAssert(bus.ioPeek(0x07) == 0x59)
         XCTAssert(cpu.regs.main.hl == 0x1001)
         XCTAssert(cpu.regs.main.b == 0x0F)
         
@@ -2055,7 +2061,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.reset()
         
         bus.write(0x0000, data: [0xED, 0xAA])
-        bus.ioWrite(0x0007, value: 0x7B)
+        bus.ioPoke(0x0007, value: 0x7B)
         cpu.regs.main.b = 0x10
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
@@ -2076,7 +2082,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0x59)
+        XCTAssert(bus.ioPeek(0x07) == 0x59)
         XCTAssert(cpu.regs.main.hl == 0x0FFF)
         XCTAssert(cpu.regs.main.b == 0x0F)
         
@@ -2142,11 +2148,11 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.b = 0x03
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
-        bus.ioWrite(0x0007, value: 0x7B)
+        bus.ioPoke(0x0007, value: 0x7B)
         cpu.executeNextOpcode()
-        bus.ioWrite(0x0007, value: 0x22)
+        bus.ioPoke(0x0007, value: 0x22)
         cpu.executeNextOpcode()
-        bus.ioWrite(0x0007, value: 0x5C)
+        bus.ioPoke(0x0007, value: 0x5C)
         cpu.executeNextOpcode()
         XCTAssert(bus.read(0x1000) == 0x7B)
         XCTAssert(bus.read(0x1001) == 0x22)
@@ -2169,11 +2175,11 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0x51)
+        XCTAssert(bus.ioPeek(0x07) == 0x51)
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0xA9)
+        XCTAssert(bus.ioPeek(0x07) == 0xA9)
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0x03)
+        XCTAssert(bus.ioPeek(0x07) == 0x03)
         XCTAssert(cpu.regs.main.hl == 0x1003)
         XCTAssert(cpu.regs.main.b == 0x00)
         XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
@@ -2242,11 +2248,11 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.b = 0x03
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
-        bus.ioWrite(0x0007, value: 0x7B)
+        bus.ioPoke(0x0007, value: 0x7B)
         cpu.executeNextOpcode()
-        bus.ioWrite(0x0007, value: 0xDD)
+        bus.ioPoke(0x0007, value: 0xDD)
         cpu.executeNextOpcode()
-        bus.ioWrite(0x0007, value: 0x8A)
+        bus.ioPoke(0x0007, value: 0x8A)
         cpu.executeNextOpcode()
         XCTAssert(bus.read(0x1000) == 0x7B)
         XCTAssert(bus.read(0x0FFF) == 0xDD)
@@ -2270,11 +2276,11 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0xBB)
+        XCTAssert(bus.ioPeek(0x07) == 0xBB)
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0xA9)
+        XCTAssert(bus.ioPeek(0x07) == 0xA9)
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioRead(0x07) == 0x51)
+        XCTAssert(bus.ioPeek(0x07) == 0x51)
         XCTAssert(cpu.regs.main.hl == 0x0FFD)
         XCTAssert(cpu.regs.main.b == 0x00)
         XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
@@ -2314,6 +2320,23 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(clock.getCycles() == 23)
     }
     
+    func test_add_a_iydi() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xFD, 0x86, 0x00])
+        bus.write(0x1000, data: [0x33])
+        cpu.regs.main.a = 0x22
+        cpu.regs.iy = 0x1000
+        cpu.regs.main.hl = 0x44
+        cpu.executeNextOpcode()
+        XCTAssertEqual(cpu.regs.main.hl, 0x44)
+        XCTAssertEqual(bus.read(0x1000), 0x33)
+        XCTAssertEqual(cpu.regs.main.a, 0x55)
+        XCTAssertEqual(cpu.regs.pc, 0x0003)
+        
+        XCTAssert(clock.getCycles() == 19)
+    }
+    
     func test_inc_ixdi() {
         cpu.reset()
         
@@ -2321,9 +2344,21 @@ class JMZeta80Tests: XCTestCase {
         bus.write(0x1009, data: [0x0F])
         cpu.regs.ix = 0x1000
         cpu.executeNextOpcode()
-        XCTAssert(cpu.bus.read(0x1009) == 0x10)
+        XCTAssert(bus.read(0x1009) == 0x10)
         
         XCTAssert(clock.getCycles() == 23, String.init(format: "cycles: %d", clock.getCycles()))
+    }
+    
+    func test_dec_iydi() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xFD, 0x35, 0x09])
+        bus.write(0x1009, data: [0x0F])
+        cpu.regs.iy = 0x1000
+        cpu.executeNextOpcode()
+        XCTAssertEqual(bus.read(0x1009), 0x0E)
+        
+        XCTAssertEqual(clock.getCycles(), 23)
     }
     
     func test_jp_ixi() {
@@ -2377,6 +2412,20 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(bus.read(0x1000) == 0x22)
         
         XCTAssert(clock.getCycles() == 19)
+    }
+    
+    func test_ld_ixd_r() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xFD, 0x71, 0xFF])
+        bus.write(0x1000, data: [0xBB])
+        cpu.regs.main.hl = 0x2000
+        cpu.regs.iy = 0x1001
+        cpu.regs.main.c = 0x33
+        cpu.executeNextOpcode()
+        XCTAssert(bus.read(0x1000) == 0x33)
+        
+        XCTAssertEqual(clock.getCycles(), 19)
     }
     
     func test_rlc_r_ixd() {
