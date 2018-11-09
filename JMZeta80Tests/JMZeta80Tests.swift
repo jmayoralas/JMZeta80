@@ -10,12 +10,14 @@ import XCTest
 @testable import JMZeta80
 
 class JMZeta80Tests: XCTestCase {
-    let bus = TestBus()
     let clock = Clock()
+    var bus: TestBus!
+    
     var cpu: Cpu!
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        bus = TestBus(clock: clock)
         cpu = Cpu(bus: bus, clock: clock)
     }
 
@@ -108,8 +110,8 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.bus.read(0x0000) == 0x11)
         XCTAssert(cpu.bus.ioRead(0xFE) == 0xFF)
         
-        bus.ioWrite(0x77FE, value: 0x77)
-        XCTAssert(bus.ioRead(0x00FE) == 0x77)
+        bus.ioPoke(0x77FE, value: 0x77)
+        XCTAssert(bus.ioPeek(0x00FE) == 0x77)
     }
     
     func testCpu() {
