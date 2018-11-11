@@ -20,16 +20,31 @@ enum SwapHL {
     case iy
 }
 
+public protocol CpuNotifyInternalOperation {
+    func tapeLoadStarted()
+}
+
+public protocol CentralProcessingUnit {
+    var int_req: Bool { get set }
+    var nmi_req: Bool { get set }
+    
+    func org(_ address: UInt16)
+    func reset()
+    func getFlags() -> UInt8
+    func executeNextOpcode()
+    func tapeLoaderHook(buffer: [UInt8]?)
+}
+
 public struct InternalRegisters {
-    public var af: UInt16 = 0
-    public var bc: UInt16 = 0
-    public var de: UInt16 = 0
-    public var hl: UInt16 = 0
-    public var ix: UInt16 = 0
-    public var iy: UInt16 = 0
-    public var pc: UInt16 = 0
-    public var sp: UInt16 = 0
-    public var ir: UInt8 = 0
+    public var af: UInt16
+    public var bc: UInt16
+    public var de: UInt16
+    public var hl: UInt16
+    public var ix: UInt16
+    public var iy: UInt16
+    public var pc: UInt16
+    public var sp: UInt16
+    public var ir: UInt8
 }
 
 // defines Z80 register structure
@@ -61,8 +76,10 @@ struct InterruptStatus {
 }
 
 // main cpu class
-public class Cpu {
+public class Cpu: CentralProcessingUnit {
     typealias OpcodeTable = [() -> Void]
+
+    public var operationDelegate: CpuNotifyInternalOperation?
     
     let bus: DataBus
     let clock: SystemClock
@@ -142,6 +159,8 @@ public class Cpu {
     
     // fetch and execute opcode at PC
     public func executeNextOpcode() {
+        notifyTapeLoad()
+        
         // check for non maskable interrupt
         guard !ackNmi() else {
             return
@@ -281,20 +300,28 @@ public class Cpu {
 
 extension Cpu {
     // Tape loader hook hack
-    public func tapeLoaderHook(buffer: [UInt8]?) {
-        if regs.pc == 0x056B {
-            if let buf = buffer {
-                injectTapeBuffer(buffer: buf)
-                
-                regs.main.bc = 0xB001
-                regs.alternate.af = 0x0145
-                regs.main.f.set(bit: FLAG_C)
-            } else {
-                regs.main.f.reset(bit: FLAG_C)
-            }
-            
-            regs.pc = 0x05E2
+    func notifyTapeLoad() {
+        guard let delegate = operationDelegate else {
+            return
         }
+        
+        if regs.pc == 0x056B {
+            delegate.tapeLoadStarted()
+        }
+    }
+    
+    public func tapeLoaderHook(buffer: [UInt8]?) {
+        if let buf = buffer {
+            injectTapeBuffer(buffer: buf)
+            
+            regs.main.bc = 0xB001
+            regs.alternate.af = 0x0145
+            regs.main.f.set(bit: FLAG_C)
+        } else {
+            regs.main.f.reset(bit: FLAG_C)
+        }
+        
+        regs.pc = 0x05E2
     }
     
     private func injectTapeBuffer(buffer: [UInt8]) {
