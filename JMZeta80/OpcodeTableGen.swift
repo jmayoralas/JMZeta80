@@ -258,9 +258,9 @@ extension Cpu {
 			}
 			
 			if self.regs.main.f & FLAG_N != 0 {
-				self.regs.main.a -= add
+				self.regs.main.a = Alu.sub(self.regs.main.a, add, flags: &self.regs.main.f)
 			} else {
-				self.regs.main.a += add
+				self.regs.main.a = Alu.add(self.regs.main.a, add, flags: &self.regs.main.f)
 			}
 			if self.regs.main.a.parity == 0 {
 				self.regs.main.f.set(bit: FLAG_PV) // even parity
@@ -268,14 +268,6 @@ extension Cpu {
 				self.regs.main.f.reset(bit: FLAG_PV) // odd parity
 			}
 			self.regs.main.f = self.regs.main.f & ~FLAG_C | carry & FLAG_C
-			self.regs.main.f = self.regs.main.f & ~FLAG_S | self.regs.main.a & FLAG_S
-			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) }
-			else { self.regs.main.f.reset(bit: FLAG_Z) }
-			if self.regs.main.a & 0x0F < a.low {
-				self.regs.main.f.set(bit: FLAG_H)
-			} else {
-				self.regs.main.f.reset(bit: FLAG_H)
-			}
 		}
 		opcodes[0x28] = {
 			// jr FLAG_Z != 0 &00
