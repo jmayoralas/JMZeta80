@@ -1109,11 +1109,11 @@ extension Cpu {
 		}
 		opcodes[0xC0] = {
 			// ret FLAG_Z == 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_Z == 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xC1] = {
 			// pop main.bc
@@ -1161,11 +1161,11 @@ extension Cpu {
 		}
 		opcodes[0xC8] = {
 			// ret FLAG_Z != 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_Z != 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xC9] = {
 			// ret
@@ -1212,11 +1212,11 @@ extension Cpu {
 		}
 		opcodes[0xD0] = {
 			// ret FLAG_C == 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_C == 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xD1] = {
 			// pop main.de
@@ -1265,11 +1265,11 @@ extension Cpu {
 		}
 		opcodes[0xD8] = {
 			// ret FLAG_C != 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_C != 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xD9] = {
 			// exx
@@ -1321,11 +1321,11 @@ extension Cpu {
 		}
 		opcodes[0xE0] = {
 			// ret FLAG_PV == 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_PV == 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xE1] = {
 			// pop main.hl
@@ -1346,9 +1346,10 @@ extension Cpu {
 			// ex (sp),hl
 			let hl_ = self.regs.main.hl
 			self.regs.main.hl = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
+			self.clock.add(cycles: 1)
 			self.bus.write(self.regs.sp, value: hl_.low)
 			self.bus.write(self.regs.sp &+ 1, value: hl_.high)
-			self.clock.add(cycles: 3)
+			self.clock.add(cycles: 2)
 		}
 		opcodes[0xE4] = {
 			// call FLAG_PV == 0,nn
@@ -1377,11 +1378,11 @@ extension Cpu {
 		}
 		opcodes[0xE8] = {
 			// ret FLAG_PV != 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_PV != 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xE9] = {
 			// jp (hl)
@@ -1427,11 +1428,11 @@ extension Cpu {
 		}
 		opcodes[0xF0] = {
 			// ret FLAG_S == 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_S == 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xF1] = {
 			// pop main.af
@@ -1480,11 +1481,11 @@ extension Cpu {
 		}
 		opcodes[0xF8] = {
 			// ret FLAG_S != 0
+			self.clock.add(cycles: 1)
 			if self.regs.main.f & FLAG_S != 0 {
 				self.regs.pc = self.buildAddress(self.bus.read(self.regs.sp &+ 1), self.bus.read(self.regs.sp))
 				self.regs.sp &+= 2
 			}
-			self.clock.add(cycles: 1)
 		}
 		opcodes[0xF9] = {
 			// ld sp,hl
