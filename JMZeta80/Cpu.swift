@@ -33,6 +33,7 @@ public protocol CentralProcessingUnit {
     func getFlags() -> UInt8
     func executeNextOpcode()
     func tapeLoaderHook(buffer: [UInt8]?)
+    func getInternalRegisters() -> InternalRegisters
 }
 
 public struct InternalRegisters {
@@ -76,7 +77,7 @@ struct InterruptStatus {
 }
 
 // main cpu class
-public class Cpu: CentralProcessingUnit {
+final public class Cpu: CentralProcessingUnit {
     typealias OpcodeTable = [() -> Void]
 
     public var operationDelegate: CpuNotifyInternalOperation?
