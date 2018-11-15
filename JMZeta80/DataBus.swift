@@ -50,4 +50,9 @@ class DataBus {
     func getLastData() -> UInt8 {
         return _last_data
     }
+    
+    // High impedance read
+    func read() -> UInt8 {
+        return 0xFF
+    }
 }

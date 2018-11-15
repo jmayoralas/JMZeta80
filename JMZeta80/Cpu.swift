@@ -269,8 +269,8 @@ final public class Cpu: CentralProcessingUnit {
         
         switch interrupt_status.int_mode {
         case 0:
-            // TODO: read next instruction from dataBus
-            opcodes[id_opcode_table][Int(bus.getLastData())]()
+            // read next instruction from dataBus
+            opcodes[id_opcode_table][Int(bus.read())]()
         case 1:
             // do a RST 38
             opcodes[id_opcode_table][0xFF]()
