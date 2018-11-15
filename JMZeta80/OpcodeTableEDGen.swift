@@ -468,6 +468,7 @@ extension Cpu {
 		}
 		opcodes[0x57] = {
 			// ld a,i
+			self.clock.add(cycles: 1)
 			self.regs.main.a = self.regs.i
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -475,8 +476,7 @@ extension Cpu {
 			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) } else { self.regs.main.f.reset(bit: FLAG_Z) }
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
-			if self.regs.main.a.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
-			self.clock.add(cycles: 1)
+			if self.interrupt_status.IFF2 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
 		}
 		opcodes[0x58] = {
 			// in main.e,(c)
@@ -521,6 +521,7 @@ extension Cpu {
 		}
 		opcodes[0x5F] = {
 			// ld a,r
+			self.clock.add(cycles: 1)
 			self.regs.main.a = self.regs.r
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -528,8 +529,7 @@ extension Cpu {
 			if self.regs.main.a == 0 { self.regs.main.f.set(bit: FLAG_Z) } else { self.regs.main.f.reset(bit: FLAG_Z) }
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
-			if self.regs.main.a.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
-			self.clock.add(cycles: 1)
+			if self.interrupt_status.IFF2 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
 		}
 		opcodes[0x60] = {
 			// in main.h,(c)
@@ -582,6 +582,7 @@ extension Cpu {
 			self.regs.main.a |= data & 0x0F
 			data >>= 4
 			data |= a << 4
+			self.clock.add(cycles: 4)
 			self.bus.write(self.regs.main.hl, value: data)
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -590,7 +591,6 @@ extension Cpu {
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
 			if self.regs.main.a.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
-			self.clock.add(cycles: 4)
 		}
 		opcodes[0x68] = {
 			// in main.l,(c)
@@ -641,6 +641,7 @@ extension Cpu {
 			self.regs.main.a |= data >> 4
 			data <<= 4
 			data |= a & 0x0F
+			self.clock.add(cycles: 4)
 			self.bus.write(self.regs.main.hl, value: data)
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -649,7 +650,6 @@ extension Cpu {
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.a & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.a & FLAG_5
 			if self.regs.main.a.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
-			self.clock.add(cycles: 4)
 		}
 		opcodes[0x70] = {
 			// in _,(c)
@@ -917,7 +917,9 @@ extension Cpu {
 		}
 		opcodes[0xA1] = {
 			// cpi
+			let carry = self.regs.main.f & FLAG_C
 			var data = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.regs.main.f = self.regs.main.f & ~FLAG_C | carry
 			self.regs.main.bc &-= 1
 			self.regs.main.hl &+= 1
 			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
@@ -928,17 +930,41 @@ extension Cpu {
 		}
 		opcodes[0xA2] = {
 			// ini
-			self.bus.write(self.regs.main.hl, value: self.bus.ioRead(self.regs.main.bc))
-			self.regs.main.hl &+= 1
-			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.clock.add(cycles: 1)
+			let data = self.bus.ioRead(self.regs.main.bc)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
+			self.bus.write(self.regs.main.hl, value: data)
+			self.regs.main.hl &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_N | (data & FLAG_S) >> 6
+			let data2 = data &+ self.regs.main.c &+ 1
+			if data2 > data {
+				self.regs.main.f.reset(bit: FLAG_H)
+				self.regs.main.f.reset(bit: FLAG_C)
+			} else {
+				self.regs.main.f.set(bit: FLAG_H)
+				self.regs.main.f.set(bit: FLAG_C)
+			}
+			let parityValue = (data2 & 0x07) ^ self.regs.main.b
+			if parityValue.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
 		}
 		opcodes[0xA3] = {
 			// outi
-			self.bus.ioWrite(self.regs.main.bc, value: self.bus.read(self.regs.main.hl))
-			self.regs.main.hl &+= 1
-			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.clock.add(cycles: 1)
+			let data = self.bus.read(self.regs.main.hl)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
+			self.bus.ioWrite(self.regs.main.bc, value: data)
+			self.regs.main.hl &+= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_N | (data & FLAG_S) >> 6
+			let data2 = data &+ self.regs.main.l
+			if data2 >= data {
+				self.regs.main.f.reset(bit: FLAG_H)
+				self.regs.main.f.reset(bit: FLAG_C)
+			} else {
+				self.regs.main.f.set(bit: FLAG_H)
+				self.regs.main.f.set(bit: FLAG_C)
+			}
+			let parityValue = (data2 & 0x07) ^ self.regs.main.b
+			if parityValue.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
 		}
 		opcodes[0xA4] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
@@ -977,7 +1003,9 @@ extension Cpu {
 		}
 		opcodes[0xA9] = {
 			// cpd
+			let carry = self.regs.main.f & FLAG_C
 			var data = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.regs.main.f = self.regs.main.f & ~FLAG_C | carry
 			self.regs.main.bc &-= 1
 			self.regs.main.hl &-= 1
 			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
@@ -988,17 +1016,41 @@ extension Cpu {
 		}
 		opcodes[0xAA] = {
 			// ind
-			self.bus.write(self.regs.main.hl, value: self.bus.ioRead(self.regs.main.bc))
+			self.clock.add(cycles: 1)
+			let data = self.bus.ioRead(self.regs.main.bc)
+			self.bus.write(self.regs.main.hl, value: data)
 			self.regs.main.hl &-= 1
 			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.regs.main.f = self.regs.main.f & ~FLAG_N | (data & FLAG_S) >> 6
+			let data2 = data &+ self.regs.main.c &- 1
+			if data2 > data {
+				self.regs.main.f.reset(bit: FLAG_H)
+				self.regs.main.f.reset(bit: FLAG_C)
+			} else {
+				self.regs.main.f.set(bit: FLAG_H)
+				self.regs.main.f.set(bit: FLAG_C)
+			}
+			let parityValue = (data2 & 0x07) ^ self.regs.main.b
+			if parityValue.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
 		}
 		opcodes[0xAB] = {
 			// outd
-			self.bus.ioWrite(self.regs.main.bc, value: self.bus.read(self.regs.main.hl))
-			self.regs.main.hl &-= 1
-			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.clock.add(cycles: 1)
+			let data = self.bus.read(self.regs.main.hl)
+			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
+			self.bus.ioWrite(self.regs.main.bc, value: data)
+			self.regs.main.hl &-= 1
+			self.regs.main.f = self.regs.main.f & ~FLAG_N | (data & FLAG_S) >> 6
+			let data2 = data &+ self.regs.main.l
+			if data2 >= data {
+				self.regs.main.f.reset(bit: FLAG_H)
+				self.regs.main.f.reset(bit: FLAG_C)
+			} else {
+				self.regs.main.f.set(bit: FLAG_H)
+				self.regs.main.f.set(bit: FLAG_C)
+			}
+			let parityValue = (data2 & 0x07) ^ self.regs.main.b
+			if parityValue.parity == 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV) }
 		}
 		opcodes[0xAC] = {
 			// noni (NOP plus interruptions not allowed for the next instruction)
@@ -1042,6 +1094,7 @@ extension Cpu {
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
 				self.clock.add(cycles: 5)
+				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}
 		opcodes[0xB3] = {
@@ -1050,6 +1103,7 @@ extension Cpu {
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
 				self.clock.add(cycles: 5)
+				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}
 		opcodes[0xB4] = {
@@ -1094,6 +1148,7 @@ extension Cpu {
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
 				self.clock.add(cycles: 5)
+				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}
 		opcodes[0xBB] = {
@@ -1102,6 +1157,7 @@ extension Cpu {
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
 				self.clock.add(cycles: 5)
+				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}
 		opcodes[0xBC] = {
