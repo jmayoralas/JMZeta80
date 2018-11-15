@@ -1964,6 +1964,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.a = 0x3B
         cpu.regs.main.hl = 0x1111
         cpu.regs.main.bc = 0x0001
+        cpu.regs.main.f.set(bit: FLAG_C)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.main.hl == 0x1112)
         XCTAssert(bus.read(0x1111) == 0x3B)
@@ -1976,6 +1977,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.f & FLAG_S == 0)
         XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
         XCTAssert(cpu.regs.main.f & FLAG_5 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
         
         XCTAssert(clock.getCycles() == 16)
     }
@@ -2003,7 +2005,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.c = 0x07
         cpu.regs.main.hl = 0x1000
         cpu.executeNextOpcode()
-        XCTAssert(bus.ioPeek(0x07) == 0x59)
+        XCTAssertEqual(bus.ioPeek(0x07), 0x59)
         XCTAssert(cpu.regs.main.hl == 0x1001)
         XCTAssert(cpu.regs.main.b == 0x0F)
         
@@ -2041,6 +2043,7 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.a = 0x3B
         cpu.regs.main.hl = 0x1111
         cpu.regs.main.bc = 0x0001
+        cpu.regs.main.f.set(bit: FLAG_C)
         cpu.executeNextOpcode()
         XCTAssert(cpu.regs.main.hl == 0x1110)
         XCTAssert(bus.read(0x1111) == 0x3B)
@@ -2053,6 +2056,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.f & FLAG_S == 0)
         XCTAssert(cpu.regs.main.f & FLAG_3 == 0)
         XCTAssert(cpu.regs.main.f & FLAG_5 == 0)
+        XCTAssert(cpu.regs.main.f & FLAG_C != 0)
         
         XCTAssert(clock.getCycles() == 16)
 
@@ -2161,7 +2165,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.hl == 0x1003)
         XCTAssert(cpu.regs.main.b == 0x00)
         XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
-        XCTAssert(cpu.regs.main.f & FLAG_N != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
         XCTAssert(cpu.regs.pc == 0x0002)
         
         XCTAssert(clock.getCycles() == 21 * 2 + 16)
@@ -2183,7 +2187,7 @@ class JMZeta80Tests: XCTestCase {
         XCTAssert(cpu.regs.main.hl == 0x1003)
         XCTAssert(cpu.regs.main.b == 0x00)
         XCTAssert(cpu.regs.main.f & FLAG_Z != 0)
-        XCTAssert(cpu.regs.main.f & FLAG_N != 0)
+        XCTAssert(cpu.regs.main.f & FLAG_N == 0)
         XCTAssert(cpu.regs.pc == 0x0002)
         
         XCTAssert(clock.getCycles() == 21 * 2 + 16)
