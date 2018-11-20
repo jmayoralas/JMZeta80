@@ -261,8 +261,8 @@ final public class Cpu: CentralProcessingUnit {
         
         // Acknowledge an interrupt
         if halted {
-            self.regs.pc = self.regs.pc &+ 1
-            self.halted = false
+            regs.pc &+= 1
+            halted = false
         }
         
         clock.add(cycles: 6)
