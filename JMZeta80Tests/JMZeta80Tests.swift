@@ -2578,4 +2578,14 @@ class JMZeta80Tests: XCTestCase {
         
         XCTAssertEqual(clock.getCycles(), 19)
     }
+    
+    func test_dd_prefix() {
+        cpu.reset()
+        
+        bus.write(0x0000, data: [0xDD, 0xDD, 0xDD, 0xDD, 0x00])
+        cpu.executeNextOpcode()
+        
+        XCTAssertEqual(clock.getCycles(), 20)
+        XCTAssertEqual(cpu.regs.pc, 0x0005)
+    }
 }
