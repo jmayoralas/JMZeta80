@@ -3946,8 +3946,6 @@ extension Cpu {
 		}
 		opcodes[0xDD] = {
 			// NONI
-			self.clock.add(cycles: 4)
-			self.interrupt_status.pending_execution = true
 			// ack new prefix
 			self.swap_hl = SwapHL.ix
 		}
@@ -4489,8 +4487,6 @@ extension Cpu {
 		}
 		opcodes[0xFD] = {
 			// NONI
-			self.clock.add(cycles: 4)
-			self.interrupt_status.pending_execution = true
 			// ack new prefix
 			self.swap_hl = SwapHL.iy
 		}
