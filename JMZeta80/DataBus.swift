@@ -22,14 +22,15 @@ class DataBus {
     }
     
     func read(_ address: UInt16) -> UInt8 {
-        _clock.add(cycles: 3)
         _last_data = _bus.read(address)
+        _clock.add(cycles: 3)
+
         return _last_data
     }
     
     func write(_ address: UInt16, value: UInt8) {
-        _clock.add(cycles: 3)
         writeNoDelay(address, value: value)
+        _clock.add(cycles: 3)
     }
     
     func writeNoDelay(_ address: UInt16, value: UInt8) {
