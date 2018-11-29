@@ -7,9 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D04749C21650DB800B0D379 /* DataBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04749B21650DB800B0D379 /* DataBus.swift */; };
+		1D04749E2165162500B0D379 /* Opcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04749D2165162500B0D379 /* Opcode.swift */; };
+		1D69C3C72163EC9B00F7A7C7 /* TestBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */; };
+		1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D69C3C82163F50500F7A7C7 /* Clock.swift */; };
+		1D7C858C217B8C8A00F3F65A /* OpcodeTableEDGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7C858B217B8C8A00F3F65A /* OpcodeTableEDGen.swift */; };
 		1D7EA9252163C701005D14C1 /* JMZeta80.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7EA91B2163C701005D14C1 /* JMZeta80.framework */; };
 		1D7EA92A2163C701005D14C1 /* JMZeta80Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9292163C701005D14C1 /* JMZeta80Tests.swift */; };
 		1D7EA92C2163C701005D14C1 /* JMZeta80.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7EA91E2163C701005D14C1 /* JMZeta80.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9372163C8FE005D14C1 /* Cpu.swift */; };
+		1D7EA93A2163CAAC005D14C1 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7EA9392163CAAB005D14C1 /* Register.swift */; };
+		1D7F714221778E8000C31E5E /* OpcodeTableCBGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7F714121778E8000C31E5E /* OpcodeTableCBGen.swift */; };
+		1D9FF925218A0EB0004ED568 /* OpcodeTableXXCBGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9FF924218A0EB0004ED568 /* OpcodeTableXXCBGen.swift */; };
+		1DA162FC216519EB00243141 /* AccessibleBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA162FB216519EB00243141 /* AccessibleBus.swift */; };
+		1DBB59B8219213C2006E4AF8 /* OpcodeTableXXGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB59B7219213C1006E4AF8 /* OpcodeTableXXGen.swift */; };
+		1DECDC8F216FA89700C6383A /* Alu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECDC8E216FA89700C6383A /* Alu.swift */; };
+		1DF890422167CF7100AC7EA2 /* OpcodeTableGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF890412167CF7100AC7EA2 /* OpcodeTableGen.swift */; };
+		1DF890442167D95B00AC7EA2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF890432167D95B00AC7EA2 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +37,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D04749B21650DB800B0D379 /* DataBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBus.swift; sourceTree = "<group>"; };
+		1D04749D2165162500B0D379 /* Opcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opcode.swift; sourceTree = "<group>"; };
+		1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBus.swift; sourceTree = "<group>"; };
+		1D69C3C82163F50500F7A7C7 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		1D7C858B217B8C8A00F3F65A /* OpcodeTableEDGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableEDGen.swift; sourceTree = "<group>"; };
 		1D7EA91B2163C701005D14C1 /* JMZeta80.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JMZeta80.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D7EA91E2163C701005D14C1 /* JMZeta80.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMZeta80.h; sourceTree = "<group>"; };
 		1D7EA91F2163C701005D14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D7EA9242163C701005D14C1 /* JMZeta80Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JMZeta80Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D7EA9292163C701005D14C1 /* JMZeta80Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMZeta80Tests.swift; sourceTree = "<group>"; };
 		1D7EA92B2163C701005D14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D7EA9372163C8FE005D14C1 /* Cpu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cpu.swift; sourceTree = "<group>"; };
+		1D7EA9392163CAAB005D14C1 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		1D7F714121778E8000C31E5E /* OpcodeTableCBGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableCBGen.swift; sourceTree = "<group>"; };
+		1D9FF924218A0EB0004ED568 /* OpcodeTableXXCBGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableXXCBGen.swift; sourceTree = "<group>"; };
+		1DA162FB216519EB00243141 /* AccessibleBus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibleBus.swift; sourceTree = "<group>"; };
+		1DBB59B7219213C1006E4AF8 /* OpcodeTableXXGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableXXGen.swift; sourceTree = "<group>"; };
+		1DECDC8E216FA89700C6383A /* Alu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alu.swift; sourceTree = "<group>"; };
+		1DF890412167CF7100AC7EA2 /* OpcodeTableGen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpcodeTableGen.swift; sourceTree = "<group>"; };
+		1DF890432167D95B00AC7EA2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +99,21 @@
 		1D7EA91D2163C701005D14C1 /* JMZeta80 */ = {
 			isa = PBXGroup;
 			children = (
+				1DBB59B7219213C1006E4AF8 /* OpcodeTableXXGen.swift */,
+				1D9FF924218A0EB0004ED568 /* OpcodeTableXXCBGen.swift */,
+				1D7C858B217B8C8A00F3F65A /* OpcodeTableEDGen.swift */,
+				1D7F714121778E8000C31E5E /* OpcodeTableCBGen.swift */,
+				1DF890412167CF7100AC7EA2 /* OpcodeTableGen.swift */,
+				1DA162FB216519EB00243141 /* AccessibleBus.swift */,
 				1D7EA91E2163C701005D14C1 /* JMZeta80.h */,
 				1D7EA91F2163C701005D14C1 /* Info.plist */,
+				1D7EA9372163C8FE005D14C1 /* Cpu.swift */,
+				1D7EA9392163CAAB005D14C1 /* Register.swift */,
+				1D69C3C82163F50500F7A7C7 /* Clock.swift */,
+				1D04749B21650DB800B0D379 /* DataBus.swift */,
+				1D04749D2165162500B0D379 /* Opcode.swift */,
+				1DF890432167D95B00AC7EA2 /* Extensions.swift */,
+				1DECDC8E216FA89700C6383A /* Alu.swift */,
 			);
 			path = JMZeta80;
 			sourceTree = "<group>";
@@ -82,6 +123,7 @@
 			children = (
 				1D7EA9292163C701005D14C1 /* JMZeta80Tests.swift */,
 				1D7EA92B2163C701005D14C1 /* Info.plist */,
+				1D69C3C62163EC9B00F7A7C7 /* TestBus.swift */,
 			);
 			path = JMZeta80Tests;
 			sourceTree = "<group>";
@@ -148,6 +190,7 @@
 				TargetAttributes = {
 					1D7EA91A2163C701005D14C1 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 					1D7EA9232163C701005D14C1 = {
 						CreatedOnToolsVersion = 10.0;
@@ -194,6 +237,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DECDC8F216FA89700C6383A /* Alu.swift in Sources */,
+				1DA162FC216519EB00243141 /* AccessibleBus.swift in Sources */,
+				1D7F714221778E8000C31E5E /* OpcodeTableCBGen.swift in Sources */,
+				1D7EA93A2163CAAC005D14C1 /* Register.swift in Sources */,
+				1DBB59B8219213C2006E4AF8 /* OpcodeTableXXGen.swift in Sources */,
+				1DF890422167CF7100AC7EA2 /* OpcodeTableGen.swift in Sources */,
+				1DF890442167D95B00AC7EA2 /* Extensions.swift in Sources */,
+				1D7EA9382163C8FE005D14C1 /* Cpu.swift in Sources */,
+				1D04749C21650DB800B0D379 /* DataBus.swift in Sources */,
+				1D9FF925218A0EB0004ED568 /* OpcodeTableXXCBGen.swift in Sources */,
+				1D04749E2165162500B0D379 /* Opcode.swift in Sources */,
+				1D7C858C217B8C8A00F3F65A /* OpcodeTableEDGen.swift in Sources */,
+				1D69C3C92163F50500F7A7C7 /* Clock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D69C3C72163EC9B00F7A7C7 /* TestBus.swift in Sources */,
 				1D7EA92A2163C701005D14C1 /* JMZeta80Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +397,7 @@
 		1D7EA9302163C701005D14C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -359,6 +417,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lomocorp.JMZeta80;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -366,6 +425,7 @@
 		1D7EA9312163C701005D14C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -392,6 +452,7 @@
 		1D7EA9332163C701005D14C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = K48829BSXH;
@@ -410,6 +471,7 @@
 		1D7EA9342163C701005D14C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = K48829BSXH;
