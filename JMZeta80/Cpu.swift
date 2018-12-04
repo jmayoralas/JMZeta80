@@ -162,6 +162,8 @@ final public class Cpu: CentralProcessingUnit {
     public func executeNextOpcode() {
         notifyTapeLoad()
         
+        clock.reset()
+        
         // check for non maskable interrupt
         guard !ackNmi() else {
             return
