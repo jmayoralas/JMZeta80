@@ -9,8 +9,8 @@
 import Foundation
 
 public protocol SystemClock {
-    func add(cycles: Int)
-    func sub(cycles: Int)
+    func add(cycles: Int) // uncontended increments
+    func add(address: UInt16, cycles: Int) // contended increments
     func getCycles() -> Int
     func reset()
 }
