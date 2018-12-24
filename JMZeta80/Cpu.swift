@@ -65,6 +65,13 @@ struct CpuRegs {
     // Memory refresh
     var r: UInt8 = 0xFF
     
+    // 16 bit composite IR register
+    var ir_reg: UInt16 {
+        get {
+            return UInt16(self.i) << 8 + UInt16(self.r)
+        }
+    }
+    
     // undocumented register for flag affection of scf/ccf opcodes
     var q : UInt8 = 0
 }

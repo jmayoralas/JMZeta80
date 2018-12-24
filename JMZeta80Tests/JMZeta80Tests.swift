@@ -85,6 +85,10 @@ class JMZeta80Tests: XCTestCase {
         cpu.regs.main.hl = 0x5678
         XCTAssert(cpu.regs.main.h == 0x56)
         XCTAssert(cpu.regs.main.l == 0x78)
+        
+        cpu.regs.i = 0x22
+        cpu.regs.r = 0x33
+        XCTAssertEqual(cpu.regs.ir_reg, 0x2233)
     }
     
     func testExtensions() {
