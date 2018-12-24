@@ -105,6 +105,8 @@ final public class Cpu: CentralProcessingUnit {
     
     var swap_hl = SwapHL.ix
     
+    var xxcb_offset: UInt8 = 0
+    
     public init(bus: AccessibleBus, clock: SystemClock) {
         self.bus = DataBus(bus: bus, clock: clock)
         self.clock = clock
@@ -139,6 +141,8 @@ final public class Cpu: CentralProcessingUnit {
         interrupt_status.int_mode = 0
         int_req = false
         nmi_req = false
+        
+        xxcb_offset = 0
         
         clock.reset()
     }

@@ -3634,8 +3634,11 @@ extension Cpu {
 		}
 		opcodes[0xCB] = {
 			self.id_opcode_table = table_XXCB
+            self.xxcb_offset = self.bus.read(self.regs.pc)
 			self.regs.pc &+= 1
-			self.fetchAndExec()
+			self.regs.ir = self.bus.read(self.regs.pc)
+            self.regs.pc &+= 1
+            self.opcodes[self.id_opcode_table][Int(self.regs.ir)]()
 			self.id_opcode_table = table_NONE
 		}
 		opcodes[0xCC] = {
