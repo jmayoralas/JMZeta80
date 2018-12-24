@@ -37,7 +37,7 @@ extension Cpu {
 		opcodes[0x06] = {
 			// rlc (hl)
 			let data = Alu.rlc(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x07] = {
@@ -71,7 +71,7 @@ extension Cpu {
 		opcodes[0x0E] = {
 			// rrc (hl)
 			let data = Alu.rrc(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x0F] = {
@@ -105,7 +105,7 @@ extension Cpu {
 		opcodes[0x16] = {
 			// rl (hl)
 			let data = Alu.rl(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x17] = {
@@ -139,7 +139,7 @@ extension Cpu {
 		opcodes[0x1E] = {
 			// rr (hl)
 			let data = Alu.rr(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x1F] = {
@@ -173,7 +173,7 @@ extension Cpu {
 		opcodes[0x26] = {
 			// sla (hl)
 			let data = Alu.sla(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x27] = {
@@ -207,7 +207,7 @@ extension Cpu {
 		opcodes[0x2E] = {
 			// sra (hl)
 			let data = Alu.sra(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x2F] = {
@@ -241,7 +241,7 @@ extension Cpu {
 		opcodes[0x36] = {
 			// sll (hl)
 			let data = Alu.sll(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x37] = {
@@ -275,7 +275,7 @@ extension Cpu {
 		opcodes[0x3E] = {
 			// srl (hl)
 			let data = Alu.srl(self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x3F] = {
@@ -309,7 +309,7 @@ extension Cpu {
 		opcodes[0x46] = {
 			// bit 0,(hl)
 			Alu.bit(0, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -344,7 +344,7 @@ extension Cpu {
 		opcodes[0x4E] = {
 			// bit 1,(hl)
 			Alu.bit(1, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -379,7 +379,7 @@ extension Cpu {
 		opcodes[0x56] = {
 			// bit 2,(hl)
 			Alu.bit(2, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -414,7 +414,7 @@ extension Cpu {
 		opcodes[0x5E] = {
 			// bit 3,(hl)
 			Alu.bit(3, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -449,7 +449,7 @@ extension Cpu {
 		opcodes[0x66] = {
 			// bit 4,(hl)
 			Alu.bit(4, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -484,7 +484,7 @@ extension Cpu {
 		opcodes[0x6E] = {
 			// bit 5,(hl)
 			Alu.bit(5, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -519,7 +519,7 @@ extension Cpu {
 		opcodes[0x76] = {
 			// bit 6,(hl)
 			Alu.bit(6, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -554,7 +554,7 @@ extension Cpu {
 		opcodes[0x7E] = {
 			// bit 7,(hl)
 			Alu.bit(7, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | self.regs.main.h & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | self.regs.main.h & FLAG_5
 		}
@@ -589,7 +589,7 @@ extension Cpu {
 		opcodes[0x86] = {
 			// res 0,(hl)
 			let data = Alu.res(0, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x87] = {
@@ -623,7 +623,7 @@ extension Cpu {
 		opcodes[0x8E] = {
 			// res 1,(hl)
 			let data = Alu.res(1, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x8F] = {
@@ -657,7 +657,7 @@ extension Cpu {
 		opcodes[0x96] = {
 			// res 2,(hl)
 			let data = Alu.res(2, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x97] = {
@@ -691,7 +691,7 @@ extension Cpu {
 		opcodes[0x9E] = {
 			// res 3,(hl)
 			let data = Alu.res(3, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0x9F] = {
@@ -725,7 +725,7 @@ extension Cpu {
 		opcodes[0xA6] = {
 			// res 4,(hl)
 			let data = Alu.res(4, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xA7] = {
@@ -759,7 +759,7 @@ extension Cpu {
 		opcodes[0xAE] = {
 			// res 5,(hl)
 			let data = Alu.res(5, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xAF] = {
@@ -793,7 +793,7 @@ extension Cpu {
 		opcodes[0xB6] = {
 			// res 6,(hl)
 			let data = Alu.res(6, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xB7] = {
@@ -827,7 +827,7 @@ extension Cpu {
 		opcodes[0xBE] = {
 			// res 7,(hl)
 			let data = Alu.res(7, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xBF] = {
@@ -861,7 +861,7 @@ extension Cpu {
 		opcodes[0xC6] = {
 			// set 0,(hl)
 			let data = Alu.set(0, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xC7] = {
@@ -895,7 +895,7 @@ extension Cpu {
 		opcodes[0xCE] = {
 			// set 1,(hl)
 			let data = Alu.set(1, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xCF] = {
@@ -929,7 +929,7 @@ extension Cpu {
 		opcodes[0xD6] = {
 			// set 2,(hl)
 			let data = Alu.set(2, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xD7] = {
@@ -963,7 +963,7 @@ extension Cpu {
 		opcodes[0xDE] = {
 			// set 3,(hl)
 			let data = Alu.set(3, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xDF] = {
@@ -997,7 +997,7 @@ extension Cpu {
 		opcodes[0xE6] = {
 			// set 4,(hl)
 			let data = Alu.set(4, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xE7] = {
@@ -1031,7 +1031,7 @@ extension Cpu {
 		opcodes[0xEE] = {
 			// set 5,(hl)
 			let data = Alu.set(5, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xEF] = {
@@ -1065,7 +1065,7 @@ extension Cpu {
 		opcodes[0xF6] = {
 			// set 6,(hl)
 			let data = Alu.set(6, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xF7] = {
@@ -1099,7 +1099,7 @@ extension Cpu {
 		opcodes[0xFE] = {
 			// set 7,(hl)
 			let data = Alu.set(7, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.main.hl, cycles: 1)
 			self.bus.write(self.regs.main.hl, value: data)
 		}
 		opcodes[0xFF] = {

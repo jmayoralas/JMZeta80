@@ -65,6 +65,13 @@ struct CpuRegs {
     // Memory refresh
     var r: UInt8 = 0xFF
     
+    // 16 bit composite IR register
+    var ir_reg: UInt16 {
+        get {
+            return UInt16(self.i) << 8 + UInt16(self.r)
+        }
+    }
+    
     // undocumented register for flag affection of scf/ccf opcodes
     var q : UInt8 = 0
 }
@@ -97,6 +104,8 @@ final public class Cpu: CentralProcessingUnit {
     var id_opcode_table = table_NONE
     
     var swap_hl = SwapHL.ix
+    
+    var xxcb_offset: UInt8 = 0
     
     public init(bus: AccessibleBus, clock: SystemClock) {
         self.bus = DataBus(bus: bus, clock: clock)
@@ -132,6 +141,8 @@ final public class Cpu: CentralProcessingUnit {
         interrupt_status.int_mode = 0
         int_req = false
         nmi_req = false
+        
+        xxcb_offset = 0
         
         clock.reset()
     }

@@ -20,6 +20,10 @@ class Clock : SystemClock {
         _cycles += cycles
     }
     
+    func add(address: UInt16, cycles: Int) {
+        self.add(cycles: cycles)
+    }
+    
     func sub(cycles: Int) {
         _cycles -= cycles
     }
