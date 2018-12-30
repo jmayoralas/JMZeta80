@@ -11,7 +11,7 @@ import Foundation
 // Especialized bus class that takes into account Z80 delays when bus line are accessed
 // reads takes 3 tstates
 // writes takes 4 tstates
-class DataBus {
+final class DataBus {
     let _bus: AccessibleBus
     let _clock: SystemClock
     var _last_data: UInt8 = 0xFF
@@ -21,39 +21,39 @@ class DataBus {
         _clock = clock
     }
     
-    func read(_ address: UInt16) -> UInt8 {
+    final func read(_ address: UInt16) -> UInt8 {
         _last_data = _bus.read(address)
         _clock.add(cycles: 3)
 
         return _last_data
     }
     
-    func write(_ address: UInt16, value: UInt8) {
+    final func write(_ address: UInt16, value: UInt8) {
         writeNoDelay(address, value: value)
         _clock.add(cycles: 3)
     }
     
-    func writeNoDelay(_ address: UInt16, value: UInt8) {
+    final func writeNoDelay(_ address: UInt16, value: UInt8) {
         _bus.write(address, value: value)
         _last_data = value
     }
     
-    func ioRead(_ address: UInt16) -> UInt8 {
+    final func ioRead(_ address: UInt16) -> UInt8 {
         _last_data = _bus.ioRead(address)
         return _last_data
     }
     
-    func ioWrite(_ address: UInt16, value: UInt8) {
+    final func ioWrite(_ address: UInt16, value: UInt8) {
         _bus.ioWrite(address, value: value)
         _last_data = value
     }
     
-    func getLastData() -> UInt8 {
+    final func getLastData() -> UInt8 {
         return _last_data
     }
     
     // High impedance read
-    func read() -> UInt8 {
+    final func read() -> UInt8 {
         return 0xFF
     }
 }
