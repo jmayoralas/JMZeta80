@@ -349,7 +349,7 @@ extension Cpu {
 		opcodes[0x42] = {
 			// sbc hl,main.bc
 			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.main.bc, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x43] = {
 			// ld (nn),main.bc
@@ -376,7 +376,7 @@ extension Cpu {
 		opcodes[0x47] = {
 			// ld i,a
 			self.regs.i = self.regs.main.a
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 		}
 		opcodes[0x48] = {
 			// in main.c,(c)
@@ -397,7 +397,7 @@ extension Cpu {
 		opcodes[0x4A] = {
 			// adc hl,main.bc
 			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.main.bc, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x4B] = {
 			// ld main.bc,(nn)
@@ -421,7 +421,7 @@ extension Cpu {
 		opcodes[0x4F] = {
 			// ld r,a
 			self.regs.r = self.regs.main.a
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 		}
 		opcodes[0x50] = {
 			// in main.d,(c)
@@ -442,7 +442,7 @@ extension Cpu {
 		opcodes[0x52] = {
 			// sbc hl,main.de
 			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.main.de, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x53] = {
 			// ld (nn),main.de
@@ -468,7 +468,7 @@ extension Cpu {
 		}
 		opcodes[0x57] = {
 			// ld a,i
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 			self.regs.main.a = self.regs.i
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -497,7 +497,7 @@ extension Cpu {
 		opcodes[0x5A] = {
 			// adc hl,main.de
 			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.main.de, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x5B] = {
 			// ld main.de,(nn)
@@ -521,7 +521,7 @@ extension Cpu {
 		}
 		opcodes[0x5F] = {
 			// ld a,r
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 			self.regs.main.a = self.regs.r
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -550,7 +550,7 @@ extension Cpu {
 		opcodes[0x62] = {
 			// sbc hl,main.hl
 			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.main.hl, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x63] = {
 			// ld (nn),main.hl
@@ -582,7 +582,7 @@ extension Cpu {
 			self.regs.main.a |= data & 0x0F
 			data >>= 4
 			data |= a << 4
-			self.clock.add(cycles: 4)
+			self.clock.add(address: self.regs.main.hl, cycles: 4)
 			self.bus.write(self.regs.main.hl, value: data)
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -611,7 +611,7 @@ extension Cpu {
 		opcodes[0x6A] = {
 			// adc hl,main.hl
 			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.main.hl, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x6B] = {
 			// ld main.hl,(nn)
@@ -641,7 +641,7 @@ extension Cpu {
 			self.regs.main.a |= data >> 4
 			data <<= 4
 			data |= a & 0x0F
-			self.clock.add(cycles: 4)
+			self.clock.add(address: self.regs.main.hl, cycles: 4)
 			self.bus.write(self.regs.main.hl, value: data)
 			self.regs.main.f.reset(bit: FLAG_N)
 			self.regs.main.f.reset(bit: FLAG_H)
@@ -669,7 +669,7 @@ extension Cpu {
 		opcodes[0x72] = {
 			// sbc hl,sp
 			self.regs.main.hl = Alu.sbc(self.regs.main.hl, self.regs.sp, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x73] = {
 			// ld (nn),sp
@@ -715,7 +715,7 @@ extension Cpu {
 		opcodes[0x7A] = {
 			// adc hl,sp
 			self.regs.main.hl = Alu.adc(self.regs.main.hl, self.regs.sp, flags: &self.regs.main.f)
-			self.clock.add(cycles: 7)
+			self.clock.add(address: self.regs.ir_reg, cycles: 7)
 		}
 		opcodes[0x7B] = {
 			// ld sp,(nn)
@@ -904,6 +904,7 @@ extension Cpu {
 			// ldi
 			var data = self.bus.read(self.regs.main.hl)
 			self.bus.write(self.regs.main.de, value: data)
+			self.clock.add(address: self.regs.main.de, cycles: 2)
 			self.regs.main.bc &-= 1
 			self.regs.main.hl &+= 1
 			self.regs.main.de &+= 1
@@ -913,12 +914,12 @@ extension Cpu {
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x02) << 4
 			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
-			self.clock.add(cycles: 2)
 		}
 		opcodes[0xA1] = {
 			// cpi
 			let carry = self.regs.main.f & FLAG_C
 			var data = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(address: self.regs.main.hl, cycles: 5)
 			self.regs.main.f = self.regs.main.f & ~FLAG_C | carry
 			self.regs.main.bc &-= 1
 			self.regs.main.hl &+= 1
@@ -926,11 +927,10 @@ extension Cpu {
 			data &-= (self.regs.main.f & FLAG_H) >> H
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x02) << 4
-			self.clock.add(cycles: 5)
 		}
 		opcodes[0xA2] = {
 			// ini
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 			let data = self.bus.ioRead(self.regs.main.bc)
 			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.bus.write(self.regs.main.hl, value: data)
@@ -949,7 +949,7 @@ extension Cpu {
 		}
 		opcodes[0xA3] = {
 			// outi
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 			let data = self.bus.read(self.regs.main.hl)
 			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.bus.ioWrite(self.regs.main.bc, value: data)
@@ -990,6 +990,7 @@ extension Cpu {
 			// ldd
 			var data = self.bus.read(self.regs.main.hl)
 			self.bus.write(self.regs.main.de, value: data)
+			self.clock.add(address: self.regs.main.de, cycles: 2)
 			self.regs.main.bc &-= 1
 			self.regs.main.hl &-= 1
 			self.regs.main.de &-= 1
@@ -999,12 +1000,12 @@ extension Cpu {
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x02) << 4
 			if self.regs.main.bc != 0 { self.regs.main.f.set(bit: FLAG_PV) } else { self.regs.main.f.reset(bit: FLAG_PV)}
-			self.clock.add(cycles: 2)
 		}
 		opcodes[0xA9] = {
 			// cpd
 			let carry = self.regs.main.f & FLAG_C
 			var data = Alu.sub(self.regs.main.a, self.bus.read(self.regs.main.hl), flags: &self.regs.main.f)
+			self.clock.add(address: self.regs.main.hl, cycles: 5)
 			self.regs.main.f = self.regs.main.f & ~FLAG_C | carry
 			self.regs.main.bc &-= 1
 			self.regs.main.hl &-= 1
@@ -1012,11 +1013,10 @@ extension Cpu {
 			data &-= (self.regs.main.f & FLAG_H) >> H
 			self.regs.main.f = self.regs.main.f & ~FLAG_3 | data & FLAG_3
 			self.regs.main.f = self.regs.main.f & ~FLAG_5 | (data & 0x02) << 4
-			self.clock.add(cycles: 5)
 		}
 		opcodes[0xAA] = {
 			// ind
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 			let data = self.bus.ioRead(self.regs.main.bc)
 			self.bus.write(self.regs.main.hl, value: data)
 			self.regs.main.hl &-= 1
@@ -1035,7 +1035,7 @@ extension Cpu {
 		}
 		opcodes[0xAB] = {
 			// outd
-			self.clock.add(cycles: 1)
+			self.clock.add(address: self.regs.ir_reg, cycles: 1)
 			let data = self.bus.read(self.regs.main.hl)
 			self.regs.main.b = Alu.dec(self.regs.main.b, flags: &self.regs.main.f)
 			self.bus.ioWrite(self.regs.main.bc, value: data)
@@ -1077,7 +1077,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xA0]()
 			if self.regs.main.bc != 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.de, cycles: 5)
 			}
 		}
 		opcodes[0xB1] = {
@@ -1085,7 +1085,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xA1]()
 			if self.regs.main.bc != 0 && self.regs.main.f & FLAG_Z == 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.hl, cycles: 5)
 			}
 		}
 		opcodes[0xB2] = {
@@ -1093,7 +1093,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xA2]()
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.hl, cycles: 5)
 				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}
@@ -1102,7 +1102,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xA3]()
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.bc, cycles: 5)
 				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}
@@ -1131,7 +1131,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xA8]()
 			if self.regs.main.bc != 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.de, cycles: 5)
 			}
 		}
 		opcodes[0xB9] = {
@@ -1139,7 +1139,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xA9]()
 			if self.regs.main.bc != 0 && self.regs.main.f & FLAG_Z == 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.hl, cycles: 5)
 			}
 		}
 		opcodes[0xBA] = {
@@ -1147,7 +1147,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xAA]()
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.hl, cycles: 5)
 				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}
@@ -1156,7 +1156,7 @@ extension Cpu {
 			self.opcodes[self.id_opcode_table][0xAB]()
 			if self.regs.main.b != 0 {
 				self.regs.pc &-= 2
-				self.clock.add(cycles: 5)
+				self.clock.add(address: self.regs.main.bc, cycles: 5)
 				self.regs.main.f.set(bit: FLAG_PV)
 			}
 		}

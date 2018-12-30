@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Alu {
+final class Alu {
     static func inc(_ a: UInt8, flags: inout UInt8) -> UInt8 {
         var op_a = a
         
