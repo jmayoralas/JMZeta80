@@ -128,9 +128,16 @@ final public class Cpu: CentralProcessingUnit {
     
     public func reset() {
         regs.pc = 0
+        regs.main.bc = 0
+        regs.alternate.bc = 0
+        regs.main.de = 0
+        regs.alternate.de = 0
+        regs.main.hl = 0
+        regs.alternate.hl = 0
         regs.sp = 0xFFFF
-        regs.ix = 0xFFFF
-        regs.iy = 0xFFFF
+        regs.ix = 0
+        regs.iy = 0
+        regs.r = 0
         
         regs.main = RegisterBank()
         regs.alternate = RegisterBank()
