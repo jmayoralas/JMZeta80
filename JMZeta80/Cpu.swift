@@ -46,6 +46,8 @@ public struct InternalRegisters {
     public var pc: UInt16
     public var sp: UInt16
     public var ir: UInt8
+    public var i: UInt8
+    public var r: UInt8
 }
 
 // defines Z80 register structure
@@ -165,7 +167,9 @@ final public class Cpu: CentralProcessingUnit {
             iy: regs.iy,
             pc: regs.pc,
             sp: regs.sp,
-            ir: regs.ir
+            ir: regs.ir,
+            i: regs.i,
+            r: regs.r
         )
     }
     
