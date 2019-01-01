@@ -1852,7 +1852,7 @@ extension Cpu {
 			let displ = self.bus.read(self.regs.pc)
 			self.regs.pc &+= 1
 			address = self.addRelative(displacement: displ, toAddress: address)
-			self.clock.add(cycles: 5)
+			self.clock.add(address: self.regs.pc, cycles: 5)
 			self.regs.main.h = self.bus.read(address)
 			self.id_opcode_table = table_NONE
 		}
@@ -1988,7 +1988,7 @@ extension Cpu {
 			let displ = self.bus.read(self.regs.pc)
 			self.regs.pc &+= 1
 			address = self.addRelative(displacement: displ, toAddress: address)
-			self.clock.add(cycles: 5)
+			self.clock.add(address: self.regs.pc, cycles: 5)
 			self.regs.main.l = self.bus.read(address)
 			self.id_opcode_table = table_NONE
 		}
@@ -2088,7 +2088,7 @@ extension Cpu {
 			let displ = self.bus.read(self.regs.pc)
 			self.regs.pc &+= 1
 			address = self.addRelative(displacement: displ, toAddress: address)
-			self.clock.add(cycles: 5)
+			self.clock.add(address: self.regs.pc, cycles: 5)
 			self.bus.write(address, value: self.regs.main.h)
 			self.id_opcode_table = table_NONE
 		}
@@ -2098,7 +2098,7 @@ extension Cpu {
 			let displ = self.bus.read(self.regs.pc)
 			self.regs.pc &+= 1
 			address = self.addRelative(displacement: displ, toAddress: address)
-			self.clock.add(cycles: 5)
+			self.clock.add(address: self.regs.pc, cycles: 5)
 			self.bus.write(address, value: self.regs.main.l)
 			self.id_opcode_table = table_NONE
 		}
