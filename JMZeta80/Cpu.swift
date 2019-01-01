@@ -222,14 +222,14 @@ final public class Cpu: CentralProcessingUnit {
             regs.pc = regs.pc &+ 1
         }
         
-        _updateMemoryRefreshRegister(opcode)
+        updateMemoryRefreshRegister(opcode)
         
         clock.add(cycles: 1)
         
         return opcode
     }
     
-    private func _updateMemoryRefreshRegister(_ opcode: Opcode) {
+    func updateMemoryRefreshRegister(_ opcode: Opcode) {
         guard opcode != 0xCB || id_opcode_table == table_NONE else {
             return
         }
@@ -309,6 +309,8 @@ final public class Cpu: CentralProcessingUnit {
         
         interrupt_status.IFF1 = false
         interrupt_status.IFF2 = false
+        
+        updateMemoryRefreshRegister(0x00)
         
         return true
     }
